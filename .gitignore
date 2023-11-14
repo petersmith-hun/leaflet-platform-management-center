@@ -1,0 +1,10 @@
+.idea
+build/
+coverage/
+dist/
+node_modules/
+*.iml
+**/config/development.yml
+**/config/development_docker.yml
+**/config/development_deployments.yml
+package-lock.json
