@@ -4,4 +4,10 @@
 
 .leaflet-logo {
   width: 35px;
+  display: inline-block;
+}
+
+.leaflet-logo-big {
+  width: 120px;
+  display: inline-block;
 }
