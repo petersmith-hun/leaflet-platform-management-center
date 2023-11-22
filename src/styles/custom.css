@@ -1,0 +1,7 @@
+.sidebar-height-full {
+  min-height: calc(100vh - 148px)
+}
+
+.leaflet-logo {
+  width: 35px;
+}

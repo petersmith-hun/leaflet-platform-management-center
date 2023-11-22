@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "group.root": "Root",
+
+    "group.quick_creation": "Quick creation",
+    "group.quick_creation.item.article": "Article",
+
+    "group.system_management": "System management",
+    "group.system_management.item.seo": "Default SEO",
+    "group.system_management.item.routes": "Frontend routes",
+    "group.system_management.item.translations": "Translation packs",
+    "group.system_management.item.failover": "Failover status",
+    "group.system_management.item.cluster": "Docker cluster status",
+    "group.system_management.item.registry": "Docker Registry browser",
+    "group.system_management.item.logs": "Logs",
+
+    "group.user_management": "User management",
+    "group.user_management.item.users": "User management",
+
+    "group.document_management": "Document management",
+    "group.document_management.item.documents": "Document management",
+
+    "group.blog_management": "Blog management",
+    "group.blog_management.item.articles": "Articles",
+    "group.blog_management.item.categories": "Categories",
+    "group.blog_management.item.tags": "Tags",
+    "group.blog_management.item.files": "File management",
+
+    "group.external_systems": "External systems",
+
+    "user.sign_out": "Sign out"
+  },
+
+  "translations": {
+    "page.title.default": "Dashboard",
+    "page.title.home": "Home"
+  }
+}
