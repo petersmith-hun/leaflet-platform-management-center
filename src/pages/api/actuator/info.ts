@@ -1,14 +1,14 @@
-import applicationConfig from "@/application-config";
+import applicationInfo from "@/application-info";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const actuatorInfoResponse = {
   app: {
-    name: applicationConfig.info.applicationName,
-    abbreviation: applicationConfig.info.abbreviation
+    name: applicationInfo.applicationName,
+    abbreviation: applicationInfo.abbreviation
   },
   build: {
-    version: applicationConfig.info.version,
-    time: applicationConfig.info.buildTime
+    version: applicationInfo.version,
+    time: applicationInfo.buildTime
   }
 }
 

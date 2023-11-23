@@ -1,4 +1,3 @@
-import applicationConfig from "@/application-config";
 import { MenuGroupData, MenuItemData } from "@/components/layout/sections/menu/index";
 import { Permission } from "@/core/domain/auth";
 import { faDocker } from "@fortawesome/free-brands-svg-icons";
@@ -126,17 +125,17 @@ const blogManagement: MenuItemData[] = [
 const externalSystems: MenuItemData[] = [
   {
     itemKey: "CircleCI",
-    path: applicationConfig.external.circleCi,
+    path: "https://app.circleci.com",
     icon: faExternalLink
   },
   {
     itemKey: "Archiva",
-    path: applicationConfig.external.archiva,
+    path: "https://artifact-repo.ci.psprog.hu",
     icon: faExternalLink
   },
   {
     itemKey: "Grafana",
-    path: applicationConfig.external.grafana,
+    path: "https://monitoring.psprog.hu",
     icon: faExternalLink
   },
 ];

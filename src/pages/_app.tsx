@@ -1,4 +1,4 @@
-import applicationConfig from "@/application-config";
+import applicationInfo from "@/application-info";
 import DefaultLayout from "@/components/layout/DefaultLayout";
 import "@/i18n";
 import "@/styles/custom.css";
@@ -61,7 +61,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         }}>
         <DefaultLayout>
           <Head>
-            <title>{applicationConfig.info.applicationName}</title>
+            <title>{applicationInfo.applicationName}</title>
           </Head>
           <Component {...pageProps} />
         </DefaultLayout>

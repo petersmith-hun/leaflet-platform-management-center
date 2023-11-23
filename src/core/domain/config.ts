@@ -2,7 +2,7 @@
  * OAuth Authorization Code Grant Flow configuration to connect the application to an OAuth Authorization Server.
  * Currently, it requires Leaflet Access Gateway Service and the connection is configured using next-auth.
  */
-interface OAuthConfig {
+export interface OAuthConfig {
 
   /**
    * Arbitrary OAuth provider ID.
@@ -38,7 +38,7 @@ interface OAuthConfig {
 /**
  * Application identification information.
  */
-interface AppInfoConfig {
+export interface AppInfoConfig {
 
   /**
    * Display name of the application.
@@ -62,21 +62,9 @@ interface AppInfoConfig {
 }
 
 /**
- * Address of external systems.
- */
-interface ExternalSystems {
-
-  circleCi: string;
-  archiva: string;
-  grafana: string;
-}
-
-/**
  * Application-wide configuration options.
  */
 export interface ApplicationConfig {
 
   oauth: OAuthConfig;
-  info: AppInfoConfig;
-  external: ExternalSystems;
 }

@@ -1,4 +1,4 @@
-import applicationConfig from "@/application-config";
+import applicationInfo from "@/application-info";
 import { LeafletLogo } from "@/components/common/LeafletLogo";
 import { UserMenuData } from "@/components/layout/sections/menu";
 import { MobileMenu } from "@/components/layout/sections/MobileMenu";
@@ -33,7 +33,7 @@ const Brand = (): ReactNode => {
       <LeafletLogo />
       <div className="hidden md:block">
         <div className="ml-10 flex items-baseline space-x-4">
-          <h1>{applicationConfig.info.applicationName}</h1>
+          <h1>{applicationInfo.applicationName}</h1>
         </div>
       </div>
     </div>
