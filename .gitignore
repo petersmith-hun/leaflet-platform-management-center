@@ -3,6 +3,8 @@ build/
 coverage/
 dist/
 node_modules/
+.next/
+.env
 *.iml
 **/config/development.yml
 **/config/development_docker.yml
