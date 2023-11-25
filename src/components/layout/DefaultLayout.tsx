@@ -39,4 +39,4 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default DefaultLayout
+export default DefaultLayout;

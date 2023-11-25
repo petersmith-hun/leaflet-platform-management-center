@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   jira: circleci/jira@1.1.2
   node: circleci/node@5.0.3
-  jq: circleci/jq@2.2.0
+  jq: circleci/jq@3.0.0
 
 # Common parameters for CircleCI build config
 parameters:

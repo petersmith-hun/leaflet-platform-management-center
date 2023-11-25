@@ -33,6 +33,7 @@
 
   "translations": {
     "page.title.default": "Dashboard",
-    "page.title.home": "Home"
+    "page.title.home": "Home",
+    "page.title.articles": "Articles"
   }
 }

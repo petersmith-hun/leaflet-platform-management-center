@@ -1,16 +1,13 @@
 import applicationConfig from "@/application-config";
 import { Permission } from "@/core/domain/auth";
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 
 const tokenURL = `${applicationConfig.oauth.authorizationServerURL}/oauth/token?audience=${applicationConfig.oauth.audience}`;
 const authorizationURL = `${applicationConfig.oauth.authorizationServerURL}/oauth/authorize`;
 const jwksEndpoint = `${applicationConfig.oauth.authorizationServerURL}/.well-known/jwks`;
 const userInfoURL = `${applicationConfig.oauth.authorizationServerURL}/oauth/userinfo`;
 
-/**
- * OAuth Authorization Code Grant Flow configuration using LAGS as Authorization Server.
- */
-export default NextAuth({
+export const options: AuthOptions = {
 
   /**
    * Authorization callback functions.
@@ -94,4 +91,9 @@ export default NextAuth({
       }
     }
   ],
-});
+};
+
+/**
+ * OAuth Authorization Code Grant Flow configuration using LAGS as Authorization Server.
+ */
+export default NextAuth(options);
