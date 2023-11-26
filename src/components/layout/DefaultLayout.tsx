@@ -29,7 +29,7 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex flex-row grow">
         <SideMenu />
         <div className="flex flex-col grow">
-          <div className="max-w-7xl py-6 sm:px-6 lg:px-8 h-full">
+          <div className="max-w-full py-6 sm:px-6 lg:px-8 h-full">
             {children}
           </div>
           <Footer />

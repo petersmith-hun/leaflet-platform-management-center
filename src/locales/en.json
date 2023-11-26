@@ -1,4 +1,26 @@
 {
+  "forms": {
+    "article.search": "Search",
+    "article.search.content": "Search by content",
+    "article.search.enabled": "Enabled",
+    "article.search.enabled.any": "Any",
+    "article.search.enabled.yes": "Yes",
+    "article.search.enabled.no": "No",
+    "article.search.order-direction": "Order direction",
+    "article.search.order-direction.asc": "Ascending",
+    "article.search.order-direction.desc": "Descending",
+    "article.search.order-by": "Order by",
+    "article.search.order-by.created": "Creation date",
+    "article.search.order-by.id": "Natural ID",
+    "article.search.order-by.published": "Publish date",
+    "article.search.order-by.title": "Article title",
+    "article.search.status": "Publication status",
+    "article.search.status.any": "Any",
+    "article.search.status.draft": "Draft",
+    "article.search.status.review": "In review",
+    "article.search.status.public": "Public"
+  },
+
   "menu": {
     "group.root": "Root",
 
@@ -32,8 +54,33 @@
   },
 
   "translations": {
+    "common.loading": "Retrieving data ...",
+
+    "dropdown.operation.delete": "Delete",
+    "dropdown.operation.edit": "Edit",
+    "dropdown.operation.handle-comments": "Handle comments",
+    "dropdown.operation.view": "View",
+
+    "error.unauthenticated": "You are not authenticated, or your session has expired. Please try signing back in!",
+    "error.unauthorized": "You are not authorized to use this operation.",
+    "error.not-found": "The requested resource does not exist.",
+    "error.unexpected-error": "An unexpected error occurred while processing your request. Please try again later!",
+
+    "header.article-search.base": "Title, category, author",
+    "header.article-search.dates": "Created, last modified, published",
+    "header.article-search.status": "General and publication status, pending comments",
+    "header.article-search.operations": "Article operations",
+
+    "page-operations.article": "Article operations",
+    "page-operations.article.new": "New article",
+    "page-operations.article.search": "Search articles",
+    "page-operations.article.show-all": "Show all article",
+
     "page.title.default": "Dashboard",
     "page.title.home": "Home",
-    "page.title.articles": "Articles"
+    "page.title.articles": "Articles",
+
+    "pagination.page-previous": "Previous",
+    "pagination.page-next": "Next"
   }
 }

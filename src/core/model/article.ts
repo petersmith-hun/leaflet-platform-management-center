@@ -27,7 +27,7 @@ export interface ArticleModel extends IdentifiedSelfStatusAwareModel {
   category: CategoryModel;
   attachments: FileDataModel[];
   locale: string;
-  published: Date;
+  published: string;
   rawContent: string;
   entryStatus: ArticleStatus
 }

@@ -11,8 +11,8 @@ export interface IdentifiedModel {
  */
 export interface IdentifiedSelfStatusAwareModel extends IdentifiedModel {
 
-  created: Date;
-  lastModified: Date;
+  created: string;
+  lastModified: string;
   enabled: boolean;
 }
 
