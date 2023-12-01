@@ -21,11 +21,14 @@ export const options: AuthOptions = {
      * @param account user account info
      */
     async jwt({ token, account }) {
+
       if (account) {
-        token.accessToken = account.access_token
-        token.scope = account.scope
+        token.accessToken = account.access_token;
+        token.scope = account.scope;
+        token.expiresAt = new Date((account.expires_at ?? 0) * 1000);
       }
-      return token
+
+      return token;
     },
 
     /**
@@ -35,13 +38,15 @@ export const options: AuthOptions = {
      * @param token parsed JWT token object
      */
     async session({ session, token }) {
-      session.accessToken = token.accessToken as string
+
+      session.accessToken = token.accessToken as string;
+      session.expiresAt = token.expiresAt as Date;
       session.scope = (token.scope as string)
         .split(" ")
         .filter(scope => Object.values(Permission).includes(scope as Permission))
         .map(scope => scope as Permission)
 
-      return session
+      return session;
     }
   },
 

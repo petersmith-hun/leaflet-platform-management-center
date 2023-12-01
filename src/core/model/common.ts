@@ -31,10 +31,19 @@ export interface Pagination {
   hasPrevious: boolean;
 }
 
+export interface SEOAttributes {
+
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords?: string;
+}
+
 /**
  * TODO.
  */
 export interface ResponseWrapper<T> {
+
   body: T
   pagination: Pagination;
+  seo: SEOAttributes;
 }

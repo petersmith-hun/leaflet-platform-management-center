@@ -1,5 +1,22 @@
 {
   "forms": {
+
+    "article.edit.category": "Category",
+    "article.edit.created-at": "Created at",
+    "article.edit.general-status": "General status",
+    "article.edit.last-modified-at": "Last modified at",
+    "article.edit.language": "Language",
+    "article.edit.language.EN": "English",
+    "article.edit.language.HU": "Hungarian",
+    "article.edit.link": "Link",
+    "article.edit.prologue": "Prologue",
+    "article.edit.publication-status": "Publication status",
+    "article.edit.published-at": "Published at",
+    "article.edit.seo.description": "SEO description",
+    "article.edit.seo.keywords": "SEO keywords",
+    "article.edit.seo.title": "SEO title",
+    "article.edit.title": "Title",
+
     "article.search": "Search",
     "article.search.content": "Search by content",
     "article.search.enabled": "Enabled",
@@ -18,7 +35,10 @@
     "article.search.status.any": "Any",
     "article.search.status.draft": "Draft",
     "article.search.status.review": "In review",
-    "article.search.status.public": "Public"
+    "article.search.status.public": "Public",
+
+    "confirmation.cancel": "Cancel",
+    "confirmation.delete.article": "Are you sure you want to delete this article?"
   },
 
   "menu": {
@@ -54,6 +74,12 @@
   },
 
   "translations": {
+    "article.label.never-modified": "Never modified",
+    "article.label.not-published": "Not published",
+    "article.label.seo-keywords-none-specified": "None specified",
+
+    "common.disabled": "disabled",
+    "common.enabled": "enabled",
     "common.loading": "Retrieving data ...",
 
     "dropdown.operation.delete": "Delete",
@@ -72,15 +98,38 @@
     "header.article-search.operations": "Article operations",
 
     "page-operations.article": "Article operations",
+    "page-operations.article.back-to-articles": "Back to article manager",
+    "page-operations.article.delete": "Delete article",
+    "page-operations.article.disable": "Disable article",
+    "page-operations.article.edit": "Edit article",
+    "page-operations.article.enable": "Enable article",
+    "page-operations.article.handle-comments": "Handle comments",
     "page-operations.article.new": "New article",
+    "page-operations.article.publish": "Publish article",
+    "page-operations.article.request-review": "Request review of article",
     "page-operations.article.search": "Search articles",
     "page-operations.article.show-all": "Show all article",
+    "page-operations.article.unpublish": "Unpublish article",
+
+    "page.sub-title.article.attachments": "Attachments",
+    "page.sub-title.article.rendered-content": "Rendered content",
+    "page.sub-title.article.seo": "SEO Attributes",
+    "page.sub-title.article.tags": "Tags",
 
     "page.title.default": "Dashboard",
     "page.title.home": "Home",
+    "page.title.article.view": "Article details",
     "page.title.articles": "Articles",
 
     "pagination.page-previous": "Previous",
-    "pagination.page-next": "Next"
+    "pagination.page-next": "Next",
+
+    "toast.article.title.failure": "Failed to update article",
+    "toast.article.title.success": "Article updated",
+    "toast.article.message.failure": "Failed to update article '{{title}}'",
+    "toast.article.message.status": "Article '{{title}}' has been {{status}}",
+    "toast.article.message.status.publication.DRAFT": "marked as draft",
+    "toast.article.message.status.publication.PUBLIC": "published",
+    "toast.article.message.status.publication.REVIEW": "submitted for review"
   }
 }

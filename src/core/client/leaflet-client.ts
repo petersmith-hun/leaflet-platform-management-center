@@ -3,6 +3,7 @@ import axiosResponseHandler from "@/core/client/axios-response-handler";
 import baseRestClient from "@/core/client/base-rest-client";
 import { RESTRequest } from "@/core/domain/requests";
 import { ResponseWrapper } from "@/core/model/common";
+import { signIn } from "next-auth/react";
 
 /**
  * TODO.
@@ -10,7 +11,9 @@ import { ResponseWrapper } from "@/core/model/common";
 export enum LeafletPath {
 
   ARTICLE_BY_ID = "/entries/{id}",
-  ARTICLE_SEARCH = "/entries/search"
+  ARTICLE_SEARCH = "/entries/search",
+  ARTICLE_GENERAL_STATUS = "/entries/{id}/status",
+  ARTICLE_PUBLICATION_STATUS = "/entries/{id}/publication/{status}"
 }
 
 /**
@@ -19,7 +22,11 @@ export enum LeafletPath {
  * @param request
  * @param unwrap
  */
-const leafletClient = <T>(environment: APIEnvironment, request: RESTRequest, unwrap: boolean = false): Promise<T> => {
+const leafletClient = async <T>(environment: APIEnvironment, request: RESTRequest, unwrap: boolean = false): Promise<T> => {
+
+  if (!environment.authorization) {
+    await signIn();
+  }
 
   request.headers!["X-Device-ID"] = environment.deviceID;
   request.headers!["X-Client-ID"] = environment.clientID;

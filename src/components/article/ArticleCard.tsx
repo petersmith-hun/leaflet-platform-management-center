@@ -1,6 +1,5 @@
 import { Separator } from "@/components/common/Separator";
 import {
-  DeleteDropdownMenuItem,
   DropdownMenu,
   DropdownMenuItem,
   EditDropdownMenuItem,
@@ -23,6 +22,7 @@ import {
   IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import React, { ReactNode } from "react";
 
 /**
@@ -47,7 +47,7 @@ const FormattedArticleDate = ({ date, icon }: { date: string, icon: IconDefiniti
  * TODO.
  * @param article
  */
-const ArticleEnabledStatusFlag = (article: ArticleModel): ReactNode => {
+export const ArticleEnabledStatusFlag = (article: ArticleModel): ReactNode => { // TODO move out to a common place instead
 
   return article.enabled
     ? <FontAwesomeIcon className="w-10 h-10 text-success" icon={faCheck} />
@@ -58,7 +58,7 @@ const ArticleEnabledStatusFlag = (article: ArticleModel): ReactNode => {
  * TODO.
  * @param article
  */
-const ArticlePublishStatusFlag = (article: ArticleModel): ReactNode => {
+export const ArticlePublishStatusFlag = (article: ArticleModel): ReactNode => {
 
   switch (article.entryStatus) {
     case ArticleStatus.DRAFT:
@@ -82,7 +82,9 @@ export const ArticleCard = (article: ArticleModel): ReactNode => {
       className="rounded-lg bg-white p-6 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 flex md:flex-row flex-col">
       <div className="w-5/12">
         <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-          {article.title}
+          <Link href={`articles/view/${article.id}`} className="text-primary-400 hover:text-primary-200">
+            {article.title}
+          </Link>
         </h5>
         <Separator thick={false} />
         <p className="flex flex-row">
@@ -105,7 +107,6 @@ export const ArticleCard = (article: ArticleModel): ReactNode => {
           <DropdownMenuItem link={`comments/${article.id}`} icon={faCommenting}
                             label="dropdown.operation.handle-comments" />
           <EditDropdownMenuItem link={`articles/edit/${article.id}`} />
-          <DeleteDropdownMenuItem link={`articles/delete/${article.id}`} />
         </DropdownMenu>
       </div>
     </div>

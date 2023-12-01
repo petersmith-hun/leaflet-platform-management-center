@@ -1,4 +1,4 @@
-import { faBars, faEye, faPencil, faTrash, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faEye, faPencil, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React, { ReactElement, ReactNode, useEffect } from "react";
@@ -40,14 +40,6 @@ export const ViewDropdownMenuItem = ({ link }: { link: string }): ReactNode => {
  */
 export const EditDropdownMenuItem = ({ link }: { link: string }): ReactNode => {
   return <DropdownMenuItem icon={faPencil} label={"dropdown.operation.edit"} link={link} />
-}
-
-/**
- * TODO.
- * @param link
- */
-export const DeleteDropdownMenuItem = ({ link }: { link: string }): ReactNode => {
-  return <DropdownMenuItem icon={faTrash} label={"dropdown.operation.delete"} link={link} style="text-danger dark:text-danger-600" />
 }
 
 /**

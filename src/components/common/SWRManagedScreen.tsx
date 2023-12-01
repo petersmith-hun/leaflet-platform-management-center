@@ -1,5 +1,6 @@
 import { ErrorScreen } from "@/components/common/ErrorScreen";
 import { InlineLoadingIndicator } from "@/components/common/InlineLoadingIndicator";
+import { WidePane } from "@/components/common/ScreenLayout";
 import { ReactNode } from "react";
 
 /**
@@ -11,11 +12,19 @@ import { ReactNode } from "react";
 export const SWRManagedScreen = ({ children, isLoading, error }: { children: () => ReactNode, isLoading: boolean, error: { response: { status: number } } }): ReactNode => {
 
   if (isLoading) {
-    return <InlineLoadingIndicator />;
+    return (
+      <WidePane>
+        <InlineLoadingIndicator />
+      </WidePane>
+    );
   }
 
   if (error) {
-    return <ErrorScreen {...error} />
+    return (
+      <WidePane>
+        <ErrorScreen {...error} />
+      </WidePane>
+    );
   }
 
   return children();

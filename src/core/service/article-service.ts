@@ -1,7 +1,8 @@
 import { APIEnvironment } from "@/api-environment";
 import leafletClient, { LeafletPath } from "@/core/client/leaflet-client";
 import { RequestMethod, RESTRequest } from "@/core/domain/requests";
-import { ArticleModel, ArticleSearchParameters, ArticleSearchResult } from "@/core/model/article";
+import { ArticleModel, ArticleSearchParameters, ArticleSearchResult, ArticleStatus } from "@/core/model/article";
+import { ResponseWrapper } from "@/core/model/common";
 
 interface ArticleService {
 
@@ -10,7 +11,7 @@ interface ArticleService {
    *
    * @param id
    */
-  getArticleByID: (id: number) => Promise<ArticleModel>;
+  getArticleByID: (id: number) => Promise<ResponseWrapper<ArticleModel>>;
 
   /**
    * TODO.
@@ -18,6 +19,28 @@ interface ArticleService {
    * @param searchParameters
    */
   searchArticles: (searchParameters: ArticleSearchParameters) => Promise<ArticleSearchResult>;
+
+  /**
+   * TODO.
+   *
+   * @param id
+   */
+  changeGeneralStatus: (id: number) => Promise<void>;
+
+  /**
+   * TODO.
+   *
+   * @param id
+   * @param currentStatus
+   */
+  changePublicationStatus: (id: number, currentStatus: ArticleStatus) => Promise<void>;
+
+  /**
+   * TODO.
+   *
+   * @param id
+   */
+  deleteArticleByID: (id: number) => Promise<void>;
 }
 
 /**
@@ -27,18 +50,23 @@ interface ArticleService {
  */
 const articleService = (environment: APIEnvironment): ArticleService => {
 
-  return {
+  const publicationStatusTransitions = {
+    [ArticleStatus.PUBLIC]: ArticleStatus.DRAFT,
+    [ArticleStatus.DRAFT]: ArticleStatus.REVIEW,
+    [ArticleStatus.REVIEW]: ArticleStatus.PUBLIC
+  };
 
-    getArticleByID: async (id: number): Promise<ArticleModel> => {
+  return {
+    getArticleByID: async (id: number): Promise<ResponseWrapper<ArticleModel>> => {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
         path: LeafletPath.ARTICLE_BY_ID,
         pathParameters: { id },
-        authorization: environment.authorization
+        authorization: environment.authorization!
       });
 
-      return leafletClient(environment, request, true);
+      return leafletClient(environment, request);
     },
 
     searchArticles(searchParameters: ArticleSearchParameters): Promise<ArticleSearchResult> {
@@ -46,11 +74,47 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       const request = new RESTRequest({
         method: RequestMethod.GET,
         path: LeafletPath.ARTICLE_SEARCH,
-        authorization: environment.authorization,
+        authorization: environment.authorization!,
         queryParameters: searchParameters
       });
 
-      return leafletClient(environment, request, false);
+      return leafletClient(environment, request);
+    },
+
+    changeGeneralStatus(id: number): Promise<void> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.PUT,
+        path: LeafletPath.ARTICLE_GENERAL_STATUS,
+        pathParameters: { id },
+        authorization: environment.authorization!
+      });
+
+      return leafletClient(environment, request);
+    },
+
+    changePublicationStatus(id: number, currentStatus: ArticleStatus): Promise<void> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.PUT,
+        path: LeafletPath.ARTICLE_PUBLICATION_STATUS,
+        pathParameters: { id, status: publicationStatusTransitions[currentStatus] },
+        authorization: environment.authorization!
+      });
+
+      return leafletClient(environment, request);
+    },
+
+    deleteArticleByID(id: number): Promise<void> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.DELETE,
+        path: LeafletPath.ARTICLE_BY_ID,
+        pathParameters: { id },
+        authorization: environment.authorization!
+      });
+
+      return leafletClient(environment, request);
     }
   }
 }

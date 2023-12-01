@@ -1,10 +1,12 @@
-import { APIEnvironment } from "@/api-environment";
+import { ScreenParameters } from "@/api-environment";
 import { ArticleSearchForm } from "@/components/article/ArticleSearchForm";
 import { ArticleSearchResultList } from "@/components/article/ArticleSearchResultList";
-import { CardWithTitle } from "@/components/common/Cards";
+import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
+import { MultiPaneScreen, NarrowPane } from "@/components/common/ScreenLayout";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import articleService from "@/core/service/article-service";
+import { swrKey } from "@/core/util/swr-key";
 import { faEdit, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
@@ -17,29 +19,27 @@ import useSWR from "swr";
  * @param data
  * @constructor
  */
-export const ArticleSearchScreen = ({ environment }: { environment: APIEnvironment }): ReactNode => {
+export const ArticleSearchScreen = ({ environment }: ScreenParameters): ReactNode => {
 
   const { searchArticles } = articleService(environment);
   const { t } = useTranslation();
   const { query } = useRouter();
-  const { isLoading, data, error } = useSWR({ type: "article-search", parameters: query }, _ => searchArticles(query));
+  const { isLoading, data, error } = useSWR(swrKey("article/search", query), _ => searchArticles(query));
 
   return (
-    <div className="flex flex-row justify-between">
+    <MultiPaneScreen>
       <SWRManagedScreen isLoading={isLoading} error={error}>
         {() => <ArticleSearchResultList data={data!} />}
       </SWRManagedScreen>
-      <div className="w-3/12 ml-3">
-        <CardWithTitle title={t("page-operations.article")}>
-          <div className="flex flex-col">
-            <PageOperationButton label={t("page-operations.article.new")} icon={faEdit} link="/articles/create" />
-            <PageOperationButton label={t("page-operations.article.show-all")} icon={faList} link="/articles" />
-          </div>
-        </CardWithTitle>
+      <NarrowPane>
+        <PageOperationCard title={t("page-operations.article")}>
+          <PageOperationButton label={t("page-operations.article.new")} icon={faEdit} link="/articles/create" />
+          <PageOperationButton label={t("page-operations.article.show-all")} icon={faList} link="/articles" />
+        </PageOperationCard>
         <CardWithTitle title={t("page-operations.article.search")}>
           <ArticleSearchForm />
         </CardWithTitle>
-      </div>
-    </div>
+      </NarrowPane>
+    </MultiPaneScreen>
   )
 }

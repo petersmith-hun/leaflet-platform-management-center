@@ -1,5 +1,6 @@
 import { ArticleCard } from "@/components/article/ArticleCard";
 import { Paginator } from "@/components/common/Paginator";
+import { WidePane } from "@/components/common/ScreenLayout";
 import { ArticleSearchResult } from "@/core/model/article";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ export const ArticleSearchResultList = ({ data }: { data: ArticleSearchResult })
   const { t } = useTranslation();
 
   return (
-    <div className="w-9/12">
+    <WidePane>
       <div
         className="rounded-lg bg-white p-2 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 md:flex flex-row text-center text-xs text-neutral-400 hidden">
         <div className="w-5/12">{t("header.article-search.base")}</div>
@@ -26,6 +27,6 @@ export const ArticleSearchResultList = ({ data }: { data: ArticleSearchResult })
           <Paginator {...data!.pagination} />
         </ul>
       </nav>
-    </div>
+    </WidePane>
   )
 }

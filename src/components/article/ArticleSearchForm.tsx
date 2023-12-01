@@ -36,7 +36,7 @@ export const ArticleSearchForm = (): ReactNode => {
   useEffect(() => {
     const init = async () => {
       const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select });
+      initTE({ Input, Select }, { allowReinits: true });
     };
     init();
   }, []);
@@ -65,6 +65,7 @@ export const ArticleSearchForm = (): ReactNode => {
         [ArticleStatus.REVIEW]: t("article.search.status.review"),
         [ArticleStatus.PUBLIC]: t("article.search.status.public")
       }} />
+      {/* TODO content field value needs to be URL encoded */}
       <Input registerReturn={register("content")} label={t("article.search.content")} id={"searchContent"} />
       <SubmitButton label={t("article.search")} icon={faSearch} />
     </form>
