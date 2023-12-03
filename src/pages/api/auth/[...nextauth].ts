@@ -39,6 +39,7 @@ export const options: AuthOptions = {
      */
     async session({ session, token }) {
 
+      session.user.id = parseInt(token.sub ?? "0");
       session.accessToken = token.accessToken as string;
       session.expiresAt = token.expiresAt as Date;
       session.scope = (token.scope as string)

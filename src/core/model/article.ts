@@ -58,3 +58,49 @@ export class ArticleSearchParameters {
  * TODO.
  */
 export type ArticleSearchResult = ResponseWrapper<{ entries: ArticleModel[] }>
+
+/**
+ * TODO.
+ */
+export interface ArticleEditRequest {
+
+  userID?: number;
+  title: string;
+  link: string;
+  prologue: string;
+  rawContent: string;
+  categoryID: number;
+  locale: string;
+  enabled: boolean;
+  status: ArticleStatus;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: string;
+  tags: number[];
+  attachments: string[];
+}
+
+/**
+ * TODO.
+ */
+export type SelectOptionsObject = { [id: number]: string };
+
+/**
+ * TODO.
+ */
+export interface ArticleComposerCommonData {
+
+  categories: SelectOptionsObject;
+  files: SelectOptionsObject;
+  tags: SelectOptionsObject;
+}
+
+/**
+ * TODO.
+ */
+export interface FileAttachmentRequest {
+
+  entryID: number;
+  pathUUID: string;
+}
+

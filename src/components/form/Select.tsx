@@ -4,11 +4,17 @@ import { UseFormRegisterReturn } from "react-hook-form";
 /**
  * TODO.
  */
-export const Select = ({ registerReturn, label, optionMap }: { registerReturn: UseFormRegisterReturn<any>, label: string, optionMap: Record<string, string>}): ReactNode => {
+export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: {
+  registerReturn: UseFormRegisterReturn<any>,
+  label: string,
+  optionMap: Record<string, string>,
+  multiple?: boolean,
+  search?: boolean
+}): ReactNode => {
 
   return (
-    <div className="mb-3">
-      <select data-te-select-init="" {...registerReturn}>
+    <div className="mb-3 max-w-[90%]">
+      <select data-te-select-init="" {...registerReturn} multiple={multiple} data-te-select-filter={search}>
         {Object.entries(optionMap)
           .map(option => <option key={option[0]} value={option[0]}>{option[1]}</option>)}
       </select>

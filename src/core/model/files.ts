@@ -8,4 +8,5 @@ export interface FileDataModel {
   acceptedAs: string;
   description: string;
   path: string;
+  pathUUID: string;
 }

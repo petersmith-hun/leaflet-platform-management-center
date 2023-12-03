@@ -15,7 +15,7 @@ export enum ToastType {
 export interface ToastProperties {
   type: ToastType;
   title: string;
-  message: string;
+  message: string | string[];
 }
 
 const SuccessIcon = (): ReactNode => {
@@ -114,7 +114,11 @@ export const OperationResultToast = ({ type, title, message }: ToastProperties):
           </div>
         </div>
         <div className="break-words rounded-b-lg px-4 py-4 ">
-          {message}
+          <ul>
+            {(Array.isArray(message) ? message : [message]).map((item, index) =>
+              <li key={`message-item-${index}`}>{item}</li>)
+            }
+          </ul>
         </div>
       </div>
     </div>

@@ -8,3 +8,12 @@ export interface TagModel extends IdentifiedSelfStatusAwareModel {
   id: number;
   name: string;
 }
+
+/**
+ * TODO.
+ */
+export interface TagAssignmentRequest {
+
+  entryID: number;
+  tagID: number;
+}

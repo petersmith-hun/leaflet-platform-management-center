@@ -47,3 +47,19 @@ export interface ResponseWrapper<T> {
   pagination: Pagination;
   seo: SEOAttributes;
 }
+
+/**
+ * TODO.
+ */
+export interface ErrorResponse {
+
+  message: string;
+}
+
+/**
+ * TODO.
+ */
+export interface ValidationErrorResponse {
+
+  validation: { field: string, message: string }[]
+}

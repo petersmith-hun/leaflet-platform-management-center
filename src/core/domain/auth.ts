@@ -26,6 +26,11 @@ export enum Permission {
 export type UserInfo = {
 
   /**
+   * User ID.
+   */
+  id: number;
+
+  /**
    * Email address of the active user.
    */
   email: string,

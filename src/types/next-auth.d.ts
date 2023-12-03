@@ -13,6 +13,6 @@ declare module "next-auth" {
     accessToken: string;
     expiresAt: Date;
     scope: Permission[];
-    user: DefaultSession["user"]
+    user: DefaultSession["user"] & { id: number }
   }
 }

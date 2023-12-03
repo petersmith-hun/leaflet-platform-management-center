@@ -36,6 +36,7 @@ export const useSessionHelper = (): SessionHelperHookReturn => {
     },
     getUserInfo: () => {
       return {
+        id: session.data?.user?.id ?? 0,
         name: session.data?.user?.name ?? "Unknown",
         email: session.data?.user?.email ?? "Unknown"
       }

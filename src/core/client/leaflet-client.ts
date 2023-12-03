@@ -10,10 +10,18 @@ import { signIn } from "next-auth/react";
  */
 export enum LeafletPath {
 
+  ARTICLE = "/entries",
   ARTICLE_BY_ID = "/entries/{id}",
   ARTICLE_SEARCH = "/entries/search",
   ARTICLE_GENERAL_STATUS = "/entries/{id}/status",
-  ARTICLE_PUBLICATION_STATUS = "/entries/{id}/publication/{status}"
+  ARTICLE_PUBLICATION_STATUS = "/entries/{id}/publication/{status}",
+
+  ATTACHMENTS = "/attachments",
+
+  CATEGORY_ALL = "/categories",
+
+  TAGS_ALL = "/tags",
+  TAGS_ASSIGN = "/tags/assign"
 }
 
 /**
