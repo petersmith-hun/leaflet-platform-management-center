@@ -37,6 +37,13 @@ interface ArticleService {
   /**
    * TODO.
    *
+   * @param article
+   */
+  updateArticle: (id: number, article: ArticleEditRequest) => Promise<ArticleModel>;
+
+  /**
+   * TODO.
+   *
    * @param id
    */
   changeGeneralStatus: (id: number) => Promise<void>;
@@ -85,6 +92,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
   };
 
   return {
+
     getArticleByID: async (id: number): Promise<ResponseWrapper<ArticleModel>> => {
 
       const request = new RESTRequest({
@@ -96,6 +104,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
 
       return leafletClient(environment, request);
     },
+
     searchArticles(searchParameters: ArticleSearchParameters): Promise<ArticleSearchResult> {
 
       const request = new RESTRequest({
@@ -107,6 +116,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
 
       return leafletClient(environment, request);
     },
+
     changeGeneralStatus(id: number): Promise<void> {
 
       const request = new RESTRequest({
@@ -124,6 +134,19 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       const request = new RESTRequest({
         method: RequestMethod.POST,
         path: LeafletPath.ARTICLE,
+        requestBody: article,
+        authorization: environment.authorization!
+      });
+
+      return leafletClient(environment, request);
+    },
+
+    updateArticle(id: number, article: ArticleEditRequest): Promise<ArticleModel> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.PUT,
+        path: LeafletPath.ARTICLE_BY_ID,
+        pathParameters: { id },
         requestBody: article,
         authorization: environment.authorization!
       });

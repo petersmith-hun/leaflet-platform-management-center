@@ -78,17 +78,23 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
 }): ReactNode => {
 
   const { submitArticle } = articleComposerFacade(environment);
+  const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>({
+    defaultValues: {
+      userID: getUserInfo().id,
+      status: ArticleStatus.DRAFT,
+      ...commonData.article
+    }
+  });
   const router = useRouter();
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const [showToast, setShowToast] = useState<ToastProperties | null>(null);
   const { handleErrorResponse } = toastHandler(setShowToast, t);
-  const { getUserInfo } = useSessionHelper();
 
   const onSubmit: SubmitHandler<ArticleEditRequest> = (data) => {
-    submitArticle(data)
+    submitArticle(data, router.query.id as number | undefined)
       .then(articleID => router.push(`/articles/view/${articleID}`))
       .catch(handleErrorResponse);
   }
@@ -107,12 +113,12 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="hidden" {...register("userID")} value={getUserInfo().id} />
-      <input type="hidden" {...register("status")} value={ArticleStatus.DRAFT} />
+      <input type="hidden" {...register("userID")} />
+      <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
         {showToast && <OperationResultToast key={`alert-${new Date().getTime()}`} {...showToast} />}
         <WidePane>
-          <CardWithTitle title={t("page.title.article.create")}>
+          <CardWithTitle title={commonData.article?.title ?? t("page.title.article.create")}>
             <TabbedScreen
               titles={[
                 t("tab.article.create.base"),
@@ -160,7 +166,7 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
                     <Textarea registerReturn={register("prologue", { required: t("forms:validation.common.required") })}
                               label={t("forms:article.edit.prologue")}
                               id={"article-prologue"}
-                              errorSupplier={() => errors.prologue?.message}/>
+                              errorSupplier={() => errors.prologue?.message} />
                   </FullWidthDataCell>
                 </DataRow>
               </div>
@@ -170,7 +176,7 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
                     <Input registerReturn={register("metaTitle", { required: t("forms:validation.common.required") })}
                            label={t("forms:article.edit.seo.title")}
                            id={"article-seo-title"}
-                           errorSupplier={() => errors.metaTitle?.message}/>
+                           errorSupplier={() => errors.metaTitle?.message} />
                   </WideDataCell>
                   <WideDataCell>
                     <Input registerReturn={register("metaKeywords")} label={t("forms:article.edit.seo.keywords")}
@@ -183,7 +189,7 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
                       registerReturn={register("metaDescription", { required: t("forms:validation.common.required") })}
                       label={t("forms:article.edit.seo.description")}
                       id={"article-seo-description"}
-                      errorSupplier={() => errors.metaDescription?.message}/>
+                      errorSupplier={() => errors.metaDescription?.message} />
                   </FullWidthDataCell>
                 </DataRow>
               </div>
@@ -194,7 +200,7 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
                       registerReturn={register("rawContent", { required: t("forms:validation.common.required") })}
                       label={t("forms:article.edit.raw-content")}
                       id={"article-raw-content"}
-                      errorSupplier={() => errors.rawContent?.message}/>
+                      errorSupplier={() => errors.rawContent?.message} />
                   </FullWidthDataCell>
                 </DataRow>
               </div>

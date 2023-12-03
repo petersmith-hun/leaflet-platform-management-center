@@ -129,6 +129,7 @@
     "page.title.default": "Dashboard",
     "page.title.home": "Home",
     "page.title.article.create": "Compose new article",
+    "page.title.article.edit": "Edit existing article",
     "page.title.article.view": "Article details",
     "page.title.articles": "Articles",
 

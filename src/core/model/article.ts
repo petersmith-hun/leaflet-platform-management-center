@@ -90,6 +90,7 @@ export type SelectOptionsObject = { [id: number]: string };
  */
 export interface ArticleComposerCommonData {
 
+  article?: ArticleEditRequest;
   categories: SelectOptionsObject;
   files: SelectOptionsObject;
   tags: SelectOptionsObject;

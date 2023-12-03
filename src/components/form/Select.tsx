@@ -3,6 +3,12 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 /**
  * TODO.
+ *
+ * @param registerReturn
+ * @param label
+ * @param optionMap
+ * @param multiple
+ * @param search
  */
 export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: {
   registerReturn: UseFormRegisterReturn<any>,
