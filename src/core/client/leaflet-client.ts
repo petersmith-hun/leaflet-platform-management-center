@@ -1,5 +1,4 @@
 import { APIEnvironment } from "@/api-environment";
-import axiosResponseHandler from "@/core/client/axios-response-handler";
 import baseRestClient from "@/core/client/base-rest-client";
 import { RESTRequest } from "@/core/domain/requests";
 import { ResponseWrapper } from "@/core/model/common";
@@ -40,7 +39,7 @@ const leafletClient = async <T>(environment: APIEnvironment, request: RESTReques
   request.headers!["X-Client-ID"] = environment.clientID;
 
   return baseRestClient(environment, request)
-    .then(axiosResponseHandler)
+    .then(response => response.data)
     .then(data => unwrap
       ? (data as ResponseWrapper<T>).body
       : data) as Promise<T>;

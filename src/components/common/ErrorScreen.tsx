@@ -32,8 +32,6 @@ interface ErrorParameter {
   }
 }
 
-// TODO 401 is acting weird, check it later
-
 /**
  * TODO.
  */

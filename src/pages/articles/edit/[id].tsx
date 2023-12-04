@@ -24,7 +24,8 @@ export default function EditArticle(environment: APIEnvironment) {
   const {
     isLoading,
     data,
-    error
+    error,
+    mutate
   } = useSWR(swrNumberKey("articles/edit", router.query.id), (key) => getCommonData(key.parameter));
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function EditArticle(environment: APIEnvironment) {
 
   return (
     <SWRManagedScreen isLoading={isLoading} error={error}>
-      {() => <ArticleComposerScreen environment={environment} commonData={data!} />}
+      {() => <ArticleComposerScreen environment={environment} commonData={data!} mutate={mutate} />}
     </SWRManagedScreen>
   )
 }

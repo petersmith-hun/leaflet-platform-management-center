@@ -1,9 +1,9 @@
 import { APIEnvironment } from "@/api-environment";
 import { RenderedArticleModal } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
+import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
 import { OperationResultToast, ToastProperties } from "@/components/common/OperationResultToast";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
-import { Separator } from "@/components/common/Separator";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
@@ -21,60 +21,19 @@ import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-
-// TODO extract these to a separate component
-const DataRow = ({ children }: { children: ReactNode | ReactNode[] }): ReactNode => {
-
-  return (
-    <>
-      <div className="flex flex-row">
-        {children}
-      </div>
-      <Separator thick={false} />
-    </>
-  )
-}
-
-const DataCell = ({ widthClass, title, children }: {
-  widthClass: "w-3/12" | "w-6/12" | "w-full",
-  title?: string,
-  children: string | ReactNode
-}): ReactNode => {
-
-  return (
-    <div className={widthClass}>
-      {title && (
-        <>
-          <b>{title}</b>
-          <br />
-        </>
-      )}
-      {children}
-    </div>
-  );
-}
-
-const NarrowDataCell = ({ title, children }: { title?: string, children: string | ReactNode }): ReactNode => {
-  return <DataCell widthClass={"w-3/12"} title={title} children={children} />
-}
-
-const WideDataCell = ({ title, children }: { title?: string, children: string | ReactNode }): ReactNode => {
-  return <DataCell widthClass={"w-6/12"} title={title} children={children} />
-}
-
-const FullWidthDataCell = ({ title, children }: { title?: string, children: string | ReactNode }): ReactNode => {
-  return <DataCell widthClass={"w-full"} title={title} children={children} />
-}
+import { KeyedMutator } from "swr";
 
 /**
  * TODO.
  *
  * @param environment
  * @param commonData
+ * @param mutate
  */
-export const ArticleComposerScreen = ({ environment, commonData }: {
+export const ArticleComposerScreen = ({ environment, commonData, mutate }: {
   environment: APIEnvironment,
-  commonData: ArticleComposerCommonData
+  commonData: ArticleComposerCommonData,
+  mutate?: KeyedMutator<ArticleComposerCommonData>;
 }): ReactNode => {
 
   const { submitArticle } = articleComposerFacade(environment);
@@ -91,12 +50,17 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const [showToast, setShowToast] = useState<ToastProperties | null>(null);
-  const { handleErrorResponse } = toastHandler(setShowToast, t);
+  const { handleAxiosError } = toastHandler(setShowToast, t);
 
   const onSubmit: SubmitHandler<ArticleEditRequest> = (data) => {
+    data = { ...data, tags: data.tags.map(id => parseInt(id as unknown as string)) };
     submitArticle(data, router.query.id as number | undefined)
+      .then(articleID => {
+        mutate && mutate();
+        return articleID;
+      })
       .then(articleID => router.push(`/articles/view/${articleID}`))
-      .catch(handleErrorResponse);
+      .catch(handleAxiosError);
   }
 
   useEffect(() => {
@@ -200,6 +164,7 @@ export const ArticleComposerScreen = ({ environment, commonData }: {
                       registerReturn={register("rawContent", { required: t("forms:validation.common.required") })}
                       label={t("forms:article.edit.raw-content")}
                       id={"article-raw-content"}
+                      defaultRowCount={50}
                       errorSupplier={() => errors.rawContent?.message} />
                   </FullWidthDataCell>
                 </DataRow>

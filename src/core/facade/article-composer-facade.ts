@@ -1,15 +1,22 @@
 import { APIEnvironment } from "@/api-environment";
-import { ArticleComposerCommonData, ArticleEditRequest, ArticleModel, SelectOptionsObject } from "@/core/model/article";
+import {
+  ArticleComposerCommonData,
+  ArticleEditRequest,
+  ArticleModel,
+  FileAttachmentRequest,
+  SelectOptionsObject
+} from "@/core/model/article";
 import { CategoryModel } from "@/core/model/category";
 import { ResponseWrapper } from "@/core/model/common";
-import { TagModel } from "@/core/model/tag";
+import { TagAssignmentRequest, TagModel } from "@/core/model/tag";
 import articleService from "@/core/service/article-service";
 import categoryService from "@/core/service/category-service";
 import tagService from "@/core/service/tag-service";
+import { entityDifferentCalculator } from "@/core/util/entity-difference-calculator";
 
-const categoriesPromiseIndex = 0;
-const tagsPromiseIndex = 1;
-const articlePromiseIndex = 2;
+const articlePromiseIndex = 0;
+const categoriesPromiseIndex = 1;
+const tagsPromiseIndex = 3;
 
 interface ArticleComposerFacade {
 
@@ -65,48 +72,21 @@ const convertArticleToEditRequest = (article: ResponseWrapper<ArticleModel>): Ar
   }
 }
 
-/**
- * TODO.
- *
- * @param itemsAlreadyAttached
- * @param itemAttachmentsRequested
- * @param idExtractor
- */
-const collectIDsToAttach = <ID, M>(itemsAlreadyAttached: M[],
-                                   itemAttachmentsRequested: ID[],
-                                   idExtractor: (item: M) => ID): ID[] => {
-
-  let idListToAttach: ID[];
-  if (!itemsAlreadyAttached.length) {
-    idListToAttach = itemAttachmentsRequested;
-  } else {
-    const alreadyAttached = itemsAlreadyAttached.map(idExtractor);
-    idListToAttach = itemAttachmentsRequested
-      .filter(itemID => !alreadyAttached.includes(itemID));
-  }
-
-  return idListToAttach;
+const createTagAssignment = (articleID: number, tagID: number): TagAssignmentRequest => {
+  return { tagID, entryID: articleID }
 }
 
-/**
- * TODO.
- *
- * @param itemsCurrentlyAttached
- * @param itemAttachmentsRequested
- * @param idExtractor
- */
-const collectIDsToDetach = <ID, M>(itemsCurrentlyAttached: M[],
-                                   itemAttachmentsRequested: ID[],
-                                   idExtractor: (item: M) => ID): ID[] => {
+const createFileAssignment = (articleID: number, pathUUID: string): FileAttachmentRequest => {
+  return { pathUUID, entryID: articleID }
+}
 
-  let idListToDetach: ID[] = [];
-  if (itemsCurrentlyAttached.length) {
-    const currentlyAttached = itemsCurrentlyAttached.map(idExtractor);
-    idListToDetach = currentlyAttached
-      .filter(itemID => !itemAttachmentsRequested.includes(itemID));
+const executeAssignments = async <T>(serviceCall: (request: T) => Promise<void>, requests: T[]): Promise<void> => {
+
+  for (const request of requests) {
+    await serviceCall(request);
   }
 
-  return idListToDetach;
+  return Promise.resolve();
 }
 
 /**
@@ -130,13 +110,13 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
         ? getArticleByID(articleID).then(convertArticleToEditRequest)
         : Promise.resolve(undefined);
 
-      return Promise.all([categories, tags, article])
+      return Promise.all([article, categories, Promise.resolve(undefined), tags])
         .then(results => {
           return {
+            article: results[articlePromiseIndex],
             categories: convertCategories(results[categoriesPromiseIndex]),
             files: {},
-            tags: convertTags(results[tagsPromiseIndex]),
-            article: results[articlePromiseIndex]
+            tags: convertTags(results[tagsPromiseIndex])
           }
         });
     },
@@ -147,32 +127,18 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
         ? updateArticle(articleID, articleEditRequest)
         : createArticle(articleEditRequest));
       const createdArticleID = createdArticle.id;
-      const tagsToAttach = collectIDsToAttach(createdArticle.tags, articleEditRequest.tags, tag => tag.id);
-      const tagsToDetach = collectIDsToDetach(createdArticle.tags, articleEditRequest.tags, tag => tag.id);
-      const filesToAttach = collectIDsToAttach(createdArticle.attachments, articleEditRequest.attachments, file => file.pathUUID);
-      const filesToDetach = collectIDsToDetach(createdArticle.attachments, articleEditRequest.attachments, file => file.pathUUID);
 
-      // TODO try to optimize this a bit
-      await Promise.all(tagsToAttach
-        .map(tagID => {
-          return { tagID, entryID: createdArticleID }
-        })
-        .map(attachTag));
-      await Promise.all(tagsToDetach
-        .map(tagID => {
-          return { tagID, entryID: createdArticleID }
-        })
-        .map(detachTag));
-      await Promise.all(filesToAttach
-        .map(pathUUID => {
-          return { pathUUID, entryID: createdArticleID }
-        })
-        .map(attachFile));
-      await Promise.all(filesToDetach
-        .map(pathUUID => {
-          return { pathUUID, entryID: createdArticleID }
-        })
-        .map(detachFile));
+      const tags = entityDifferentCalculator(createdArticle.tags, articleEditRequest.tags, tag => tag.id);
+      const files = entityDifferentCalculator(createdArticle.attachments, articleEditRequest.attachments, file => file.pathUUID);
+
+      await executeAssignments(attachTag, tags.attach
+        .map(tagID => createTagAssignment(createdArticleID, tagID)));
+      await executeAssignments(detachTag, tags.detach
+        .map(tagID => createTagAssignment(createdArticleID, tagID)));
+      await executeAssignments(attachFile, files.attach
+        .map(pathUUID => createFileAssignment(createdArticleID, pathUUID)));
+      await executeAssignments(detachFile, files.detach
+        .map(pathUUID => createFileAssignment(createdArticleID, pathUUID)));
 
       return Promise.resolve(createdArticleID);
     }

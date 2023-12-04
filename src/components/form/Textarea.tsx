@@ -6,6 +6,7 @@ interface TextareaProps extends ValidatedInput {
   registerReturn: UseFormRegisterReturn<any>;
   label: string;
   id: string;
+  defaultRowCount?: number;
 }
 
 /**
@@ -15,8 +16,9 @@ interface TextareaProps extends ValidatedInput {
  * @param label
  * @param id
  * @param errorSupplier
+ * @param defaultRowCount
  */
-export const Textarea = ({ registerReturn, label, id, errorSupplier }: TextareaProps): ReactNode => {
+export const Textarea = ({ registerReturn, label, id, errorSupplier, defaultRowCount = 3 }: TextareaProps): ReactNode => {
 
   return (
     <div className="mb-3 max-w-[95%]">
@@ -24,7 +26,7 @@ export const Textarea = ({ registerReturn, label, id, errorSupplier }: TextareaP
       <textarea
         className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
         id={id}
-        rows={3}
+        rows={defaultRowCount}
         placeholder={label}
         {...registerReturn}>
       </textarea>

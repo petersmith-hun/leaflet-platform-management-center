@@ -9,9 +9,26 @@ interface ToastHandler {
   /**
    * TODO.
    *
+   * @param title
+   * @param message
+   * @param type
+   */
+  showCustomToast: (title: string, message: string, type?: ToastType) => void;
+
+  /**
+   * TODO.
+   *
+   * @param title
+   * @param message
+   */
+  showCustomErrorToast: (title: string, message: string) => void;
+
+  /**
+   * TODO.
+   *
    * @param axiosError
    */
-  handleErrorResponse: (axiosError: AxiosError) => void;
+  handleAxiosError: (axiosError: AxiosError) => void;
 }
 
 /**
@@ -23,7 +40,18 @@ interface ToastHandler {
 export const toastHandler = (toastDispatcher: Dispatch<SetStateAction<ToastProperties | null>>, t: TFunction): ToastHandler => {
 
   return {
-    handleErrorResponse(axiosError: AxiosError): void {
+
+    showCustomToast(title: string, message: string, type: ToastType | undefined = ToastType.SUCCESS): void {
+      toastDispatcher({
+        type, title, message
+      })
+    },
+
+    showCustomErrorToast(title: string, message: string): void {
+      this.showCustomToast(title, message, ToastType.ERROR);
+    },
+
+    handleAxiosError(axiosError: AxiosError): void {
 
       if (axiosError.response?.status === 400) {
         toastDispatcher({

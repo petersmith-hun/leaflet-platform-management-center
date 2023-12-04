@@ -1,3 +1,4 @@
+import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
 import { Separator } from "@/components/common/Separator";
 import {
   DropdownMenu,
@@ -6,18 +7,14 @@ import {
   ViewDropdownMenuItem
 } from "@/components/navigation/DropdownMenu";
 import { OperationButton } from "@/components/navigation/OperationButton";
-import { ArticleModel, ArticleStatus } from "@/core/model/article";
+import { ArticleModel } from "@/core/model/article";
 import { dateFormatter } from "@/core/util/date-formatter";
 import {
   faAsterisk,
-  faCheck,
   faCommenting,
   faEdit,
-  faEye,
   faFolder,
   faGlobe,
-  faPencil,
-  faRemove,
   faUser,
   IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
@@ -41,33 +38,6 @@ const FormattedArticleDate = ({ date, icon }: { date: string, icon: IconDefiniti
       <FontAwesomeIcon className="w-4" icon={icon} /> {dateFormatter(date)}
     </p>
   )
-}
-
-/**
- * TODO.
- * @param article
- */
-export const ArticleEnabledStatusFlag = (article: ArticleModel): ReactNode => { // TODO move out to a common place instead
-
-  return article.enabled
-    ? <FontAwesomeIcon className="w-10 h-10 text-success" icon={faCheck} />
-    : <FontAwesomeIcon className="w-10 h-10 text-danger" icon={faRemove} />;
-}
-
-/**
- * TODO.
- * @param article
- */
-export const ArticlePublishStatusFlag = (article: ArticleModel): ReactNode => {
-
-  switch (article.entryStatus) {
-    case ArticleStatus.DRAFT:
-      return <FontAwesomeIcon className="w-10 h-10 text-danger ml-3" icon={faPencil} />;
-    case ArticleStatus.REVIEW:
-      return <FontAwesomeIcon className="w-10 h-10 text-danger ml-3" icon={faEye} />;
-    case ArticleStatus.PUBLIC:
-      return <FontAwesomeIcon className="w-10 h-10 text-success ml-3" icon={faGlobe} />;
-  }
 }
 
 /**

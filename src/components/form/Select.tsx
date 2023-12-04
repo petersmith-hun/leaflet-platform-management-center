@@ -13,7 +13,7 @@ import { UseFormRegisterReturn } from "react-hook-form";
 export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: {
   registerReturn: UseFormRegisterReturn<any>,
   label: string,
-  optionMap: Record<string, string>,
+  optionMap: Record<number | string, string>,
   multiple?: boolean,
   search?: boolean
 }): ReactNode => {
