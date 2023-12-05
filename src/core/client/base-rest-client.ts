@@ -3,10 +3,12 @@ import { RESTRequest } from "@/core/domain/requests";
 import axios, { AxiosResponse } from "axios";
 
 /**
- * TODO.
+ * Generic, Axios-backed REST client implementation. Adds the Accept and Content-Type headers by default (both set to
+ * application/json), as well deals with the resolution of the parameterized paths, besides setting up any other
+ * provided parameter in the Axios request configuration object.
  *
- * @param environment
- * @param request
+ * @param environment APIEnvironment object defining the target API configuration
+ * @param request RESTRequest object containing the request parameters
  */
 const baseRestClient = <T>(environment: APIEnvironment, request: RESTRequest): Promise<AxiosResponse<T>> => {
 

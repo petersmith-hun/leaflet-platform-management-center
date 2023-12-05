@@ -10,13 +10,13 @@ interface TextareaProps extends ValidatedInput {
 }
 
 /**
- * TODO.
+ * Renders a form textarea styled by TW-Elements.
  *
- * @param registerReturn
- * @param label
- * @param id
- * @param errorSupplier
- * @param defaultRowCount
+ * @param registerReturn React Hook Form registration result
+ * @param label label of the textarea
+ * @param id ID of the textarea
+ * @param errorSupplier validation error supplier
+ * @param defaultRowCount default row count of the textarea (defaults to 3 rows)
  */
 export const Textarea = ({ registerReturn, label, id, errorSupplier, defaultRowCount = 3 }: TextareaProps): ReactNode => {
 

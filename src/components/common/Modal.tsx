@@ -1,5 +1,11 @@
 import React, { ReactNode } from "react";
 
+interface ModalProps {
+  id: string;
+  title: string;
+  children: ReactNode;
+}
+
 const CloseButton = (): ReactNode => {
   return (
     <button
@@ -24,13 +30,13 @@ const CloseButton = (): ReactNode => {
 }
 
 /**
- * TODO.
+ * Renders a TW-Elements Modal component.
  *
- * @param id
- * @param title
- * @param children
+ * @param id ID of the modal window
+ * @param title title of the modal window
+ * @param children contents to be rendered within
  */
-export const Modal = ({ id, title, children }: { id: string, title: string, children: ReactNode }) => {
+export const Modal = ({ id, title, children }: ModalProps) => {
 
   return (
     <div

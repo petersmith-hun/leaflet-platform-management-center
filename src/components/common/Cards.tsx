@@ -2,11 +2,24 @@ import { ResizeBlockButton } from "@/components/common/ResizeBlockButton";
 import { Separator } from "@/components/common/Separator";
 import React, { ReactNode } from "react";
 
+interface SimpleCardProps {
+  children: ReactNode;
+}
+
+interface PageOperationCardProps extends SimpleCardProps {
+  title: string;
+}
+
+interface CardWithTitleProps extends PageOperationCardProps {
+  resizable?: string;
+}
+
 /**
- * TODO.
- * @param children
+ * Renders a TW-Elements Card component.
+ *
+ * @param children contents to be rendered within
  */
-export const SimpleCard = ({ children }: { children: ReactNode }) => {
+export const SimpleCard = ({ children }: SimpleCardProps) => {
 
   return (
     <div
@@ -19,13 +32,14 @@ export const SimpleCard = ({ children }: { children: ReactNode }) => {
 }
 
 /**
- * TODO.
+ * Renders a TW-Element Card component, including an H2 heading. Also, able to render a resize button within the heading,
+ * if a target container's ID is provided.
  *
- * @param children
- * @param title
+ * @param children contents to be rendered within
+ * @param title title of the card
  * @param resizable
  */
-export const CardWithTitle = ({ children, title, resizable }: { children: ReactNode, title: string, resizable?: string }) => {
+export const CardWithTitle = ({ children, title, resizable }: CardWithTitleProps) => {
 
   return (
     <SimpleCard>
@@ -40,13 +54,13 @@ export const CardWithTitle = ({ children, title, resizable }: { children: ReactN
 }
 
 /**
- * TODO.
+ * Renders a narrow TW-Element Card component, to be used as a page operation block. Contents of this component are
+ * rendered in a column using flex-col directive.
  *
- * @param children
- * @param title
- * @constructor
+ * @param children contents to be rendered within
+ * @param title title of the card
  */
-export const PageOperationCard = ({ children, title }: { children: ReactNode, title: string }) => {
+export const PageOperationCard = ({ children, title }: PageOperationCardProps) => {
 
   return (
     <CardWithTitle title={title}>

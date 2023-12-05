@@ -1,5 +1,20 @@
 import { ReactNode, useEffect } from "react";
 
+interface TabItemProps {
+  id: string;
+  title: string;
+}
+
+interface TabContentProps {
+  id: string;
+  child: ReactNode;
+}
+
+interface TabbedScreenProps {
+  titles: string[];
+  children: ReactNode[];
+}
+
 const createTabID = (index: number): string => {
   return `tab-${index}`;
 }
@@ -7,12 +22,12 @@ const createTabID = (index: number): string => {
 const defaultTab = createTabID(0);
 
 /**
- * TODO.
+ * Renders a tab item.
  *
- * @param id
- * @param title
+ * @param id ID of the tab
+ * @param title title of tab
  */
-const TabItem = ({ id, title }: { id: string, title: string }): ReactNode => {
+const TabItem = ({ id, title }: TabItemProps): ReactNode => {
 
   const props: any = {
     href: `#${id}`,
@@ -38,12 +53,12 @@ const TabItem = ({ id, title }: { id: string, title: string }): ReactNode => {
 }
 
 /**
- * TODO.
+ * Renders a tab content wrapper.
  *
- * @param id
- * @param child
+ * @param id ID of the tab content
+ * @param child child React node of this tab
  */
-const TabContentWrapper = ({ id, child }: { id: string, child: ReactNode }): ReactNode => {
+const TabContentWrapper = ({ id, child }: TabContentProps): ReactNode => {
 
   const props: any = {
     className: "hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block",
@@ -63,12 +78,13 @@ const TabContentWrapper = ({ id, child }: { id: string, child: ReactNode }): Rea
 }
 
 /**
- * TODO.
+ * Renders a TW-Elements Tab screen. The number of titles and child nodes must match, otherwise an error message is rendered.
+ * Content nodes are attached to the tabs in the same order as the titles are provided.
  *
- * @param titles
- * @param children
+ * @param titles titles to show on the tabs
+ * @param children contents to be rendered within, attached to the tabs
  */
-export const TabbedScreen = ({ titles, children }: { titles: string[], children: ReactNode[] }): ReactNode => {
+export const TabbedScreen = ({ titles, children }: TabbedScreenProps): ReactNode => {
 
   useEffect(() => {
     const init = async () => {

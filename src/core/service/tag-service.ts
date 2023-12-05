@@ -10,29 +10,29 @@ interface WrappedTagList {
 interface TagService {
 
   /**
-   * TODO.
+   * Retrieves all existing tag.
    */
   getAllTags: () => Promise<TagModel[]>;
 
   /**
-   * TODO.
+   * Attaches the given tag to the article.
    *
-   * @param attachmentRequest
+   * @param attachmentRequest tag-article attachment request
    */
   attachTag: (attachmentRequest: TagAssignmentRequest) => Promise<void>;
 
   /**
-   * TODO.
+   * Detaches the given tag from the article.
    *
-   * @param attachmentRequest
+   * @param attachmentRequest tag-article detachment request
    */
   detachTag: (attachmentRequest: TagAssignmentRequest) => Promise<void>;
 }
 
 /**
- * TODO.
+ * Service implementation for Leaflet API communication, handling tag management requests.
  *
- * @param environment
+ * @param environment APIEnvironment object defining the target API configuration
  */
 const tagService = (environment: APIEnvironment): TagService => {
 

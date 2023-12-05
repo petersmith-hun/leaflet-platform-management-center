@@ -1,7 +1,7 @@
-import { createQueryString } from "@/components/common/Paginator";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { SubmitButton } from "@/components/form/SubmitButton";
+import { createQueryString } from "@/components/utility/query-string-util";
 import { ArticleStatus } from "@/core/model/article";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ interface SearchForm {
 }
 
 /**
- * TODO.
+ * Article search panel used by the article manager's list screen.
  */
 export const ArticleSearchForm = (): ReactNode => {
 

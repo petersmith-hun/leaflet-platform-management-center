@@ -23,18 +23,21 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
-/**
- * TODO.
- *
- * @param environment
- * @param commonData
- * @param mutate
- */
-export const ArticleComposerScreen = ({ environment, commonData, mutate }: {
-  environment: APIEnvironment,
-  commonData: ArticleComposerCommonData,
+interface ArticleComposerScreenProps {
+  environment: APIEnvironment;
+  commonData: ArticleComposerCommonData;
   mutate?: KeyedMutator<ArticleComposerCommonData>;
-}): ReactNode => {
+}
+
+/**
+ * Screen used by article manager's create/edit operations. For editing purpose, provide the article itself in the
+ * common data parameter, as well as an SWR mutate function to invalidate the common data cache for the edited article.
+ *
+ * @param environment APIEnvironment object defining the target API configuration
+ * @param commonData pre-loaded form data (categories, tags, files)
+ * @param mutate SWR mutate function for data invalidation
+ */
+export const ArticleComposerScreen = ({ environment, commonData, mutate }: ArticleComposerScreenProps): ReactNode => {
 
   const { submitArticle } = articleComposerFacade(environment);
   const { getUserInfo } = useSessionHelper();

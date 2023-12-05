@@ -21,17 +21,19 @@ const tagsPromiseIndex = 3;
 interface ArticleComposerFacade {
 
   /**
-   * TODO.
+   * Retrieves the commonly used pieces of data for the article composer screen (list of categories, tags, uploaded
+   * files). Also retrieves the article data for the article editor screen (if the ID is provided).
    *
-   * @param articleID
+   * @param articleID ID of the article of return data of
    */
   getCommonData: (articleID?: number) => Promise<ArticleComposerCommonData>;
 
   /**
-   * TODO.
+   * Submits the composed article, while also dealing with the tag and file assignments. To edit an existing article,
+   * article ID must be also provided. Returns the ID of the created/edited article.
    *
-   * @param article
-   * @param id
+   * @param article article data to be submitted
+   * @param articleID ID of an existing article to update
    */
   submitArticle: (article: ArticleEditRequest, articleID?: number) => Promise<number>;
 }
@@ -90,9 +92,9 @@ const executeAssignments = async <T>(serviceCall: (request: T) => Promise<void>,
 }
 
 /**
- * TODO.
+ * Facade implementation coordinating the population of the article composer/editor screen, as well as submitting a new article.
  *
- * @param environment
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export const articleComposerFacade = (environment: APIEnvironment): ArticleComposerFacade => {
 

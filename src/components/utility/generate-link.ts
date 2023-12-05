@@ -18,9 +18,15 @@ const titleUpdateListener = (): void => {
 };
 
 /**
- * TODO.
+ * Generates a sanitized link based on the input value and writes it into the target input field.
+ * Sanitization actually materializes in the following steps:
+ *  - Removing accents;
+ *  - Making the input string lowercase;
+ *  - Trimming the leading and trailing whitespaces;
+ *  - Replacing the special characters with empty characters;
+ *  - Replacing the spaces with dashes.
  *
- * @param generateLink
+ * @param generateLink enables/disabled generating the link
  */
 export const generateLinkByTitle = (generateLink: boolean): void => {
 

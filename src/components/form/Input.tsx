@@ -11,13 +11,13 @@ interface InputProps extends ValidatedInput {
 }
 
 /**
- * TODO.
+ * Renders a form input styled by TW-Elements.
  *
- * @param registerReturn
- * @param label
- * @param id
- * @param disabled
- * @param errorSupplier
+ * @param registerReturn React Hook Form registration result
+ * @param label label of the input
+ * @param id ID of the input
+ * @param readonly makes the input read-only
+ * @param errorSupplier validation error supplier
  */
 export const Input = ({ registerReturn, label, id, readonly = false, errorSupplier }: InputProps): ReactNode => {
 

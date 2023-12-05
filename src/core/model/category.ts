@@ -1,7 +1,7 @@
 import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
 
 /**
- * TODO.
+ * Response model representing a category.
  */
 export interface CategoryModel extends IdentifiedSelfStatusAwareModel {
 

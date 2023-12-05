@@ -11,9 +11,10 @@ import useSWR from "swr";
 export const getServerSideProps = environmentProperties;
 
 /**
- * TODO.
+ * Create article page.
+ * Mapped to /articles/create
  *
- * @constructor
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export default function CreateArticle(environment: APIEnvironment) {
 

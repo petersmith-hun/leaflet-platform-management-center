@@ -9,8 +9,10 @@ import useSWR from "swr";
 export const getServerSideProps = environmentProperties;
 
 /**
- * TODO.
- * @param environment
+ * View article page.
+ * Mapped to /articles/view/:id
+ *
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export default function ViewArticle(environment: APIEnvironment) {
 

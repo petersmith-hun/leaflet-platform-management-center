@@ -6,12 +6,28 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 /**
- * TODO.
+ * Supported awareness levels for buttons.
  */
 export enum AwarenessLevel {
+
+  /**
+   * Adds a blue border.
+   */
   NORMAL = "border-primary-100",
+
+  /**
+   * Adds a green border.
+   */
   POSITIVE = "border-success",
+
+  /**
+   * Adds a yellow border.
+   */
   WARNING = "border-warning",
+
+  /**
+   * Adds a red border.
+   */
   ALERT = "border-danger"
 }
 
@@ -35,12 +51,13 @@ interface ConfirmedOperationButtonProperties {
 }
 
 /**
- * TODO.
- * @param label
- * @param icon
- * @param link
- * @param additionalClass
- * @param awareness
+ * Renders an operation button. Can be used anywhere.
+ *
+ * @param label label of the operation button
+ * @param icon icon of the operation button as FontAwesome IconDefinition
+ * @param link link of the operation button
+ * @param additionalClass additional classes to be attached to the button
+ * @param awareness awareness level of the button
  */
 export const OperationButton = ({ label, icon, link, additionalClass = "mr-2", awareness = AwarenessLevel.NORMAL }: OperationButtonProperties): ReactNode => {
 
@@ -55,25 +72,25 @@ export const OperationButton = ({ label, icon, link, additionalClass = "mr-2", a
 }
 
 /**
- * TODO.
+ * Renders a page operation button. Should be used within page operation blocks.
  *
- * @param label
- * @param icon
- * @param link
- * @param awareness
+ * @param label label of the operation button
+ * @param icon icon of the operation button as FontAwesome IconDefinition
+ * @param link link of the operation button
+ * @param awareness awareness level of the button
  */
 export const PageOperationButton = ({ label, icon, link, awareness = AwarenessLevel.NORMAL }: PageOperationButtonProperties): ReactNode => {
   return <OperationButton label={label} icon={icon} link={link} additionalClass="mb-3" awareness={awareness} />
 }
 
 /**
- * TODO.
+ * Renders a confirmed operation button. Instead of simply linking to a different page, these buttons used a form and a popover notification.
  *
- * @param label
- * @param icon
- * @param link
- * @param onSubmit
- * @param awareness
+ * @param label label of the operation button
+ * @param icon icon of the operation button as FontAwesome IconDefinition
+ * @param id ID of the button, used to attach it to the popconfirm
+ * @param onSubmit submit handler function
+ * @param awareness awareness level of the button
  */
 export const ConfirmedOperationButton = ({ label, icon, id, onSubmit, awareness = AwarenessLevel.NORMAL }: ConfirmedOperationButtonProperties): ReactNode => {
 

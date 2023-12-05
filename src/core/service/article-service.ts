@@ -14,74 +14,75 @@ import { ResponseWrapper } from "@/core/model/common";
 interface ArticleService {
 
   /**
-   * TODO.
+   * Retrieves a single article by its ID.
    *
-   * @param id
+   * @param id article ID
    */
   getArticleByID: (id: number) => Promise<ResponseWrapper<ArticleModel>>;
 
   /**
-   * TODO.
+   * Retrieves a set of articles based on the provided search parameters.
    *
-   * @param searchParameters
+   * @param searchParameters article search parameters
    */
   searchArticles: (searchParameters: ArticleSearchParameters) => Promise<ArticleSearchResult>;
 
   /**
-   * TODO.
+   * Creates a new article.
    *
-   * @param article
+   * @param article article data to be submitted
    */
   createArticle: (article: ArticleEditRequest) => Promise<ArticleModel>;
 
   /**
-   * TODO.
+   * Modifies an existing article.
    *
-   * @param article
+   * @param id ID of article to be updated
+   * @param article article data to be submitted
    */
   updateArticle: (id: number, article: ArticleEditRequest) => Promise<ArticleModel>;
 
   /**
-   * TODO.
+   * Flips the general status (enabled/disabled) of the given article.
    *
-   * @param id
+   * @param id ID of article to be updated
    */
   changeGeneralStatus: (id: number) => Promise<void>;
 
   /**
-   * TODO.
+   * Updates the publication status of the given article.
    *
-   * @param id
-   * @param currentStatus
+   * @param id ID of article to be updated
+   * @param currentStatus publication status to transition the article to
    */
   changePublicationStatus: (id: number, currentStatus: ArticleStatus) => Promise<void>;
 
   /**
-   * TODO.
+   * Removes an existing article.
    *
-   * @param id
+   * @param id ID of article to be deleted
    */
   deleteArticleByID: (id: number) => Promise<void>;
 
   /**
-   * TODO.
+   * Attaches the given file to the article as an attachment.
    *
-   * @param attachmentRequest
+   * @param attachmentRequest file-article attachment request
    */
   attachFile: (attachmentRequest: FileAttachmentRequest) => Promise<void>;
 
   /**
-   * TODO.
+   * Detaches the given file from the article.
    *
-   * @param attachmentRequest
+   * @param attachmentRequest file-article detachment request
    */
   detachFile: (attachmentRequest: FileAttachmentRequest) => Promise<void>;
 }
 
 /**
- * TODO.
+ * Service implementation for Leaflet API communication, handling article management requests.
  *
- * @param environment
+ * @param environment APIEnvironment object defining the target API configuration
  */
 const articleService = (environment: APIEnvironment): ArticleService => {
 

@@ -14,6 +14,15 @@ interface LocalPageOperationButtonProperties {
   awareness?: AwarenessLevel;
 }
 
+interface RenderedArticleProps {
+  content: string;
+  resourceServer: string;
+}
+
+interface RenderedArticleModalProps extends RenderedArticleProps {
+  onRender: () => void;
+}
+
 const RenderArticleButton = ({ label, icon, onClick, awareness = AwarenessLevel.NORMAL }: LocalPageOperationButtonProperties): ReactNode => {
 
   return (
@@ -30,12 +39,13 @@ const RenderArticleButton = ({ label, icon, onClick, awareness = AwarenessLevel.
 }
 
 /**
- * TODO.
+ * Markdown renderer component used to render the article's MD source as HTML. Renders the article as a static,
+ * embedded HTML segment.
  *
- * @param content
- * @param resourceServer
+ * @param content raw MD source of the article
+ * @param resourceServer resource server address for rendering the embedded images
  */
-export const RenderedArticle = ({ content, resourceServer }: { content: string, resourceServer: string }): ReactNode => {
+export const RenderedArticle = ({ content, resourceServer }: RenderedArticleProps): ReactNode => {
 
   const processedContent = content.replaceAll("{resource-server-url}", resourceServer);
 
@@ -49,9 +59,15 @@ export const RenderedArticle = ({ content, resourceServer }: { content: string, 
 }
 
 /**
- * TODO.
+ * Markdown renderer component used to render the article's MD source as HTML. Renders the article in a modal window.
+ * Also renders a trigger button, including an onClick listener, which can be used to execute additional operations
+ * before actually rendering the content (e.g. populating the content).
+ *
+ * @param content raw MD source of the article
+ * @param resourceServer resource server address for rendering the embedded images
+ * @param onRender callback function to execute additional operations before rendering
  */
-export const RenderedArticleModal = ({ content, resourceServer, onRender }: { content: string, resourceServer: string, onRender: () => void }): ReactNode => {
+export const RenderedArticleModal = ({ content, resourceServer, onRender }: RenderedArticleModalProps): ReactNode => {
 
   const { t } = useTranslation();
 
@@ -65,7 +81,8 @@ export const RenderedArticleModal = ({ content, resourceServer, onRender }: { co
 
   return (
     <>
-      <RenderArticleButton awareness={AwarenessLevel.POSITIVE} label={t("page-operations.article.render")} icon={faPrint} onClick={onRender} />
+      <RenderArticleButton awareness={AwarenessLevel.POSITIVE} label={t("page-operations.article.render")}
+                           icon={faPrint} onClick={onRender} />
       <Modal id={"article-render-modal"} title={t("modal.title.rendered-article")}>
         <RenderedArticle content={content} resourceServer={resourceServer} />
       </Modal>

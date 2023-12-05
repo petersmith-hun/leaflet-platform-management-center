@@ -1,15 +1,22 @@
 import { SimpleCard } from "@/components/common/Cards";
+import { createQueryString } from "@/components/utility/query-string-util";
 import { Pagination } from "@/core/model/common";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
-const PageButton = ({ index, queryString, label }: {
-  index: number,
-  queryString: string,
-  label?: string
-}): ReactNode => {
+interface PageButtonProps {
+  index: number;
+  queryString: string;
+  label?: string;
+}
+
+interface PaginatorProps {
+  pagination: Pagination;
+}
+
+const PageButton = ({ index, queryString, label }: PageButtonProps): ReactNode => {
 
   return (
     <li>
@@ -23,24 +30,11 @@ const PageButton = ({ index, queryString, label }: {
 }
 
 /**
- * TODO.
+ * Renders a TW-Elements Pagination component.
  *
- * @param query
- * @param includePage
+ * @param pagination pagination properties (page number, page size, ordering, etc.)
  */
-export const createQueryString = (query: Record<string, string>, includePage: boolean = false): string => {
-
-  return Object.entries(query)
-    .filter(parameter => includePage || parameter[0] !== "page")
-    .filter(parameter => parameter[1] !== "empty")
-    .map(parameter => `${parameter[0]}=${parameter[1]}`)
-    .join("&");
-}
-
-/**
- * TODO.
- */
-export const Paginator = (pagination: Pagination): ReactNode => {
+export const Paginator = ({ pagination }: PaginatorProps): ReactNode => {
 
   const { t } = useTranslation();
   const { query } = useRouter();

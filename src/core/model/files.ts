@@ -1,5 +1,5 @@
 /**
- * TODO.
+ * Response model representing an uploaded file.
  */
 export interface FileDataModel {
 

@@ -5,17 +5,28 @@ import { TagModel } from "@/core/model/tag";
 import { UserModel } from "@/core/model/user";
 
 /**
- * TODO.
+ * Supported article statuses.
  */
 export enum ArticleStatus {
 
+  /**
+   * Article is a draft, not meant for publication.
+   */
   DRAFT = "DRAFT",
+
+  /**
+   * Article is in review phase, waiting to be published.
+   */
   REVIEW = "REVIEW",
+
+  /**
+   * Article is public.
+   */
   PUBLIC = "PUBLIC"
 }
 
 /**
- * TODO.
+ * Response model representing an article.
  */
 export interface ArticleModel extends IdentifiedSelfStatusAwareModel {
 
@@ -33,7 +44,7 @@ export interface ArticleModel extends IdentifiedSelfStatusAwareModel {
 }
 
 /**
- * TODO.
+ * Request model containing the supported article search parameters.
  */
 export class ArticleSearchParameters {
 
@@ -55,12 +66,12 @@ export class ArticleSearchParameters {
 }
 
 /**
- * TODO.
+ * Simple wrapper for a list of articles returned by the search endpoint.
  */
 export type ArticleSearchResult = ResponseWrapper<{ entries: ArticleModel[] }>
 
 /**
- * TODO.
+ * Request model representing an article.
  */
 export interface ArticleEditRequest {
 
@@ -81,12 +92,12 @@ export interface ArticleEditRequest {
 }
 
 /**
- * TODO.
+ * Type directive for select dropdown field options.
  */
 export type SelectOptionsObject = { [id: number]: string };
 
 /**
- * TODO.
+ * Wrapper object representing all data returned to the article composer screen.
  */
 export interface ArticleComposerCommonData {
 
@@ -97,7 +108,7 @@ export interface ArticleComposerCommonData {
 }
 
 /**
- * TODO.
+ * Request model representing a file assignment.
  */
 export interface FileAttachmentRequest {
 

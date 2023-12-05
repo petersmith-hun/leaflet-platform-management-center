@@ -10,15 +10,15 @@ interface WrappedCategoryList {
 interface CategoryService {
 
   /**
-   * TODO.
+   * Retrieves all existing category.
    */
   getAllCategories: () => Promise<CategoryModel[]>;
 }
 
 /**
- * TODO.
+ * Service implementation for Leaflet API communication, handling category management requests.
  *
- * @param environment
+ * @param environment APIEnvironment object defining the target API configuration
  */
 const categoryService = (environment: APIEnvironment): CategoryService => {
 

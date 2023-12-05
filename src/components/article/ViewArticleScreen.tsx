@@ -44,9 +44,11 @@ interface ViewArticleScreenParameters {
 }
 
 /**
- * TODO.
+ * Article viewer screen component. Renders a static page with every information of the given article.
  *
- * @param data
+ * @param article article data to be rendered
+ * @param environment APIEnvironment object defining the target API configuration
+ * @param mutate SWR mutate function for data invalidation
  */
 export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleScreenParameters): ReactNode => {
 
@@ -124,10 +126,10 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
                                additionalClass="mt-2 w-6/12 inline-block" />
             </WideDataCell>
             <NarrowDataCell title={t("forms:article.edit.general-status")}>
-              <ArticleEnabledStatusFlag {...article.body} />
+              <ArticleEnabledStatusFlag article={article.body} />
             </NarrowDataCell>
             <NarrowDataCell title={t("forms:article.edit.publication-status")}>
-              <ArticlePublishStatusFlag {...article.body} />
+              <ArticlePublishStatusFlag article={article.body} />
             </NarrowDataCell>
           </DataRow>
           <DataRow>

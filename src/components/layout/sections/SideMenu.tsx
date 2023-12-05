@@ -9,6 +9,7 @@ import { ReactNode, useEffect } from "react";
  */
 export const SideMenu = (): ReactNode => {
 
+  // TODO try extracting these into a single place ...
   useEffect(() => {
     const init = async () => {
       const { Sidenav, initTE } = await import("tw-elements");

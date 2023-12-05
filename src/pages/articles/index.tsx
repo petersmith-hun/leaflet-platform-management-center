@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 export const getServerSideProps = environmentProperties;
 
 /**
- * TODO.
+ * Article manager main page.
+ * Mapped to /articles
  *
- * @constructor
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export default function Articles(environment: APIEnvironment) {
 

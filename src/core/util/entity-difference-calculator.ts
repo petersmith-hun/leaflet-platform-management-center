@@ -42,11 +42,12 @@ const collectIDsToDetach = <ID, M>(itemsCurrentlyAttached: M[],
 }
 
 /**
- * TODO.
+ * "Calculates" the difference between the currently existing tag or file assignments and the requested state.
+ * Based on the differences, it creates a list of IDs to be attached and another to be detached.
  *
- * @param itemsAttached
- * @param itemAttachmentsRequested
- * @param idExtractor
+ * @param itemsAttached current assignments
+ * @param itemAttachmentsRequested requested assignments
+ * @param idExtractor ID extraction function from the entity model
  */
 export const entityDifferentCalculator = <ID, M>(itemsAttached: M[], itemAttachmentsRequested: ID[],
                                                  idExtractor: (item: M) => ID): EntityDifferenceCalculator<ID> => {

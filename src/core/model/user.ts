@@ -1,7 +1,7 @@
 import { IdentifiedModel } from "@/core/model/common";
 
 /**
- * TODO.
+ * Response model representing the owner of an article.
  */
 export interface UserModel extends IdentifiedModel {
 

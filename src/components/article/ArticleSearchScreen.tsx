@@ -14,10 +14,9 @@ import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 
 /**
- * TODO.
+ * Main screen of the artile manager.
  *
- * @param data
- * @constructor
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export const ArticleSearchScreen = ({ environment }: ScreenParameters): ReactNode => {
 

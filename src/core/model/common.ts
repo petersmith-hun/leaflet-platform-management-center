@@ -1,5 +1,5 @@
 /**
- * TODO.
+ * Base response model representing an identifiable entity (has an ID field).
  */
 export interface IdentifiedModel {
 
@@ -7,7 +7,8 @@ export interface IdentifiedModel {
 }
 
 /**
- * TODO.
+ * Base response model representing a self-status aware entity (has creation and last modification date, as well as an
+ * enabled flag).
  */
 export interface IdentifiedSelfStatusAwareModel extends IdentifiedModel {
 
@@ -17,7 +18,7 @@ export interface IdentifiedSelfStatusAwareModel extends IdentifiedModel {
 }
 
 /**
- * TODO.
+ * Response model representing pagination information.
  */
 export interface Pagination {
 
@@ -31,6 +32,9 @@ export interface Pagination {
   hasPrevious: boolean;
 }
 
+/**
+ * Response model representing SEO information.
+ */
 export interface SEOAttributes {
 
   metaTitle: string;
@@ -39,7 +43,8 @@ export interface SEOAttributes {
 }
 
 /**
- * TODO.
+ * Response wrapper model for endpoints returning response-filled data (includes pagination and SEO information along
+ * with the requested data itself).
  */
 export interface ResponseWrapper<T> {
 
@@ -49,7 +54,7 @@ export interface ResponseWrapper<T> {
 }
 
 /**
- * TODO.
+ * Response model representing a simple error.
  */
 export interface ErrorResponse {
 
@@ -57,7 +62,7 @@ export interface ErrorResponse {
 }
 
 /**
- * TODO.
+ * Response model representing a validation error.
  */
 export interface ValidationErrorResponse {
 

@@ -3,18 +3,20 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode } from "react";
 
+interface SubmitButtonProps {
+  label: string;
+  icon: IconDefinition;
+  awareness?: AwarenessLevel;
+}
+
 /**
- * TODO.
+ * Renders a form submit button styled by TW-Elements.
  *
- * @param label
- * @param icon
- * @param link
+ * @param label label of the button
+ * @param icon icon of the button
+ * @param awareness awareness indicator to be rendered on the button (see AwarenessLevel enum)
  */
-export const SubmitButton = ({ label, icon, awareness = AwarenessLevel.NORMAL }: {
-  label: string,
-  icon: IconDefinition,
-  awareness?: AwarenessLevel
-}): ReactNode => {
+export const SubmitButton = ({ label, icon, awareness = AwarenessLevel.NORMAL }: SubmitButtonProps): ReactNode => {
 
   return (
     <button type="submit"

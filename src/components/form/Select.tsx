@@ -1,22 +1,24 @@
 import React, { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
+interface SelectProps {
+  registerReturn: UseFormRegisterReturn<any>;
+  label: string;
+  optionMap: Record<number | string, string>;
+  multiple?: boolean;
+  search?: boolean;
+}
+
 /**
- * TODO.
+ * Renders a form select dropdown styled by TW-Elements.
  *
- * @param registerReturn
- * @param label
- * @param optionMap
- * @param multiple
- * @param search
+ * @param registerReturn React Hook Form registration result
+ * @param label label of the select dropdown
+ * @param optionMap select options to be rendered as a flat key-value object
+ * @param multiple enables multiselect behaviors
+ * @param search enables rendering a search input
  */
-export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: {
-  registerReturn: UseFormRegisterReturn<any>,
-  label: string,
-  optionMap: Record<number | string, string>,
-  multiple?: boolean,
-  search?: boolean
-}): ReactNode => {
+export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: SelectProps): ReactNode => {
 
   return (
     <div className="mb-3 max-w-[90%]">

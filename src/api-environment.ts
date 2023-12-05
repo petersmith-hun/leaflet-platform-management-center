@@ -4,26 +4,52 @@ import { getServerSession } from "next-auth";
 import { v5 as uuidv5 } from 'uuid';
 
 /**
- * TODO.
+ * Target API environment parameters.
  */
 export interface APIEnvironment {
+
+  /**
+   * Leaflet host URL.
+   */
   api: string,
+
+  /**
+   * Leaflet Link client ID.
+   */
   clientID: string;
+
+  /**
+   * Leaflet Link device ID.
+   */
   deviceID: string;
+
+  /**
+   * Authorization header to be passed in the API requests.
+   */
   authorization: Record<string, string> | null;
+
+  /**
+   * Root path of the published articles on the visitor frontend.
+   */
   publicArticlePath: string;
+
+  /**
+   * Images resource server path for rendering images in article previews.
+   */
   resourceServer: string;
 }
 
 /**
- * TODO.
+ * Parameters passed directly to a page component.
  */
 export interface ScreenParameters {
   environment: APIEnvironment;
 }
 
 /**
- * TODO.
+ * Generates the server side properties needed by the pages communicating with Leaflet.
+ *
+ * @param context NextPageContext object containing the HTTP request and response objects
  */
 const environmentProperties = async (context: NextPageContext): Promise<{ props: APIEnvironment | object }> => {
 

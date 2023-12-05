@@ -15,20 +15,20 @@ interface SWRKey<T> {
 }
 
 /**
- * TODO.
+ * Creates an object that can be used as an SWR key, where the parameter can be of any type.
  *
- * @param type
- * @param parameter
+ * @param type arbitrary request type identifier
+ * @param parameter exact parameter to be passed to the service
  */
 export const swrKey = <T>(type: string, parameter: any): SWRKey<T> => {
   return { type, parameter: parameter as unknown as T }
 }
 
 /**
- * TODO.
+ * Creates an object that can be used as an SWR key, where the parameter must be a number.
  *
- * @param type
- * @param parameter
+ * @param type arbitrary request type identifier
+ * @param parameter exact parameter to be passed to the service
  */
 export const swrNumberKey = (type: string, parameter: any): SWRKey<number> => {
   return swrKey(type, parameter);

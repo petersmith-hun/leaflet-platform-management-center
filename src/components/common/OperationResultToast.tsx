@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 
 /**
- * TODO.
+ * Types of the toast notification.
  */
 export enum ToastType {
   SUCCESS,
@@ -10,11 +10,23 @@ export enum ToastType {
 }
 
 /**
- * TODO.
+ * Toast notification properties.
  */
 export interface ToastProperties {
+
+  /**
+   * Type of the toast notification.
+   */
   type: ToastType;
+
+  /**
+   * Title of the toast.
+   */
   title: string;
+
+  /**
+   * Message or messages to be shown within the toast.
+   */
   message: string | string[];
 }
 
@@ -70,9 +82,11 @@ const colorMap = {
 }
 
 /**
- * TODO.
+ * Renders a TW-Elements Toast notification for a finished API operation.
  *
- * @constructor
+ * @param type type of the toast notification.
+ * @param title title of the toast
+ * @param message message or messages to be shown within the toast
  */
 export const OperationResultToast = ({ type, title, message }: ToastProperties): ReactNode => {
 

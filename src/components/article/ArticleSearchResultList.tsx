@@ -5,9 +5,20 @@ import { ArticleSearchResult } from "@/core/model/article";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
-export const ArticleSearchResultList = ({ data }: { data: ArticleSearchResult }): ReactNode => {
+interface ArticleSearchResultListProps {
+  data: ArticleSearchResult;
+}
+
+/**
+ * Article list wrapper component for the article manager's list screen.
+ *
+ * @param data article info entries to be rendered
+ */
+export const ArticleSearchResultList = ({ data }: ArticleSearchResultListProps): ReactNode => {
 
   const { t } = useTranslation();
+
+  // TODO try extracting a component that can generate the list easier (like { widthClass, title }[] + children, passing the widthClasses down the line)
 
   return (
     <WidePane>
@@ -20,11 +31,11 @@ export const ArticleSearchResultList = ({ data }: { data: ArticleSearchResult })
       </div>
       <div>
         {data?.body.entries
-          .map(article => <ArticleCard key={`article-${article.id}`} {...article} />)}
+          .map(article => <ArticleCard key={`article-${article.id}`} article={article} />)}
       </div>
       <nav aria-label="Page navigation example">
         <ul className="list-style-none flex">
-          <Paginator {...data!.pagination} />
+          <Paginator pagination={data!.pagination} />
         </ul>
       </nav>
     </WidePane>

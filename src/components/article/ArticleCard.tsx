@@ -22,12 +22,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 
+interface FormattedArticleDataProps {
+  date: string;
+  icon: IconDefinition;
+}
+
+interface ArticleCardProps {
+  article: ArticleModel;
+}
+
 /**
- * TODO.
- * @param date
- * @param icon
+ * Renders the given date with a purpose-indicator icon.
+ *
+ * @param date date (as string) to be rendered
+ * @param icon indicator icon as FontAwesome IconDefinition
  */
-const FormattedArticleDate = ({ date, icon }: { date: string, icon: IconDefinition }): ReactNode => {
+const FormattedArticleDate = ({ date, icon }: FormattedArticleDataProps): ReactNode => {
 
   if (!date) {
     return null;
@@ -41,11 +51,11 @@ const FormattedArticleDate = ({ date, icon }: { date: string, icon: IconDefiniti
 }
 
 /**
- * TODO.
+ * Renders an article card to be shown on the article manager's list view.
  *
- * @param article
+ * @param article article data to be rendered
  */
-export const ArticleCard = (article: ArticleModel): ReactNode => {
+export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
 
   return (
     <div
@@ -68,8 +78,8 @@ export const ArticleCard = (article: ArticleModel): ReactNode => {
         <FormattedArticleDate date={article.published} icon={faGlobe} />
       </div>
       <div className="w-2/12 text-center">
-        <ArticleEnabledStatusFlag {...article} />
-        <ArticlePublishStatusFlag {...article} />
+        <ArticleEnabledStatusFlag article={article} />
+        <ArticlePublishStatusFlag article={article} />
       </div>
       <div className="w-2/12 flex flex-col items-end">
         <DropdownMenu id={`article-${article.id}`}>

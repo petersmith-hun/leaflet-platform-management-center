@@ -12,8 +12,10 @@ import useSWR from "swr";
 export const getServerSideProps = environmentProperties;
 
 /**
- * TODO.
- * @param environment
+ * Edit article page.
+ * Mapped to /articles/edit/:id
+ *
+ * @param environment APIEnvironment object defining the target API configuration
  */
 export default function EditArticle(environment: APIEnvironment) {
 

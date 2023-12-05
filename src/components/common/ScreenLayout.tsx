@@ -1,10 +1,15 @@
 import { ReactNode, useEffect } from "react";
 
+interface PaneProps {
+  children: ReactNode;
+}
+
 /**
- * TODO.
- * @param children
+ * Renders the skeleton for a multi-pane screen. Items within are aligned used flex-row directive.
+ *
+ * @param children contents to be rendered within
  */
-export const MultiPaneScreen = ({ children }: { children: ReactNode }): ReactNode => {
+export const MultiPaneScreen = ({ children }: PaneProps): ReactNode => {
 
   useEffect(() => {
     const init = async () => {
@@ -23,10 +28,11 @@ export const MultiPaneScreen = ({ children }: { children: ReactNode }): ReactNod
 }
 
 /**
- * TODO.
- * @param children
+ * Renders a wide (w-9/12) pane within a multi-pane screen.
+ *
+ * @param children contents to be rendered within
  */
-export const WidePane = ({ children }: { children: ReactNode }): ReactNode => {
+export const WidePane = ({ children }: PaneProps): ReactNode => {
 
   return (
     <div className="w-9/12 max-w-7xl mr-3">
@@ -36,10 +42,11 @@ export const WidePane = ({ children }: { children: ReactNode }): ReactNode => {
 }
 
 /**
- * TODO.
- * @param children
+ * Renders a narrow (w-3/12) pane within a multi-pane screen.
+ *
+ * @param children contents to be rendered within
  */
-export const NarrowPane = ({ children }: { children: ReactNode }): ReactNode => {
+export const NarrowPane = ({ children }: PaneProps): ReactNode => {
 
   return (
     <div className="w-3/12" data-te-sticky-init="" data-te-sticky-direction="both">

@@ -4,14 +4,31 @@ import Link from "next/link";
 import React, { ReactElement, ReactNode, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+interface DropdownMenuItemProps {
+  icon: IconDefinition;
+  label: string;
+  link: string;
+  style?: string;
+}
+
+
+interface SpecificDropdownMenuItemProps {
+  link: string;
+}
+
+interface DropdownMenuProps {
+  children: ReactElement[];
+  id: string;
+}
 /**
- * TODO.
- * @param icon
- * @param label
- * @param link
- * @param style
+ * Renders a dropdown menu item.
+ *
+ * @param icon icon of the menu item as FontAwesome IconDefinition
+ * @param label label of the menu item
+ * @param link link of the menu item
+ * @param style classes to attach to the menu item
  */
-export const DropdownMenuItem = ({ icon, label, link, style = "text-neutral-700 dark:text-neutral-200" }: { icon: IconDefinition, label: string, link: string, style?: string }): ReactNode => {
+export const DropdownMenuItem = ({ icon, label, link, style = "text-neutral-700 dark:text-neutral-200" }: DropdownMenuItemProps): ReactNode => {
 
   const { t } = useTranslation();
 
@@ -27,27 +44,30 @@ export const DropdownMenuItem = ({ icon, label, link, style = "text-neutral-700 
 }
 
 /**
- * TODO.
- * @param link
+ * Renders a View dropdown menu item (adds the FontAwesome "eye" icon and the default "view" label).
+ *
+ * @param link link of the menu item
  */
-export const ViewDropdownMenuItem = ({ link }: { link: string }): ReactNode => {
+export const ViewDropdownMenuItem = ({ link }: SpecificDropdownMenuItemProps): ReactNode => {
   return <DropdownMenuItem icon={faEye} label={"dropdown.operation.view"} link={link} />
 }
 
 /**
- * TODO.
- * @param link
+ * Renders an Edit dropdown menu item (adds the FontAwesome "pencil" icon and the default "edit" label).
+ *
+ * @param link link of the menu item
  */
-export const EditDropdownMenuItem = ({ link }: { link: string }): ReactNode => {
+export const EditDropdownMenuItem = ({ link }: SpecificDropdownMenuItemProps): ReactNode => {
   return <DropdownMenuItem icon={faPencil} label={"dropdown.operation.edit"} link={link} />
 }
 
 /**
- * TODO.
- * @param children
- * @param idSuffix
+ * Renders a dropdown menu.
+ *
+ * @param children menu items (see DropdownMenuItem, ViewDropdownMenuItem and EditDropdownMenuItem)
+ * @param id ID of the dropdown menu
  */
-export const DropdownMenu = ({ children, id }: { children: ReactElement[], id: string }): ReactNode => {
+export const DropdownMenu = ({ children, id }: DropdownMenuProps): ReactNode => {
 
   useEffect(() => {
     const init = async () => {

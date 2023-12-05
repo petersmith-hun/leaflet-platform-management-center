@@ -1,7 +1,7 @@
 import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
 
 /**
- * TODO.
+ * Response model representing a tag.
  */
 export interface TagModel extends IdentifiedSelfStatusAwareModel {
 
@@ -10,7 +10,7 @@ export interface TagModel extends IdentifiedSelfStatusAwareModel {
 }
 
 /**
- * TODO.
+ * Request model representing a tag assignment.
  */
 export interface TagAssignmentRequest {
 
