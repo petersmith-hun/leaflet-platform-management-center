@@ -1,4 +1,5 @@
 import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
+import { ItemListCard } from "@/components/common/Cards";
 import { Separator } from "@/components/common/Separator";
 import {
   DropdownMenu,
@@ -58,8 +59,7 @@ const FormattedArticleDate = ({ date, icon }: FormattedArticleDataProps): ReactN
 export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
 
   return (
-    <div
-      className="rounded-lg bg-white p-6 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 flex md:flex-row flex-col">
+    <ItemListCard>
       <div className="w-5/12">
         <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
           <Link href={`articles/view/${article.id}`} className="text-primary-400 hover:text-primary-200">
@@ -89,6 +89,6 @@ export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
           <EditDropdownMenuItem link={`articles/edit/${article.id}`} />
         </DropdownMenu>
       </div>
-    </div>
+    </ItemListCard>
   )
 }

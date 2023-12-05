@@ -32,6 +32,21 @@ export const SimpleCard = ({ children }: SimpleCardProps) => {
 }
 
 /**
+ * Renders a TW-Elements Card component for entity lists.
+ *
+ * @param children contents to be rendered within
+ */
+export const ItemListCard = ({ children }: SimpleCardProps) => {
+
+  return (
+    <div
+      className="rounded-lg bg-white p-6 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 flex md:flex-row flex-col">
+      {children}
+    </div>
+  )
+}
+
+/**
  * Renders a TW-Element Card component, including an H2 heading. Also, able to render a resize button within the heading,
  * if a target container's ID is provided.
  *
