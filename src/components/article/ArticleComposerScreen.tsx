@@ -1,4 +1,5 @@
 import { APIEnvironment } from "@/api-environment";
+import { ArticleSubmission } from "@/components/article/operations/ArticleSubmission";
 import { RenderedArticleModal } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
@@ -10,16 +11,13 @@ import { SubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
 import { generateLinkByTitle } from "@/components/utility/generate-link";
-import { toastHandler } from "@/components/utility/toast-handler";
-import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
-import { PageContext } from "@/pages/_app";
 import { faEye, faFloppyDisk, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { ReactNode, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
@@ -39,7 +37,6 @@ interface ArticleComposerScreenProps {
  */
 export const ArticleComposerScreen = ({ environment, commonData, mutate }: ArticleComposerScreenProps): ReactNode => {
 
-  const { submitArticle } = articleComposerFacade(environment);
   const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
   const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>({
@@ -52,30 +49,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   const router = useRouter();
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
-  const { triggerToast, setOperationInProgress } = useContext(PageContext);
-  const { showCustomToast, handleAxiosError } = toastHandler(triggerToast, t);
   const articleID = router.query.id as number | undefined;
-
-  const onSubmit: SubmitHandler<ArticleEditRequest> = (data) => {
-    setOperationInProgress(true);
-    data = { ...data, tags: data.tags.map(id => parseInt(id as unknown as string)) };
-    submitArticle(data, articleID)
-      .then(articleID => {
-        mutate && mutate();
-        return articleID;
-      })
-      .then(articleID => router.push(`/articles/view/${articleID}`))
-      .then(() => showCustomToast(
-        t(articleID
-          ? "toast.article.title.success.updated"
-          : "toast.article.title.success.created"),
-        t("toast.article.message.status", {
-          title: data.title,
-          status: t(articleID ? "common.updated" : "common.created")
-        })))
-      .catch(handleAxiosError)
-      .finally(() => setOperationInProgress(false));
-  }
 
   useEffect(() => {
     generateLinkByTitle(generateLink);
@@ -90,7 +64,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <ArticleSubmission environment={environment} mutate={mutate} handleSubmit={handleSubmit}>
       <input type="hidden" {...register("userID")} />
       <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
@@ -213,6 +187,6 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>
-    </form>
+    </ArticleSubmission>
   )
 }

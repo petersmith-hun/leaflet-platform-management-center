@@ -1,47 +1,27 @@
-import { APIEnvironment } from "@/api-environment";
 import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
+import { ViewArticleScreenParameters } from "@/components/article/operations";
+import { ArticleDeletion } from "@/components/article/operations/ArticleDeletion";
+import { ArticleGeneralStatusUpdate } from "@/components/article/operations/ArticleGeneralStatusUpdate";
+import { ArticlePublicationStatusUpdate } from "@/components/article/operations/ArticlePublicationStatusUpdate";
 import { RenderedArticle } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, NarrowDataCell, WideDataCell } from "@/components/common/DataRow";
-import { ToastType } from "@/components/common/OperationResultToast";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
-import {
-  AwarenessLevel,
-  ConfirmedOperationButton,
-  OperationButton,
-  PageOperationButton
-} from "@/components/navigation/OperationButton";
-import { toastHandler } from "@/components/utility/toast-handler";
-import { ArticleModel, ArticleStatus } from "@/core/model/article";
-import { ResponseWrapper } from "@/core/model/common";
-import articleService from "@/core/service/article-service";
+import { OperationButton, PageOperationButton } from "@/components/navigation/OperationButton";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { PageContext } from "@/pages/_app";
 import {
   faArrowUpRightFromSquare,
-  faBan,
   faCommenting,
   faDownload,
-  faEye,
   faFolder,
-  faGlobe,
   faList,
   faPencil,
-  faTag,
-  faToggleOff,
-  faToggleOn
+  faTag
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/router";
 import React, { ReactNode, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { KeyedMutator } from "swr";
-
-interface ViewArticleScreenParameters {
-  article: ResponseWrapper<ArticleModel>;
-  environment: APIEnvironment;
-  mutate: KeyedMutator<ResponseWrapper<ArticleModel>>;
-}
 
 /**
  * Article viewer screen component. Renders a static page with every information of the given article.
@@ -52,86 +32,12 @@ interface ViewArticleScreenParameters {
  */
 export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleScreenParameters): ReactNode => {
 
-  const { changeGeneralStatus, changePublicationStatus, deleteArticleByID } = articleService(environment);
   const { t } = useTranslation();
   const { updatePageTitle } = useContext(PageContext);
-  const router = useRouter();
-  const { triggerToast, setOperationInProgress } = useContext(PageContext);
-  const { showCustomToast, showCustomErrorToast } = toastHandler(triggerToast, t);
 
   useEffect(() => {
     updatePageTitle(t("page.title.article.view"));
   }, []);
-
-  const handleGeneralStatusChange = (article: ResponseWrapper<ArticleModel>): void => {
-
-    setOperationInProgress(true);
-    changeGeneralStatus(article.body.id)
-      .then(_ => mutate())
-      .then(currentArticle => showCustomToast(
-        t("toast.article.title.success.updated"),
-        t("toast.article.message.status", {
-          title: article.body.title,
-          status: t(currentArticle!.body.enabled ? "common.enabled" : "common.disabled")
-        }),
-        currentArticle!.body.enabled
-          ? ToastType.SUCCESS
-          : ToastType.WARNING
-      ))
-      .catch(_ => showCustomErrorToast(
-        t("toast.article.title.failure"),
-        t("toast.article.message.failure", {
-          title: article.body.title
-        })
-      ))
-      .finally(() => setOperationInProgress(false));
-  }
-
-  const handlePublicationStatusChange = (article: ResponseWrapper<ArticleModel>): void => {
-
-    setOperationInProgress(true);
-    changePublicationStatus(article.body.id, article.body.entryStatus)
-      .then(_ => mutate())
-      .then(currentArticle => showCustomToast(
-        t("toast.article.title.success.updated"),
-        t("toast.article.message.status", {
-          title: article.body.title,
-          status: t(`toast.article.message.status.publication.${currentArticle!.body.entryStatus}`)
-        }),
-        currentArticle!.body.entryStatus === ArticleStatus.PUBLIC
-          ? ToastType.SUCCESS
-          : ToastType.WARNING
-      ))
-      .catch(_ => showCustomErrorToast(
-        t("toast.article.title.failure"),
-        t("toast.article.message.failure", {
-          title: article.body.title
-        })
-      ))
-      .finally(() => setOperationInProgress(false));
-  }
-
-  const handleDeletion = (article: ResponseWrapper<ArticleModel>): void => {
-
-    setOperationInProgress(true);
-    deleteArticleByID(article.body.id)
-      .then(_ => mutate())
-      .then(_ => router.push("/articles"))
-      .then(_ => showCustomToast(
-        t("toast.article.title.success.updated"),
-        t("toast.article.message.status", {
-          title: article.body.title,
-          status: t("common.deleted")
-        }), ToastType.WARNING
-      ))
-      .catch(_ => showCustomErrorToast(
-        t("toast.article.title.failure"),
-        t("toast.article.message.failure", {
-          title: article.body.title
-        })
-      ))
-      .finally(() => setOperationInProgress(false));
-  }
 
   return (
     <MultiPaneScreen>
@@ -225,35 +131,9 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
           <PageOperationButton label={t("page-operations.article.edit")} icon={faPencil}
                                link={`/articles/edit/${article.body.id}`} />
           <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList} link={"/articles"} />
-          {article.body.enabled &&
-						<ConfirmedOperationButton label={t("page-operations.article.disable")} icon={faToggleOff}
-																			id={`article-general-status-${article.body.id}`}
-																			onSubmit={() => handleGeneralStatusChange(article)}
-																			awareness={AwarenessLevel.ALERT} />}
-          {!article.body.enabled &&
-						<ConfirmedOperationButton label={t("page-operations.article.enable")} icon={faToggleOn}
-																			id={`article-general-status-${article.body.id}`}
-																			onSubmit={() => handleGeneralStatusChange(article)}
-																			awareness={AwarenessLevel.POSITIVE} />}
-          {article.body.entryStatus === ArticleStatus.PUBLIC &&
-						<ConfirmedOperationButton label={t("page-operations.article.unpublish")} icon={faBan}
-																			id={`article-publication-${article.body.id}`}
-																			onSubmit={() => handlePublicationStatusChange(article)}
-																			awareness={AwarenessLevel.ALERT} />}
-          {article.body.entryStatus === ArticleStatus.REVIEW &&
-						<ConfirmedOperationButton label={t("page-operations.article.publish")} icon={faGlobe}
-																			id={`article-publication-${article.body.id}`}
-																			onSubmit={() => handlePublicationStatusChange(article)}
-																			awareness={AwarenessLevel.POSITIVE} />}
-          {article.body.entryStatus === ArticleStatus.DRAFT &&
-						<ConfirmedOperationButton label={t("page-operations.article.request-review")} icon={faEye}
-																			id={`article-publication-${article.body.id}`}
-																			onSubmit={() => handlePublicationStatusChange(article)}
-																			awareness={AwarenessLevel.WARNING} />}
-          <ConfirmedOperationButton label={t("page-operations.article.delete")} icon={faPencil}
-                                    id={`article-delete-${article.body.id}`}
-                                    onSubmit={() => handleDeletion(article)}
-                                    awareness={AwarenessLevel.ALERT} />
+          <ArticleGeneralStatusUpdate article={article} environment={environment} mutate={mutate} />
+          <ArticlePublicationStatusUpdate article={article} environment={environment} mutate={mutate} />
+          <ArticleDeletion article={article} environment={environment} mutate={mutate} />
         </PageOperationCard>
       </NarrowPane>
     </MultiPaneScreen>
