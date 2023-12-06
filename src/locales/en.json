@@ -83,9 +83,12 @@
     "article.label.not-published": "Not published",
     "article.label.seo-keywords-none-specified": "None specified",
 
+    "common.created": "created",
+    "common.deleted": "deleted",
     "common.disabled": "disabled",
     "common.enabled": "enabled",
     "common.loading": "Retrieving data ...",
+    "common.updated": "updated",
 
     "dropdown.operation.delete": "Delete",
     "dropdown.operation.edit": "Edit",
@@ -118,6 +121,7 @@
     "page-operations.article.search": "Search articles",
     "page-operations.article.show-all": "Show all article",
     "page-operations.article.unpublish": "Unpublish article",
+    "page-operations.article.view": "View article",
 
     "page-operations.common.save": "Save",
 
@@ -142,7 +146,8 @@
     "tab.article.create.tags-attachments": "Tags and attachments",
 
     "toast.article.title.failure": "Failed to update article",
-    "toast.article.title.success": "Article updated",
+    "toast.article.title.success.created": "Article created",
+    "toast.article.title.success.updated": "Article updated",
     "toast.article.message.failure": "Failed to update article '{{title}}'",
     "toast.article.message.status": "Article '{{title}}' has been {{status}}",
     "toast.article.message.status.publication.DRAFT": "marked as draft",

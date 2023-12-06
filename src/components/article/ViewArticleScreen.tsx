@@ -3,7 +3,7 @@ import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components
 import { RenderedArticle } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, NarrowDataCell, WideDataCell } from "@/components/common/DataRow";
-import { OperationResultToast, ToastProperties, ToastType } from "@/components/common/OperationResultToast";
+import { ToastType } from "@/components/common/OperationResultToast";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import {
   AwarenessLevel,
@@ -33,7 +33,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
@@ -56,8 +56,8 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
   const { t } = useTranslation();
   const { updatePageTitle } = useContext(PageContext);
   const router = useRouter();
-  const [showToast, setShowToast] = useState<ToastProperties | null>(null);
-  const { showCustomToast, showCustomErrorToast } = toastHandler(setShowToast, t);
+  const { triggerToast, setOperationInProgress } = useContext(PageContext);
+  const { showCustomToast, showCustomErrorToast } = toastHandler(triggerToast, t);
 
   useEffect(() => {
     updatePageTitle(t("page.title.article.view"));
@@ -65,10 +65,11 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
 
   const handleGeneralStatusChange = (article: ResponseWrapper<ArticleModel>): void => {
 
+    setOperationInProgress(true);
     changeGeneralStatus(article.body.id)
       .then(_ => mutate())
       .then(currentArticle => showCustomToast(
-        t("toast.article.title.success"),
+        t("toast.article.title.success.updated"),
         t("toast.article.message.status", {
           title: article.body.title,
           status: t(currentArticle!.body.enabled ? "common.enabled" : "common.disabled")
@@ -82,15 +83,17 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
         t("toast.article.message.failure", {
           title: article.body.title
         })
-      ));
+      ))
+      .finally(() => setOperationInProgress(false));
   }
 
   const handlePublicationStatusChange = (article: ResponseWrapper<ArticleModel>): void => {
 
+    setOperationInProgress(true);
     changePublicationStatus(article.body.id, article.body.entryStatus)
       .then(_ => mutate())
       .then(currentArticle => showCustomToast(
-        t("toast.article.title.success"),
+        t("toast.article.title.success.updated"),
         t("toast.article.message.status", {
           title: article.body.title,
           status: t(`toast.article.message.status.publication.${currentArticle!.body.entryStatus}`)
@@ -104,18 +107,34 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
         t("toast.article.message.failure", {
           title: article.body.title
         })
-      ));
+      ))
+      .finally(() => setOperationInProgress(false));
   }
 
   const handleDeletion = (article: ResponseWrapper<ArticleModel>): void => {
+
+    setOperationInProgress(true);
     deleteArticleByID(article.body.id)
       .then(_ => mutate())
-      .then(_ => router.push("/articles"));
+      .then(_ => router.push("/articles"))
+      .then(_ => showCustomToast(
+        t("toast.article.title.success.updated"),
+        t("toast.article.message.status", {
+          title: article.body.title,
+          status: t("common.deleted")
+        }), ToastType.WARNING
+      ))
+      .catch(_ => showCustomErrorToast(
+        t("toast.article.title.failure"),
+        t("toast.article.message.failure", {
+          title: article.body.title
+        })
+      ))
+      .finally(() => setOperationInProgress(false));
   }
 
   return (
     <MultiPaneScreen>
-      {showToast && <OperationResultToast key={`alert-${new Date().getTime()}`} {...showToast} />}
       <WidePane>
 
         <CardWithTitle title={article.body.title}>

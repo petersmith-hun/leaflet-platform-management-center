@@ -2,7 +2,6 @@ import { APIEnvironment } from "@/api-environment";
 import { RenderedArticleModal } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
-import { OperationResultToast, ToastProperties } from "@/components/common/OperationResultToast";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
 import { Input } from "@/components/form/Input";
@@ -15,10 +14,11 @@ import { toastHandler } from "@/components/utility/toast-handler";
 import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
-import { faFloppyDisk, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
+import { PageContext } from "@/pages/_app";
+import { faEye, faFloppyDisk, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -52,18 +52,29 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   const router = useRouter();
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
-  const [showToast, setShowToast] = useState<ToastProperties | null>(null);
-  const { handleAxiosError } = toastHandler(setShowToast, t);
+  const { triggerToast, setOperationInProgress } = useContext(PageContext);
+  const { showCustomToast, handleAxiosError } = toastHandler(triggerToast, t);
+  const articleID = router.query.id as number | undefined;
 
   const onSubmit: SubmitHandler<ArticleEditRequest> = (data) => {
+    setOperationInProgress(true);
     data = { ...data, tags: data.tags.map(id => parseInt(id as unknown as string)) };
-    submitArticle(data, router.query.id as number | undefined)
+    submitArticle(data, articleID)
       .then(articleID => {
         mutate && mutate();
         return articleID;
       })
       .then(articleID => router.push(`/articles/view/${articleID}`))
-      .catch(handleAxiosError);
+      .then(() => showCustomToast(
+        t(articleID
+          ? "toast.article.title.success.updated"
+          : "toast.article.title.success.created"),
+        t("toast.article.message.status", {
+          title: data.title,
+          status: t(articleID ? "common.updated" : "common.created")
+        })))
+      .catch(handleAxiosError)
+      .finally(() => setOperationInProgress(false));
   }
 
   useEffect(() => {
@@ -83,7 +94,6 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
       <input type="hidden" {...register("userID")} />
       <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
-        {showToast && <OperationResultToast key={`alert-${new Date().getTime()}`} {...showToast} />}
         <WidePane>
           <CardWithTitle title={commonData.article?.title ?? t("page.title.article.create")}>
             <TabbedScreen
@@ -191,6 +201,8 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
           <PageOperationCard title={t("page-operations.article")}>
             <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList}
                                  link={"/articles"} />
+            {articleID && <PageOperationButton label={t("page-operations.article.view")} icon={faEye}
+                                               link={`/articles/view/${articleID}`} />}
             <RenderedArticleModal content={contentToRender} resourceServer={environment.resourceServer}
                                   onRender={() => {
                                     const sourceInput = document.getElementById("article-raw-content") as HTMLInputElement;

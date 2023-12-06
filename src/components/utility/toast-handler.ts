@@ -4,8 +4,6 @@ import { AxiosError } from "axios";
 import { TFunction } from "i18next";
 import { Dispatch, SetStateAction } from "react";
 
-// TODO try extracting toast generation to a common place
-
 interface ToastHandler {
 
   /**
