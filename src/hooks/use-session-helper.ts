@@ -31,11 +31,12 @@ export const useSessionHelper = (): SessionHelperHookReturn => {
   return {
     getAuthorizationHeader: () => {
       return {
-        Authorization: session.data?.accessToken ?? "Unknown"
+        Authorization: `Bearer ${session.data?.accessToken ?? "Unknown"}`
       }
     },
     getUserInfo: () => {
       return {
+        id: session.data?.user?.id ?? 0,
         name: session.data?.user?.name ?? "Unknown",
         email: session.data?.user?.email ?? "Unknown"
       }

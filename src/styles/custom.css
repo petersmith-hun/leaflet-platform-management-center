@@ -11,3 +11,8 @@
   width: 120px;
   display: inline-block;
 }
+
+.blockquote {
+  padding: 10px 20px;
+  border-left: 5px solid #eee;
+}

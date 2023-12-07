@@ -11,7 +11,8 @@ declare module "next-auth" {
    */
   interface Session {
     accessToken: string;
+    expiresAt: Date;
     scope: Permission[];
-    user: DefaultSession["user"]
+    user: DefaultSession["user"] & { id: number }
   }
 }

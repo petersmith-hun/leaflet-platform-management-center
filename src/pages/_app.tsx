@@ -1,4 +1,5 @@
 import applicationInfo from "@/application-info";
+import { ToastProperties } from "@/components/common/OperationResultToast";
 import DefaultLayout from "@/components/layout/DefaultLayout";
 import "@/i18n";
 import "@/styles/custom.css";
@@ -6,7 +7,7 @@ import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from 'next/app'
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "tw-elements/dist/css/tw-elements.min.css";
 
@@ -22,7 +23,27 @@ type PageContextOperations = {
    *
    * @param pageTitle page title to be set
    */
-  updatePageTitle: (pageTitle: string) => void
+  updatePageTitle: (pageTitle: string) => void;
+
+  /**
+   * Retrieves the set toast properties (if any).
+   */
+  toast: ToastProperties | null;
+
+  /**
+   * Triggers showing a toast notification.
+   */
+  triggerToast: Dispatch<SetStateAction<ToastProperties | null>>;
+
+  /**
+   * Retrieves a boolean flag indicating if a long-running operation is in progress.
+   */
+  operationInProgress: boolean;
+
+  /**
+   * Updates the long-running operation indicator flag.
+   */
+  setOperationInProgress: Dispatch<SetStateAction<boolean>>;
 };
 
 interface PageData {
@@ -34,7 +55,11 @@ interface PageData {
  */
 export const PageContext = React.createContext<PageContextOperations>({
   pageTitle: "",
-  updatePageTitle: (_: string): void => {}
+  updatePageTitle: (_: string): void => {},
+  toast: null,
+  triggerToast: () => {},
+  operationInProgress: false,
+  setOperationInProgress: () => {}
 });
 
 /**
@@ -51,13 +76,19 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
   const { t } = useTranslation();
   const [pageData, setPageData] = useState<PageData>({ title: t("page.title.default") });
+  const [toast, setToast] = useState<ToastProperties | null>(null);
+  const [operationInProgress, setOperationInProgress] = useState<boolean>(false);
 
   return (
     <SessionProvider session={session}>
       <PageContext.Provider
         value={{
           pageTitle: pageData.title,
-          updatePageTitle: (title: string) => setPageData({ ...pageData, title: title })
+          updatePageTitle: (title: string) => setPageData({ ...pageData, title: title }),
+          toast: toast,
+          triggerToast: setToast,
+          operationInProgress,
+          setOperationInProgress
         }}>
         <DefaultLayout>
           <Head>
