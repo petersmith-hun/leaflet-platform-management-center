@@ -51,15 +51,17 @@ export const ArticleGeneralStatusUpdate = ({ article, environment, mutate }: Vie
   return (
     <>
       {article.body.enabled &&
-				<ConfirmedOperationButton label={t("page-operations.article.disable")} icon={faToggleOff}
-																	id={`article-general-status-${article.body.id}`}
-																	onSubmit={() => handleGeneralStatusChange(article)}
-																	awareness={AwarenessLevel.ALERT} />}
+        <ConfirmedOperationButton label={t("page-operations.article.disable")}
+                                  icon={faToggleOff}
+                                  id={`article-general-status-${article.body.id}`}
+                                  onSubmit={() => handleGeneralStatusChange(article)}
+                                  awareness={AwarenessLevel.ALERT} />}
       {!article.body.enabled &&
-				<ConfirmedOperationButton label={t("page-operations.article.enable")} icon={faToggleOn}
-																	id={`article-general-status-${article.body.id}`}
-																	onSubmit={() => handleGeneralStatusChange(article)}
-																	awareness={AwarenessLevel.POSITIVE} />}
+        <ConfirmedOperationButton label={t("page-operations.article.enable")}
+                                  icon={faToggleOn}
+                                  id={`article-general-status-${article.body.id}`}
+                                  onSubmit={() => handleGeneralStatusChange(article)}
+                                  awareness={AwarenessLevel.POSITIVE} />}
     </>
   )
 }

@@ -51,20 +51,20 @@ export const ArticlePublicationStatusUpdate = ({ article, environment, mutate }:
   return (
     <>
       {article.body.entryStatus === ArticleStatus.PUBLIC &&
-				<ConfirmedOperationButton label={t("page-operations.article.unpublish")} icon={faBan}
-																	id={`article-publication-${article.body.id}`}
-																	onSubmit={() => handlePublicationStatusChange(article)}
-																	awareness={AwarenessLevel.ALERT} />}
+        <ConfirmedOperationButton label={t("page-operations.article.unpublish")} icon={faBan}
+                                  id={`article-publication-${article.body.id}`}
+                                  onSubmit={() => handlePublicationStatusChange(article)}
+                                  awareness={AwarenessLevel.ALERT} />}
       {article.body.entryStatus === ArticleStatus.REVIEW &&
-				<ConfirmedOperationButton label={t("page-operations.article.publish")} icon={faGlobe}
-																	id={`article-publication-${article.body.id}`}
-																	onSubmit={() => handlePublicationStatusChange(article)}
-																	awareness={AwarenessLevel.POSITIVE} />}
+        <ConfirmedOperationButton label={t("page-operations.article.publish")} icon={faGlobe}
+                                  id={`article-publication-${article.body.id}`}
+                                  onSubmit={() => handlePublicationStatusChange(article)}
+                                  awareness={AwarenessLevel.POSITIVE} />}
       {article.body.entryStatus === ArticleStatus.DRAFT &&
-				<ConfirmedOperationButton label={t("page-operations.article.request-review")} icon={faEye}
-																	id={`article-publication-${article.body.id}`}
-																	onSubmit={() => handlePublicationStatusChange(article)}
-																	awareness={AwarenessLevel.WARNING} />}
+        <ConfirmedOperationButton label={t("page-operations.article.request-review")} icon={faEye}
+                                  id={`article-publication-${article.body.id}`}
+                                  onSubmit={() => handlePublicationStatusChange(article)}
+                                  awareness={AwarenessLevel.WARNING} />}
     </>
   )
 }
