@@ -10,6 +10,14 @@ export interface TagModel extends IdentifiedSelfStatusAwareModel {
 }
 
 /**
+ * Request model representing a tag.
+ */
+export interface TagEditRequest {
+
+  name: string;
+}
+
+/**
  * Request model representing a tag assignment.
  */
 export interface TagAssignmentRequest {

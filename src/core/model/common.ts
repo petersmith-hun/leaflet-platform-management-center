@@ -68,3 +68,18 @@ export interface ValidationErrorResponse {
 
   validation: { field: string, message: string }[]
 }
+
+/**
+ * "No-operation" pagination (reports a single page of items).
+ */
+export const noOpPagination: Pagination = {
+  entityCount: 0,
+  entityCountOnPage: 0,
+  first: false,
+  hasNext: false,
+  hasPrevious: false,
+  last: false,
+  pageCount: 1,
+  pageNumber: 1
+
+}

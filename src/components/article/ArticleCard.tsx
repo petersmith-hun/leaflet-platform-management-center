@@ -1,5 +1,7 @@
-import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
+import { ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
 import { ItemListCard } from "@/components/common/Cards";
+import { FormattedArticleDate } from "@/components/common/FormattedDateItem";
+import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag";
 import { Separator } from "@/components/common/Separator";
 import {
   DropdownMenu,
@@ -9,46 +11,12 @@ import {
 } from "@/components/navigation/DropdownMenu";
 import { OperationButton } from "@/components/navigation/OperationButton";
 import { ArticleModel } from "@/core/model/article";
-import { dateFormatter } from "@/core/util/date-formatter";
-import {
-  faAsterisk,
-  faCommenting,
-  faEdit,
-  faFolder,
-  faGlobe,
-  faUser,
-  IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAsterisk, faCommenting, faEdit, faFolder, faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 
-interface FormattedArticleDataProps {
-  date: string;
-  icon: IconDefinition;
-}
-
 interface ArticleCardProps {
   article: ArticleModel;
-}
-
-/**
- * Renders the given date with a purpose-indicator icon.
- *
- * @param date date (as string) to be rendered
- * @param icon indicator icon as FontAwesome IconDefinition
- */
-const FormattedArticleDate = ({ date, icon }: FormattedArticleDataProps): ReactNode => {
-
-  if (!date) {
-    return null;
-  }
-
-  return (
-    <p>
-      <FontAwesomeIcon className="w-4" icon={icon} /> {dateFormatter(date)}
-    </p>
-  )
 }
 
 /**
@@ -78,7 +46,7 @@ export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
         <FormattedArticleDate date={article.published} icon={faGlobe} />
       </div>
       <div className="w-2/12 text-center">
-        <ArticleEnabledStatusFlag article={article} />
+        <ItemEnabledStatusFlag item={article} />
         <ArticlePublishStatusFlag article={article} />
       </div>
       <div className="w-2/12 flex flex-col items-end">

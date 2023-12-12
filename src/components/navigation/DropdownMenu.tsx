@@ -17,7 +17,7 @@ interface SpecificDropdownMenuItemProps {
 }
 
 interface DropdownMenuProps {
-  children: ReactElement[];
+  children: ReactElement | ReactElement[];
   id: string;
 }
 /**

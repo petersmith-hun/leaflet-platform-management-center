@@ -1,4 +1,4 @@
-import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
+import { ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
 import { ViewArticleScreenParameters } from "@/components/article/operations";
 import { ArticleDeletion } from "@/components/article/operations/ArticleDeletion";
 import { ArticleGeneralStatusUpdate } from "@/components/article/operations/ArticleGeneralStatusUpdate";
@@ -6,6 +6,7 @@ import { ArticlePublicationStatusUpdate } from "@/components/article/operations/
 import { RenderedArticle } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, NarrowDataCell, WideDataCell } from "@/components/common/DataRow";
+import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { OperationButton, PageOperationButton } from "@/components/navigation/OperationButton";
 import { dateFormatter } from "@/core/util/date-formatter";
@@ -51,7 +52,7 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
                                additionalClass="mt-2 w-6/12 inline-block" />
             </WideDataCell>
             <NarrowDataCell title={t("forms:article.edit.general-status")}>
-              <ArticleEnabledStatusFlag article={article.body} />
+              <ItemEnabledStatusFlag item={article.body} />
             </NarrowDataCell>
             <NarrowDataCell title={t("forms:article.edit.publication-status")}>
               <ArticlePublishStatusFlag article={article.body} />

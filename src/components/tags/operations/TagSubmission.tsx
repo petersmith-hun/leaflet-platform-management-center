@@ -1,7 +1,7 @@
 import { APIEnvironment } from "@/api-environment";
 import { toastHandler } from "@/components/utility/toast-handler";
-import { articleComposerFacade } from "@/core/facade/article-composer-facade";
-import { ArticleComposerCommonData, ArticleEditRequest } from "@/core/model/article";
+import { TagEditRequest, TagModel } from "@/core/model/tag";
+import tagService from "@/core/service/tag-service";
 import { PageContext } from "@/pages/_app";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
@@ -9,46 +9,50 @@ import { SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
-interface ArticleSubmissionProps {
+interface TagSubmissionProps {
   environment: APIEnvironment;
-  handleSubmit: UseFormHandleSubmit<ArticleEditRequest>;
+  handleSubmit: UseFormHandleSubmit<TagEditRequest>;
   children: ReactNode;
-  mutate?: KeyedMutator<ArticleComposerCommonData>;
+  mutate?: KeyedMutator<TagModel>;
 }
 
 /**
- * Component wrapping the article submission logic.
+ * Component wrapping the tag submission logic.
  *
  * @param environment APIEnvironment object defining the target API configuration
  * @param handleSubmit React Hook Form submission handler function
  * @param children contents to be rendered within
  * @param mutate SWR mutate function for data invalidation
  */
-export const ArticleSubmission = ({ environment, handleSubmit, children, mutate }: ArticleSubmissionProps): ReactNode => {
+export const TagSubmission = ({ environment, handleSubmit, children, mutate }: TagSubmissionProps): ReactNode => {
 
-  const { submitArticle } = articleComposerFacade(environment);
+  const { createTag, editTag } = tagService(environment);
   const { t } = useTranslation();
   const router = useRouter();
   const { triggerToast, setOperationInProgress } = useContext(PageContext);
   const { showCustomToast, handleAxiosError } = toastHandler(triggerToast, t);
-  const articleID = router.query.id as number | undefined;
+  const tagID = router.query.id as number | undefined;
 
-  const onSubmit: SubmitHandler<ArticleEditRequest> = (data) => {
+  const onSubmit: SubmitHandler<TagEditRequest> = (data) => {
     setOperationInProgress(true);
-    data = { ...data, tags: data.tags.map(id => parseInt(id as unknown as string)) };
-    submitArticle(data, articleID)
-      .then(articleID => {
+
+    const result = tagID
+      ? editTag(tagID, data)
+      : createTag(data);
+
+    result
+      .then(tag => {
         mutate && mutate();
-        return articleID;
+        return tag;
       })
-      .then(articleID => router.push(`/articles/view/${articleID}`))
+      .then(tag => router.push(`/tags/view/${tag.id}`))
       .then(() => showCustomToast(
-        t(articleID
-          ? "toast.article.title.success.updated"
-          : "toast.article.title.success.created"),
-        t("toast.article.message.status", {
-          title: data.title,
-          status: t(articleID ? "common.updated" : "common.created")
+        t(tagID
+          ? "toast.tag.title.success.updated"
+          : "toast.tag.title.success.created"),
+        t("toast.tag.message.status", {
+          title: data.name,
+          status: t(tagID ? "common.updated" : "common.created")
         })))
       .catch(handleAxiosError)
       .finally(() => setOperationInProgress(false));

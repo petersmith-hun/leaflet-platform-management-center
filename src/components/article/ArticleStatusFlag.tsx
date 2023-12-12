@@ -1,22 +1,10 @@
 import { ArticleModel, ArticleStatus } from "@/core/model/article";
-import { faCheck, faEye, faGlobe, faPencil, faRemove } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faGlobe, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode } from "react";
 
 interface ArticleFlagProps {
   article: ArticleModel;
-}
-
-/**
- * Flag component for indicating the general status of an article.
- *
- * @param article article data to extract the status of the "enabled" value
- */
-export const ArticleEnabledStatusFlag = ({ article }: ArticleFlagProps): ReactNode => {
-
-  return article.enabled
-    ? <FontAwesomeIcon className="w-10 h-10 text-success" icon={faCheck} />
-    : <FontAwesomeIcon className="w-10 h-10 text-danger" icon={faRemove} />;
 }
 
 /**
