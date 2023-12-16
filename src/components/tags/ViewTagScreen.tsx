@@ -21,8 +21,7 @@ interface ViewTagScreenParameters {
 }
 
 /**
- * Screen used by tag manager's create/edit operations. For editing purpose, provide the tag itself in the tag
- * parameter, as well as an SWR mutate function to invalidate the data cache for the edited tag.
+ * Tag viewer screen component. Renders a static page with every information of the given tag.
  *
  * @param tag data of an existing tag
  * @param environment APIEnvironment object defining the target API configuration

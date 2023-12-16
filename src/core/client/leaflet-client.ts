@@ -21,6 +21,8 @@ export enum LeafletPath {
 
   // -- categories --
   CATEGORY_ALL = "/categories",
+  CATEGORY_BY_ID = "/categories/{id}",
+  CATEGORY_GENERAL_STATUS = "/categories/{id}/status",
 
   // -- tags --
   TAGS_ALL = "/tags",
