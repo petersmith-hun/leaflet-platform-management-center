@@ -28,7 +28,7 @@ export enum ArticleStatus {
 /**
  * Response model representing an article.
  */
-export interface ArticleModel extends IdentifiedSelfStatusAwareModel {
+export interface ArticleModel extends IdentifiedSelfStatusAwareModel<number> {
 
   title: string;
   link: string;

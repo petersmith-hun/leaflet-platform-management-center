@@ -1,13 +1,15 @@
-import { ArticleEnabledStatusFlag, ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
-import { ViewArticleScreenParameters } from "@/components/article/operations";
-import { ArticleDeletion } from "@/components/article/operations/ArticleDeletion";
-import { ArticleGeneralStatusUpdate } from "@/components/article/operations/ArticleGeneralStatusUpdate";
+import { ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
+import { ViewArticleScreenParameters } from "@/components/article/index";
 import { ArticlePublicationStatusUpdate } from "@/components/article/operations/ArticlePublicationStatusUpdate";
 import { RenderedArticle } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, NarrowDataCell, WideDataCell } from "@/components/common/DataRow";
+import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag";
+import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
+import { GeneralStatusUpdateOperation } from "@/components/common/operations/GeneralStatusUpdateOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { OperationButton, PageOperationButton } from "@/components/navigation/OperationButton";
+import articleService from "@/core/service/article-service";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { PageContext } from "@/pages/_app";
 import {
@@ -32,6 +34,7 @@ import { useTranslation } from "react-i18next";
  */
 export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleScreenParameters): ReactNode => {
 
+  const { changeGeneralStatus, deleteArticleByID } = articleService(environment);
   const { t } = useTranslation();
   const { updatePageTitle } = useContext(PageContext);
 
@@ -51,7 +54,7 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
                                additionalClass="mt-2 w-6/12 inline-block" />
             </WideDataCell>
             <NarrowDataCell title={t("forms:article.edit.general-status")}>
-              <ArticleEnabledStatusFlag article={article.body} />
+              <ItemEnabledStatusFlag item={article.body} />
             </NarrowDataCell>
             <NarrowDataCell title={t("forms:article.edit.publication-status")}>
               <ArticlePublishStatusFlag article={article.body} />
@@ -131,9 +134,11 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
           <PageOperationButton label={t("page-operations.article.edit")} icon={faPencil}
                                link={`/articles/edit/${article.body.id}`} />
           <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList} link={"/articles"} />
-          <ArticleGeneralStatusUpdate article={article} environment={environment} mutate={mutate} />
+          <GeneralStatusUpdateOperation domain={"article"} entity={article.body} titleSupplier={article => article.title}
+                                        serviceCall={changeGeneralStatus} mutate={mutate} />
           <ArticlePublicationStatusUpdate article={article} environment={environment} mutate={mutate} />
-          <ArticleDeletion article={article} environment={environment} mutate={mutate} />
+          <DeleteOperation domain={"article"} entity={article.body} titleSupplier={article => article.title}
+                           serviceCall={deleteArticleByID} />
         </PageOperationCard>
       </NarrowPane>
     </MultiPaneScreen>

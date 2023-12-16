@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  jira: circleci/jira@1.1.2
+  jira: circleci/jira@2.1.0
   node: circleci/node@5.0.3
   jq: circleci/jq@3.0.0
 
@@ -58,6 +58,8 @@ jobs:
     docker:
       - image: cimg/node:18.18.2
     steps:
+      - jq/install:
+          version: jq-1.7
       - checkout
       - run:
           name: Set build number

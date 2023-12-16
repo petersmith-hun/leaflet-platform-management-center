@@ -49,7 +49,9 @@ export const toastHandler = (toastDispatcher: Dispatch<SetStateAction<ToastPrope
     },
 
     showCustomErrorToast(title: string, message: string): void {
-      this.showCustomToast(title, message, ToastType.ERROR);
+      toastDispatcher({
+        type: ToastType.ERROR, title, message
+      })
     },
 
     handleAxiosError(axiosError: AxiosError): void {

@@ -24,7 +24,9 @@ export enum LeafletPath {
 
   // -- tags --
   TAGS_ALL = "/tags",
-  TAGS_ASSIGN = "/tags/assign"
+  TAGS_ASSIGN = "/tags/assign",
+  TAGS_BY_ID = "/tags/{id}",
+  TAGS_GENERAL_STATUS = "/tags/{id}/status",
 }
 
 /**

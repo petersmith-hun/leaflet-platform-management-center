@@ -1,8 +1,8 @@
 import { APIEnvironment } from "@/api-environment";
-import { ArticleSubmission } from "@/components/article/operations/ArticleSubmission";
 import { RenderedArticleModal } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
+import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
 import { Input } from "@/components/form/Input";
@@ -11,6 +11,7 @@ import { SubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
 import { generateLinkByTitle } from "@/components/utility/generate-link";
+import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
 import { faEye, faFloppyDisk, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
@@ -37,6 +38,7 @@ interface ArticleComposerScreenProps {
  */
 export const ArticleComposerScreen = ({ environment, commonData, mutate }: ArticleComposerScreenProps): ReactNode => {
 
+  const { submitArticle } = articleComposerFacade(environment);
   const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
   const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>({
@@ -64,7 +66,9 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   }, []);
 
   return (
-    <ArticleSubmission environment={environment} mutate={mutate} handleSubmit={handleSubmit}>
+    <SubmitOperation domain={"article"} mutate={mutate} titleSupplier={article => article.title}
+                     handleSubmit={handleSubmit}
+                     serviceCall={article => submitArticle(article, articleID)}>
       <input type="hidden" {...register("userID")} />
       <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
@@ -187,6 +191,6 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>
-    </ArticleSubmission>
+    </SubmitOperation>
   )
 }

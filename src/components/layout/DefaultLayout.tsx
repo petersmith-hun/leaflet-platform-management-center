@@ -32,15 +32,15 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <LongRunningOperationIndicator />
       <Header userInfo={getUserInfo()} />
       <div className="flex flex-row grow">
-        <SideMenu />
-        <div className="flex flex-col grow">
+        <div className="flex flex-row grow">
           {toast && <OperationResultToast key={`alert-${new Date().getTime()}`} {...toast} />}
-          <div className="max-w-full py-6 sm:px-6 lg:px-8 h-full">
+          <SideMenu />
+          <div className="w-full py-6 sm:px-6 lg:px-8 h-full">
             {children}
           </div>
-          <Footer />
         </div>
       </div>
+      <Footer />
     </main>
   )
 }

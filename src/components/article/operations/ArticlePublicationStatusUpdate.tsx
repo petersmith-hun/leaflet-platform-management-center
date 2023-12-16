@@ -1,4 +1,4 @@
-import { ViewArticleScreenParameters } from "@/components/article/operations/index";
+import { ViewArticleScreenParameters } from "@/components/article";
 import { ToastType } from "@/components/common/OperationResultToast";
 import { AwarenessLevel, ConfirmedOperationButton } from "@/components/navigation/OperationButton";
 import { toastHandler } from "@/components/utility/toast-handler";
@@ -30,8 +30,11 @@ export const ArticlePublicationStatusUpdate = ({ article, environment, mutate }:
     changePublicationStatus(article.body.id, article.body.entryStatus)
       .then(_ => mutate())
       .then(currentArticle => showCustomToast(
-        t("toast.article.title.success.updated"),
-        t("toast.article.message.status", {
+        t("toast.template.title.success.updated", {
+          domain: t(`domain.article`)
+        }),
+        t("toast.template.message.status", {
+          domain: t(`domain.article`),
           title: article.body.title,
           status: t(`toast.article.message.status.publication.${currentArticle!.body.entryStatus}`)
         }),
@@ -40,8 +43,11 @@ export const ArticlePublicationStatusUpdate = ({ article, environment, mutate }:
           : ToastType.WARNING
       ))
       .catch(_ => showCustomErrorToast(
-        t("toast.article.title.failure"),
-        t("toast.article.message.failure", {
+        t("toast.template.title.failure", {
+          domain: t(`domain.article`)
+        }),
+        t("toast.template.message.failure", {
+          domain: t(`domain.article`),
           title: article.body.title
         })
       ))

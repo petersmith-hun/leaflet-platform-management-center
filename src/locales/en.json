@@ -43,6 +43,11 @@
     "confirmation.cancel": "Cancel",
     "confirmation.delete.article": "Are you sure you want to delete this article?",
 
+    "tag.edit.name": "Tag",
+    "tag.edit.created-at": "Created at",
+    "tag.edit.general-status": "General status",
+    "tag.edit.last-modified-at": "Last modified at",
+
     "validation.common.required": "Please provide a value"
   },
 
@@ -90,6 +95,13 @@
     "common.loading": "Retrieving data ...",
     "common.updated": "updated",
 
+    "domain.article": "Article",
+    "domain.category": "Category",
+    "domain.document": "Document",
+    "domain.file": "Article",
+    "domain.tag": "Tag",
+    "domain.user": "User",
+
     "dropdown.operation.delete": "Delete",
     "dropdown.operation.edit": "Edit",
     "dropdown.operation.handle-comments": "Handle comments",
@@ -104,6 +116,10 @@
     "header.article-search.dates": "Created, last modified, published",
     "header.article-search.status": "General and publication status, pending comments",
     "header.article-search.operations": "Article operations",
+    "header.tags.tag": "Tag",
+    "header.tags.dates": "Created, last modified",
+    "header.tags.status": "General status",
+    "header.tags.operations": "Tag operations",
 
     "modal.title.rendered-article": "Rendered article",
 
@@ -122,6 +138,14 @@
     "page-operations.article.show-all": "Show all article",
     "page-operations.article.unpublish": "Unpublish article",
     "page-operations.article.view": "View article",
+    "page-operations.tag": "Tag operations",
+    "page-operations.tag.back-to-tags": "Back to all tags",
+    "page-operations.tag.delete": "Delete tag",
+    "page-operations.tag.disable": "Disable tag",
+    "page-operations.tag.edit": "Edit tag",
+    "page-operations.tag.enable": "Enable tag",
+    "page-operations.tag.new": "New tag",
+    "page-operations.tag.view": "View tag",
 
     "page-operations.common.save": "Save",
 
@@ -136,6 +160,10 @@
     "page.title.article.edit": "Edit existing article",
     "page.title.article.view": "Article details",
     "page.title.articles": "Articles",
+    "page.title.tag.create": "Create new tag",
+    "page.title.tag.edit": "Edit existing tag",
+    "page.title.tag.view": "Tag details",
+    "page.title.tags": "Tags",
 
     "pagination.page-previous": "Previous",
     "pagination.page-next": "Next",
@@ -145,14 +173,15 @@
     "tab.article.create.content": "Content",
     "tab.article.create.tags-attachments": "Tags and attachments",
 
-    "toast.article.title.failure": "Failed to update article",
-    "toast.article.title.success.created": "Article created",
-    "toast.article.title.success.updated": "Article updated",
-    "toast.article.message.failure": "Failed to update article '{{title}}'",
-    "toast.article.message.status": "Article '{{title}}' has been {{status}}",
     "toast.article.message.status.publication.DRAFT": "marked as draft",
     "toast.article.message.status.publication.PUBLIC": "published",
     "toast.article.message.status.publication.REVIEW": "submitted for review",
+
+    "toast.template.title.failure": "Failed to update {{domain}}",
+    "toast.template.title.success.created": "{{domain}} created",
+    "toast.template.title.success.updated": "{{domain}} updated",
+    "toast.template.message.failure": "Failed to update {{domain}} '{{title}}'",
+    "toast.template.message.status": "{{domain}} '{{title}}' has been {{status}}",
 
     "toast.error.validation-error": "Validation error",
     "toast.error.unknown-error": "Unknown error"

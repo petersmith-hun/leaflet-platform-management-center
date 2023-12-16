@@ -1,6 +1,6 @@
 import { Paginator } from "@/components/common/Paginator";
 import { WidePane } from "@/components/common/ScreenLayout";
-import { Pagination } from "@/core/model/common";
+import { noOpPagination, Pagination } from "@/core/model/common";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -76,7 +76,7 @@ export const ItemListPane = ({ children, pagination }: ItemListProps): ReactNode
   return (
     <WidePane>
       {children}
-      {pagination && (
+      {pagination && pagination != noOpPagination && (
         <nav aria-label="Page navigation example">
           <ul className="list-style-none flex">
             <Paginator pagination={pagination} />
