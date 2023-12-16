@@ -41,7 +41,7 @@ interface TagService {
    *
    * @param id ID of tag to be updated
    */
-  changeGeneralStatus: (id: number) => Promise<void>;
+  changeGeneralStatus: (id: number) => Promise<TagModel>;
 
   /**
    * Removes an existing tag.
@@ -73,7 +73,7 @@ interface TagService {
 const tagService = (environment: APIEnvironment): TagService => {
 
   return {
-    getAllTags(): Promise<TagModel[]> {
+    async getAllTags(): Promise<TagModel[]> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
@@ -85,7 +85,7 @@ const tagService = (environment: APIEnvironment): TagService => {
         .then(response => response?.tags ?? []);
     },
 
-    getTagByID(id: number): Promise<TagModel> {
+    async getTagByID(id: number): Promise<TagModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
@@ -97,7 +97,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    createTag(tag: TagEditRequest): Promise<TagModel> {
+    async createTag(tag: TagEditRequest): Promise<TagModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.POST,
@@ -109,7 +109,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    editTag(id: number, tag: TagEditRequest): Promise<TagModel> {
+    async editTag(id: number, tag: TagEditRequest): Promise<TagModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
@@ -122,7 +122,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    changeGeneralStatus(id: number): Promise<void> {
+    async changeGeneralStatus(id: number): Promise<TagModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
@@ -134,7 +134,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    deleteTagByID(id: number): Promise<void> {
+    async deleteTagByID(id: number): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.DELETE,
@@ -146,7 +146,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    attachTag(attachmentRequest: TagAssignmentRequest): Promise<void> {
+    async attachTag(attachmentRequest: TagAssignmentRequest): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.POST,
@@ -158,7 +158,7 @@ const tagService = (environment: APIEnvironment): TagService => {
       return leafletClient(environment, request);
     },
 
-    detachTag(attachmentRequest: TagAssignmentRequest): Promise<void> {
+    async detachTag(attachmentRequest: TagAssignmentRequest): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,

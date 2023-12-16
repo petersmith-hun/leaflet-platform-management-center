@@ -1,16 +1,16 @@
 /**
  * Base response model representing an identifiable entity (has an ID field).
  */
-export interface IdentifiedModel {
+export interface IdentifiedModel<T> {
 
-  id: number;
+  id: T;
 }
 
 /**
  * Base response model representing a self-status aware entity (has creation and last modification date, as well as an
  * enabled flag).
  */
-export interface IdentifiedSelfStatusAwareModel extends IdentifiedModel {
+export interface IdentifiedSelfStatusAwareModel<T> extends IdentifiedModel<T> {
 
   created: string;
   lastModified: string;

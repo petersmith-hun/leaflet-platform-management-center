@@ -24,7 +24,7 @@ const categoryService = (environment: APIEnvironment): CategoryService => {
 
   return {
 
-    getAllCategories(): Promise<CategoryModel[]> {
+    async getAllCategories(): Promise<CategoryModel[]> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,

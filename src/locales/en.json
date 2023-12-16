@@ -95,6 +95,13 @@
     "common.loading": "Retrieving data ...",
     "common.updated": "updated",
 
+    "domain.article": "Article",
+    "domain.category": "Category",
+    "domain.document": "Document",
+    "domain.file": "Article",
+    "domain.tag": "Tag",
+    "domain.user": "User",
+
     "dropdown.operation.delete": "Delete",
     "dropdown.operation.edit": "Edit",
     "dropdown.operation.handle-comments": "Handle comments",
@@ -134,9 +141,9 @@
     "page-operations.tag": "Tag operations",
     "page-operations.tag.back-to-tags": "Back to all tags",
     "page-operations.tag.delete": "Delete tag",
-    "page-operations.tag.disable": "Disable article",
+    "page-operations.tag.disable": "Disable tag",
     "page-operations.tag.edit": "Edit tag",
-    "page-operations.tag.enable": "Enable article",
+    "page-operations.tag.enable": "Enable tag",
     "page-operations.tag.new": "New tag",
     "page-operations.tag.view": "View tag",
 
@@ -166,19 +173,15 @@
     "tab.article.create.content": "Content",
     "tab.article.create.tags-attachments": "Tags and attachments",
 
-    "toast.article.message.failure": "Failed to update article '{{title}}'",
-    "toast.article.message.status": "Article '{{title}}' has been {{status}}",
     "toast.article.message.status.publication.DRAFT": "marked as draft",
     "toast.article.message.status.publication.PUBLIC": "published",
     "toast.article.message.status.publication.REVIEW": "submitted for review",
-    "toast.article.title.failure": "Failed to update article",
-    "toast.article.title.success.created": "Article created",
-    "toast.article.title.success.updated": "Article updated",
-    "toast.tag.message.status": "Tag '{{title}}' has been {{status}}",
-    "toast.tag.title.success.created": "Tag created",
-    "toast.tag.title.success.updated": "Tag updated",
-    "toast.tag.title.failure": "Failed to update tag",
-    "toast.tag.message.failure": "Failed to update article '{{title}}'",
+
+    "toast.template.title.failure": "Failed to update {{domain}}",
+    "toast.template.title.success.created": "{{domain}} created",
+    "toast.template.title.success.updated": "{{domain}} updated",
+    "toast.template.message.failure": "Failed to update {{domain}} '{{title}}'",
+    "toast.template.message.status": "{{domain}} '{{title}}' has been {{status}}",
 
     "toast.error.validation-error": "Validation error",
     "toast.error.unknown-error": "Unknown error"

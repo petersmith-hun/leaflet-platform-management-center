@@ -47,7 +47,7 @@ interface ArticleService {
    *
    * @param id ID of article to be updated
    */
-  changeGeneralStatus: (id: number) => Promise<void>;
+  changeGeneralStatus: (id: number) => Promise<ArticleModel>;
 
   /**
    * Updates the publication status of the given article.
@@ -94,7 +94,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
 
   return {
 
-    getArticleByID: async (id: number): Promise<ResponseWrapper<ArticleModel>> => {
+    async getArticleByID(id: number): Promise<ResponseWrapper<ArticleModel>> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
@@ -106,7 +106,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    searchArticles(searchParameters: ArticleSearchParameters): Promise<ArticleSearchResult> {
+    async searchArticles(searchParameters: ArticleSearchParameters): Promise<ArticleSearchResult> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
@@ -118,7 +118,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    changeGeneralStatus(id: number): Promise<void> {
+    async changeGeneralStatus(id: number): Promise<ArticleModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
@@ -130,7 +130,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    createArticle(article: ArticleEditRequest): Promise<ArticleModel> {
+    async createArticle(article: ArticleEditRequest): Promise<ArticleModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.POST,
@@ -142,7 +142,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    updateArticle(id: number, article: ArticleEditRequest): Promise<ArticleModel> {
+    async updateArticle(id: number, article: ArticleEditRequest): Promise<ArticleModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
@@ -155,7 +155,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    changePublicationStatus(id: number, currentStatus: ArticleStatus): Promise<void> {
+    async changePublicationStatus(id: number, currentStatus: ArticleStatus): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
@@ -167,7 +167,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    deleteArticleByID(id: number): Promise<void> {
+    async deleteArticleByID(id: number): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.DELETE,
@@ -179,7 +179,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    attachFile(attachmentRequest: FileAttachmentRequest): Promise<void> {
+    async attachFile(attachmentRequest: FileAttachmentRequest): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.POST,
@@ -191,7 +191,7 @@ const articleService = (environment: APIEnvironment): ArticleService => {
       return leafletClient(environment, request);
     },
 
-    detachFile(attachmentRequest: FileAttachmentRequest): Promise<void> {
+    async detachFile(attachmentRequest: FileAttachmentRequest): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,

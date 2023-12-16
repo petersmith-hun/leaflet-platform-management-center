@@ -35,7 +35,7 @@ interface ArticleComposerFacade {
    * @param article article data to be submitted
    * @param articleID ID of an existing article to update
    */
-  submitArticle: (article: ArticleEditRequest, articleID?: number) => Promise<number>;
+  submitArticle: (article: ArticleEditRequest, articleID?: number) => Promise<ArticleModel>;
 }
 
 const convertCategories = (categories: CategoryModel[]): SelectOptionsObject => {
@@ -123,7 +123,7 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
         });
     },
 
-    async submitArticle(articleEditRequest: ArticleEditRequest, articleID?: number): Promise<number> {
+    async submitArticle(articleEditRequest: ArticleEditRequest, articleID?: number): Promise<ArticleModel> {
 
       const createdArticle = await (articleID
         ? updateArticle(articleID, articleEditRequest)
@@ -142,7 +142,7 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
       await executeAssignments(detachFile, files.detach
         .map(pathUUID => createFileAssignment(createdArticleID, pathUUID)));
 
-      return Promise.resolve(createdArticleID);
+      return Promise.resolve(createdArticle);
     }
   }
 }

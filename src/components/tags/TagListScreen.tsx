@@ -29,7 +29,7 @@ const TagListResult = ({ tags }: TagListResultProps ): ReactNode => {
         <ItemListHeaderItem titleKey={"header.tags.operations"} widthClass={"w-2/12"} />
       </ItemListHeader>
       <ItemListBody data={tags}>
-        {(tag: TagModel) => <TagCard tag={tag} />}
+        {(tag: TagModel) => <TagCard key={`tag-${tag.id}`} tag={tag} />}
       </ItemListBody>
     </ItemListPane>
   )

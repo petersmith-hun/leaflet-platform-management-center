@@ -3,7 +3,7 @@ import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
 /**
  * Response model representing a tag.
  */
-export interface TagModel extends IdentifiedSelfStatusAwareModel {
+export interface TagModel extends IdentifiedSelfStatusAwareModel<number> {
 
   id: number;
   name: string;

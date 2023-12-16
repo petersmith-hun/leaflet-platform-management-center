@@ -1,12 +1,13 @@
 import { APIEnvironment } from "@/api-environment";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, WideDataCell } from "@/components/common/DataRow";
+import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { Input } from "@/components/form/Input";
 import { SubmitButton } from "@/components/form/SubmitButton";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
-import { TagSubmission } from "@/components/tags/operations/TagSubmission";
 import { TagEditRequest, TagModel } from "@/core/model/tag";
+import tagService from "@/core/service/tag-service";
 import { faEye, faFloppyDisk, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect } from "react";
@@ -28,6 +29,7 @@ interface TagComposerScreenProps {
  */
 export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScreenProps): ReactNode => {
 
+  const { createTag, editTag } = tagService(environment);
   const { t } = useTranslation();
   const { register, handleSubmit, formState: { errors } } = useForm<TagEditRequest>({
     defaultValues: tag
@@ -37,14 +39,18 @@ export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScree
 
   useEffect(() => {
     const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
+      const { Input, initTE } = await import("tw-elements");
+      initTE({ Input }, { allowReinits: true });
     };
     init();
   }, []);
 
   return (
-    <TagSubmission environment={environment} mutate={mutate} handleSubmit={handleSubmit}>
+    <SubmitOperation domain={"tag"} mutate={mutate} titleSupplier={tag => tag.name}
+                     handleSubmit={handleSubmit}
+                     serviceCall={entity => tagID
+                       ? editTag(tagID, entity)
+                       : createTag(entity)}>
       <MultiPaneScreen>
         <WidePane>
           <CardWithTitle title={tag?.name ?? t("page.title.tag.create")}>
@@ -68,6 +74,6 @@ export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScree
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>
-    </TagSubmission>
+    </SubmitOperation>
   )
 }
