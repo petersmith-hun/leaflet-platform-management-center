@@ -22,10 +22,12 @@ interface TagComposerScreenProps {
 }
 
 /**
+ * Screen used by tag manager's create/edit operations. For editing purpose, provide the tag itself, as well as an SWR
+ * mutate function to invalidate the cache for the edited tag.
  *
- * @param environment
- * @param tag
- * @param mutate
+ * @param environment APIEnvironment object defining the target API configuration
+ * @param tag tag data for the editor
+ * @param mutate SWR mutate function for data invalidation
  */
 export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScreenProps): ReactNode => {
 
@@ -68,7 +70,7 @@ export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScree
             <PageOperationButton label={t("page-operations.tag.back-to-tags")} icon={faList}
                                  link={"/tags"} />
             {tagID && <PageOperationButton label={t("page-operations.tag.view")} icon={faEye}
-																					 link={`/tags/view/${tagID}`} />}
+                                           link={`/tags/view/${tagID}`} />}
             <SubmitButton label={t("page-operations.common.save")} icon={faFloppyDisk}
                           awareness={AwarenessLevel.POSITIVE} />
           </PageOperationCard>
