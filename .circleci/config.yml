@@ -58,8 +58,6 @@ jobs:
     docker:
       - image: cimg/node:18.18.2
     steps:
-      - jq/install:
-          version: jq-1.7
       - checkout
       - run:
           name: Set build number
