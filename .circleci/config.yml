@@ -213,8 +213,8 @@ workflows:
                 - master
           post-steps:
             - jira/notify:
-                environment_type: development
-                job_type: build
+                pipeline_id: << pipeline.id >>
+                pipeline_number: << pipeline.number >>
 
       - publish-github-rc:
           context: leaflet_ci
