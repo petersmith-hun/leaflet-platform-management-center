@@ -233,8 +233,8 @@ workflows:
                 - deploy
           post-steps:
             - jira/notify:
-                environment_type: development
-                job_type: build
+                pipeline_id: << pipeline.id >>
+                pipeline_number: << pipeline.number >>
 
       - deploy-approval:
           context: leaflet_ci
@@ -248,8 +248,11 @@ workflows:
             - deploy-approval
           post-steps:
             - jira/notify:
+                environment: production
                 environment_type: production
                 job_type: deployment
+                pipeline_id: << pipeline.id >>
+                pipeline_number: << pipeline.number >>
 
       - publish-github-release:
           context: leaflet_ci

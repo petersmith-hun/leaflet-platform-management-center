@@ -40,6 +40,12 @@
     "article.search.status.review": "In review",
     "article.search.status.public": "Public",
 
+    "category.edit.created-at": "Created at",
+    "category.edit.description": "Description",
+    "category.edit.general-status": "General status",
+    "category.edit.last-modified-at": "Last modified at",
+    "category.edit.title": "Category title",
+
     "confirmation.cancel": "Cancel",
     "confirmation.delete.article": "Are you sure you want to delete this article?",
 
@@ -120,6 +126,10 @@
     "header.tags.dates": "Created, last modified",
     "header.tags.status": "General status",
     "header.tags.operations": "Tag operations",
+    "header.category.title": "Category title",
+    "header.category.dates": "Created, last modified",
+    "header.category.status": "General status",
+    "header.category.operations": "Category operations",
 
     "modal.title.rendered-article": "Rendered article",
 
@@ -146,6 +156,14 @@
     "page-operations.tag.enable": "Enable tag",
     "page-operations.tag.new": "New tag",
     "page-operations.tag.view": "View tag",
+    "page-operations.category": "Tag operations",
+    "page-operations.category.back-to-categories": "Back to all categories",
+    "page-operations.category.delete": "Delete category",
+    "page-operations.category.disable": "Disable category",
+    "page-operations.category.edit": "Edit category",
+    "page-operations.category.enable": "Enable category",
+    "page-operations.category.new": "New category",
+    "page-operations.category.view": "View category",
 
     "page-operations.common.save": "Save",
 
@@ -160,6 +178,10 @@
     "page.title.article.edit": "Edit existing article",
     "page.title.article.view": "Article details",
     "page.title.articles": "Articles",
+    "page.title.category.create": "Create new category",
+    "page.title.category.edit": "Edit existing category",
+    "page.title.category.view": "Category details",
+    "page.title.categories": "Categories",
     "page.title.tag.create": "Create new tag",
     "page.title.tag.edit": "Edit existing tag",
     "page.title.tag.view": "Tag details",
