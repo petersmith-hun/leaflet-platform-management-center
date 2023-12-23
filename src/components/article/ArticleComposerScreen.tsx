@@ -7,14 +7,14 @@ import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/Scree
 import { TabbedScreen } from "@/components/common/TabbedScreen";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
-import { SubmitButton } from "@/components/form/SubmitButton";
+import { DefaultSubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
-import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
+import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { generateLinkByTitle } from "@/components/utility/generate-link";
 import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
-import { faEye, faFloppyDisk, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -186,8 +186,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
                                     const sourceInput = document.getElementById("article-raw-content") as HTMLInputElement;
                                     setContentToRender(sourceInput.value);
                                   }} />
-            <SubmitButton label={t("page-operations.common.save")} icon={faFloppyDisk}
-                          awareness={AwarenessLevel.POSITIVE} />
+            <DefaultSubmitButton />
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>

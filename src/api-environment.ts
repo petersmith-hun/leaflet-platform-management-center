@@ -4,14 +4,20 @@ import { getServerSession } from "next-auth";
 import { v5 as uuidv5 } from 'uuid';
 
 /**
- * Target API environment parameters.
+ * Target API host parameters.
  */
-export interface APIEnvironment {
+export interface HostEnvironment {
 
   /**
-   * Leaflet host URL.
+   * Service host URL.
    */
   api: string,
+}
+
+/**
+ * Target API environment parameters.
+ */
+export interface APIEnvironment extends HostEnvironment {
 
   /**
    * Leaflet Link client ID.

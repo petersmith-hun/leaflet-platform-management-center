@@ -62,7 +62,7 @@ export const toastHandler = (toastDispatcher: Dispatch<SetStateAction<ToastPrope
           title: t("toast.error.validation-error"),
           message: (axiosError.response?.data as ValidationErrorResponse)
             ?.validation
-            .map(item => `${item.field}: ${item.message}`)
+            ?.map(item => `${item.field}: ${item.message}`)
         })
       } else {
         toastDispatcher({
