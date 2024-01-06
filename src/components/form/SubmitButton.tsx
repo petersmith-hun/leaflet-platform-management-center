@@ -1,7 +1,8 @@
 import { AwarenessLevel } from "@/components/navigation/OperationButton";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SubmitButtonProps {
   label: string;
@@ -24,4 +25,15 @@ export const SubmitButton = ({ label, icon, awareness = AwarenessLevel.NORMAL }:
       <FontAwesomeIcon className="w-4 h-4 mr-2" icon={icon} /> {label}
     </button>
   )
+}
+
+/**
+ * Renders a form submit button styled by TW-Elements, configured to its standard look-and-feel.
+ */
+export const DefaultSubmitButton = (): ReactNode => {
+
+  const { t } = useTranslation();
+
+  return <SubmitButton label={t("page-operations.common.save")} icon={faFloppyDisk}
+                       awareness={AwarenessLevel.POSITIVE} />
 }

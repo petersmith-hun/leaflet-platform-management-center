@@ -4,11 +4,11 @@ import { DataRow, WideDataCell } from "@/components/common/DataRow";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { Input } from "@/components/form/Input";
-import { SubmitButton } from "@/components/form/SubmitButton";
-import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
+import { DefaultSubmitButton } from "@/components/form/SubmitButton";
+import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { TagEditRequest, TagModel } from "@/core/model/tag";
 import tagService from "@/core/service/tag-service";
-import { faEye, faFloppyDisk, faList } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -71,8 +71,7 @@ export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScree
                                  link={"/tags"} />
             {tagID && <PageOperationButton label={t("page-operations.tag.view")} icon={faEye}
                                            link={`/tags/view/${tagID}`} />}
-            <SubmitButton label={t("page-operations.common.save")} icon={faFloppyDisk}
-                          awareness={AwarenessLevel.POSITIVE} />
+            <DefaultSubmitButton />
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>

@@ -3,14 +3,16 @@ import { OperationProps, redirectMap } from "@/components/common/operations/inde
 import { AwarenessLevel, ConfirmedOperationButton } from "@/components/navigation/OperationButton";
 import { toastHandler } from "@/components/utility/toast-handler";
 import { IdentifiedModel } from "@/core/model/common";
+import { FileDataModel } from "@/core/model/files";
 import { PageContext } from "@/pages/_app";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID>> extends OperationProps<T> {
+interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel> extends OperationProps<T> {
   serviceCall: (id: ID) => Promise<void>;
+  idProvider?: (entity: T) => ID;
 }
 
 /**
@@ -22,8 +24,8 @@ interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID>> exten
  * @param serviceCall service entry point to execute deletion
  * @param mutate SWR mutate function for data invalidation
  */
-export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID>>(
-  { domain, entity, titleSupplier, serviceCall }: DeletionProps<ID, T>): ReactNode => {
+export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel>(
+  { domain, entity, titleSupplier, serviceCall, idProvider = entity => (entity as IdentifiedModel<ID>).id }: DeletionProps<ID, T>): ReactNode => {
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -33,7 +35,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
   const handleDeletion = (): void => {
 
     setOperationInProgress(true);
-    serviceCall(entity.id)
+    serviceCall(idProvider(entity))
       .then(_ => router.push(redirectMap[domain]))
       .then(_ => showCustomToast(
         t(`toast.template.title.success.updated`, {
@@ -59,7 +61,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
 
   return (
     <ConfirmedOperationButton label={t(`page-operations.${domain}.delete`)} icon={faPencil}
-                              id={`${domain}-delete-${entity.id}`}
+                              id={`${domain}-delete-${idProvider(entity)}`}
                               onSubmit={() => handleDeletion()}
                               awareness={AwarenessLevel.ALERT} />
   )

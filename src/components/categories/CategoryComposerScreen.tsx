@@ -4,12 +4,12 @@ import { DataRow, WideDataCell } from "@/components/common/DataRow";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { Input } from "@/components/form/Input";
-import { SubmitButton } from "@/components/form/SubmitButton";
+import { DefaultSubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
-import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
+import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { CategoryEditRequest, CategoryModel } from "@/core/model/category";
 import categoryService from "@/core/service/category-service";
-import { faEye, faFloppyDisk, faList } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -77,8 +77,7 @@ export const CategoryComposerScreen = ({ environment, category, mutate }: Catego
                                  link={"/categories"} />
             {categoryID && <PageOperationButton label={t("page-operations.category.view")} icon={faEye}
                                                 link={`/categories/view/${categoryID}`} />}
-            <SubmitButton label={t("page-operations.common.save")} icon={faFloppyDisk}
-                          awareness={AwarenessLevel.POSITIVE} />
+            <DefaultSubmitButton />
           </PageOperationCard>
         </NarrowPane>
       </MultiPaneScreen>

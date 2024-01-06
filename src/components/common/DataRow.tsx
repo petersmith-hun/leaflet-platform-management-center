@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 
 interface DataRowProps {
   children: ReactNode | ReactNode[];
+  additionalClasses?: string;
 }
 
 interface DataCellProps {
@@ -18,12 +19,13 @@ interface SizedDataCellProps extends DataCellProps {
  * Renders a simple data row (items are aligned using flex-row directive). Also, adds a separator below the row.
  *
  * @param children contents to be rendered within
+ * @param additionalClasses optional, additional class definitions
  */
-export const DataRow = ({ children }: DataRowProps): ReactNode => {
+export const DataRow = ({ children, additionalClasses }: DataRowProps): ReactNode => {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className={`flex flex-row ${additionalClasses}`}>
         {children}
       </div>
       <Separator thick={false} />
