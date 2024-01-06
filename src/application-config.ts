@@ -22,7 +22,7 @@ const applicationConfig: ApplicationConfig = {
         audience: process.env.SERVICE_LSRS_AUDIENCE as string,
         clientID: process.env.SERVICE_LSRS_CLIENT_ID as string,
         clientSecret: process.env.SERVICE_LSRS_CLIENT_SECRET as string,
-        scope: (process.env.SERVICE_LSRS_SCOPE as string).split(","),
+        scope: (process.env.SERVICE_LSRS_SCOPE as string ?? "").split(","),
         requireUserScope: process.env.SERVICE_LSRS_REQUIRED_USER_SCOPE as string
       }
     }
