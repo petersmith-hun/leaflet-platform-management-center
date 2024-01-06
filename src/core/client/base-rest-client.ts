@@ -25,16 +25,14 @@ const baseRestClient = <T>(environment: HostEnvironment, request: RESTRequest): 
     ... request.authorization
   };
 
-  const config = {
+  return axios.request({
     baseURL: environment.api,
     url: resolvePath(request),
     method: request.method,
     headers: headers,
     params: request.queryParameters,
     data: request.requestBody
-  };
-
-  return axios.request(config);
+  });
 }
 
 const resolvePath = (request: RESTRequest): string => {

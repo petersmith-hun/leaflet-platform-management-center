@@ -62,7 +62,7 @@ const FileBrowserContent = ({ environment, vfs }: FileBrowserContentProps): Reac
     <WidePane>
       <CardWithTitle title={vfs.currentPath}>
         {vfs.currentPath !== vfs.parent &&
-					<Folder key="folder-parent" folder={{ folderName: folderUpPath, absolutePath: vfs.parent }} />
+          <Folder key="folder-parent" folder={{ folderName: folderUpPath, absolutePath: vfs.parent }} />
         }
         {vfs.directories.map(folder =>
           <Folder key={`folder-${folder.folderName}`} folder={folder} />
@@ -101,9 +101,9 @@ export const FileBrowserScreen = ({ environment, pathInfo }: FileBrowserProps): 
           <PageOperationButton label={t("page-operations.file.back-to-vfs-root")} icon={faList} link="/files/browse" />
           {data?.currentPath !== rootPath &&
             <>
-							<PageOperationButton label={t("page-operations.file.upload-here")} icon={faUpload}
+              <PageOperationButton label={t("page-operations.file.upload-here")} icon={faUpload}
                                    link={`/files/create/upload/${pathInfo.fullPath}`} awareness={AwarenessLevel.POSITIVE} />
-							<PageOperationButton label={t("page-operations.file.new-folder-here")} icon={faFolderPlus}
+              <PageOperationButton label={t("page-operations.file.new-folder-here")} icon={faFolderPlus}
                                    link={`/files/create/directory/${pathInfo.fullPath}`} awareness={AwarenessLevel.POSITIVE} />
             </>
           }
