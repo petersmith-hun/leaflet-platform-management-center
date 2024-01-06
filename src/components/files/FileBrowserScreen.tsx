@@ -4,7 +4,7 @@ import { DataRow, FullWidthDataCell } from "@/components/common/DataRow";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
-import { FileDataModel, FolderDataModel, VFSBrowserModel } from "@/core/model/files";
+import { FileDataModel, FolderDataModel, PathInfo, VFSBrowserModel } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { swrKey } from "@/core/util/swr-key";
 import { faFolderOpen, faFolderPlus, faLevelUp, faList, faUpload } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ interface FileBrowserContentProps extends ScreenParameters {
 }
 
 interface FileBrowserProps extends ScreenParameters {
-  currentPath: string;
+  pathInfo: PathInfo;
 }
 
 const folderUpPath = "..";
@@ -79,9 +79,9 @@ const FileBrowserContent = ({ environment, vfs }: FileBrowserContentProps): Reac
  * Main screen of the VFS browser.
  *
  * @param environment APIEnvironment object defining the target API configuration
- * @param currentPath current VFS path
+ * @param pathInfo current VFS path data
  */
-export const FileBrowserScreen = ({ environment, currentPath }: FileBrowserProps): ReactNode => {
+export const FileBrowserScreen = ({ environment, pathInfo }: FileBrowserProps): ReactNode => {
 
   const { t } = useTranslation();
   const { browse } = fileService(environment);
@@ -89,7 +89,7 @@ export const FileBrowserScreen = ({ environment, currentPath }: FileBrowserProps
     isLoading,
     data,
     error
-  } = useSWR(swrKey("files/browse", currentPath), (key) => browse(key.parameter as string));
+  } = useSWR(swrKey("files/browse", pathInfo.fullPath), (key) => browse(key.parameter as string));
 
   return (
     <MultiPaneScreen>
@@ -102,9 +102,9 @@ export const FileBrowserScreen = ({ environment, currentPath }: FileBrowserProps
           {data?.currentPath !== rootPath &&
             <>
 							<PageOperationButton label={t("page-operations.file.upload-here")} icon={faUpload}
-																	 link={`/files/create/upload/${currentPath}`} awareness={AwarenessLevel.POSITIVE} />
+                                   link={`/files/create/upload/${pathInfo.fullPath}`} awareness={AwarenessLevel.POSITIVE} />
 							<PageOperationButton label={t("page-operations.file.new-folder-here")} icon={faFolderPlus}
-																	 link={`/files/create/directory/${currentPath}`} awareness={AwarenessLevel.POSITIVE} />
+                                   link={`/files/create/directory/${pathInfo.fullPath}`} awareness={AwarenessLevel.POSITIVE} />
             </>
           }
         </PageOperationCard>

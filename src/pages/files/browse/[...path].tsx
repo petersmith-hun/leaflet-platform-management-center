@@ -1,5 +1,6 @@
 import environmentProperties, { APIEnvironment } from "@/api-environment";
 import { FileBrowserScreen } from "@/components/files/FileBrowserScreen";
+import { BrowserPathInfo } from "@/core/model/files";
 import { PageContext } from "@/pages/_app";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
@@ -19,10 +20,11 @@ export default function Files(environment: APIEnvironment) {
   const pageContext = useContext(PageContext);
   const router = useRouter();
 
+  const pathInfo = new BrowserPathInfo(router.query.path as string[]);
+
   useEffect(() => {
     pageContext.updatePageTitle(t("page.title.files"));
   }, []);
 
-  // TODO change this to PathInfo
-  return <FileBrowserScreen environment={environment} currentPath={(router.query.path as string[]).join("/")} />
+  return <FileBrowserScreen environment={environment} pathInfo={pathInfo} />
 }

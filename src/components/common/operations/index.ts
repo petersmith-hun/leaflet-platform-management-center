@@ -11,7 +11,7 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   category: "/categories",
   directory: "/files/browse",
   document: "/documents",
-  file: "/files/browse", // TODO try to do something with this
+  file: "/files/browse",
   fileView: "/files",
   tag: "/tags",
   user: "/user"

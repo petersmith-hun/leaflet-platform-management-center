@@ -78,9 +78,9 @@ export interface FileUploadProxyRequest {
 /**
  * Path details for the current VFS path.
  */
-export class PathInfo { // TODO change to this where possible! but generalize first (actually a separate would be better, like FilePathInfo, ProxyPathInfo (this would include the target svc name too)
+export class PathInfo {
 
-  readonly operation: "upload" | "directory";
+  readonly operation: "browse" | "view" | "upload" | "directory";
   readonly fullPath: string;
   readonly pathWithoutRoot: string;
 
@@ -90,5 +90,25 @@ export class PathInfo { // TODO change to this where possible! but generalize fi
     this.pathWithoutRoot = pathSegments.length > 2
       ? pathSegments.slice(2).join("/")
       : "";
+  }
+}
+
+/**
+ * Specific PathInfo object for file viewer.
+ */
+export class ViewFilePathInfo extends PathInfo {
+
+  constructor(fileDataModel: FileDataModel) {
+    super(["view", ...fileDataModel.path.split("/").slice(0, -1)]);
+  }
+}
+
+/**
+ * Specific PathInfo object for VFS browser.
+ */
+export class BrowserPathInfo extends PathInfo {
+
+  constructor(pathSegments: string[] = []) {
+    super(["browse", ...pathSegments]);
   }
 }

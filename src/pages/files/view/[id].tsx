@@ -1,6 +1,7 @@
 import environmentProperties, { APIEnvironment } from "@/api-environment";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
 import { FileViewerScreen } from "@/components/files/FileViewerScreen";
+import { ViewFilePathInfo } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { swrKey } from "@/core/util/swr-key";
 import { PageContext } from "@/pages/_app";
@@ -31,7 +32,7 @@ export default function ViewFile(environment: APIEnvironment) {
 
   return (
     <SWRManagedScreen isLoading={isLoading} error={error}>
-      {() => <FileViewerScreen environment={environment} file={data!} />}
+      {() => <FileViewerScreen environment={environment} file={data!} pathInfo={new ViewFilePathInfo(data!)} />}
     </SWRManagedScreen>
   )
 }

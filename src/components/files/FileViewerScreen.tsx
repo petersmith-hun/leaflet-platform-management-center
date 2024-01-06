@@ -4,9 +4,9 @@ import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/Da
 import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
-import { FileDataModel } from "@/core/model/files";
+import { FileDataModel, PathInfo } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
-import { faCheck, faCopy, faList, faPencil, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCopy, faFolderOpen, faList, faPencil, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 interface FileViewerProps {
   environment: APIEnvironment;
   file: FileDataModel;
+  pathInfo: PathInfo;
 }
 
 interface CopyReferenceButtonProperties {
@@ -49,8 +50,9 @@ const copyReference = (reference: string, setCopied?: Dispatch<SetStateAction<bo
  *
  * @param environment APIEnvironment object defining the target API configuration
  * @param file file data
+ * @param pathInfo current VFS path data
  */
-export const FileViewerScreen = ({ environment, file }: FileViewerProps): ReactNode => {
+export const FileViewerScreen = ({ environment, file, pathInfo }: FileViewerProps): ReactNode => {
 
   const { deleteFileByPathUUID } = fileService(environment);
   const { t } = useTranslation();
@@ -97,6 +99,8 @@ export const FileViewerScreen = ({ environment, file }: FileViewerProps): ReactN
                                link={`/files/edit/${file.pathUUID}`} />
           <PageOperationButton label={t("page-operations.file.back-to-vfs-root")} icon={faList}
                                link={"/files/browse"} />
+          <PageOperationButton label={t("page-operations.file.show-current-folder")} icon={faFolderOpen}
+                               link={`/files/browse/${pathInfo.fullPath}`} />
           {!copied && <CopyReferenceButton awareness={AwarenessLevel.POSITIVE} id={"file-copy-reference"}
                                            label={t("page-operations.file.copy-reference")} icon={faCopy}
                                            onClick={() => copyReference(file.reference, setCopied)} />}
