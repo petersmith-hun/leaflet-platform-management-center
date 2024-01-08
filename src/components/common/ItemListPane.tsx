@@ -14,7 +14,7 @@ interface ItemListProps extends ChildrenListProps {
 
 interface ItemListHeaderItemProps {
   titleKey: string;
-  widthClass: "w-2/12" | "w-3/12" | "w-5/12";
+  widthClass: "w-1/12" | "w-2/12" | "w-3/12" | "w-5/12";
 }
 
 interface ItemListBodyProps<T> {

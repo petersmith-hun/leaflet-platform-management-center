@@ -17,9 +17,16 @@ const forwardRequest = async (requestPath: string[], request: NextApiRequest, se
 
   const targetPath = requestPath.slice(1);
   const adapter = getProxyRequestBodyAdapter(request);
+  const headers: Record<string, string> = {};
+
+  if (request.headers["content-type"] && request.headers["content-type"] !== "application/json") {
+    headers["Content-Type"] = request.headers["content-type"];
+  }
+
   const restRequest = new RESTRequest({
     method: request.method as RequestMethod,
     path: targetPath.join("/"),
+    headers: headers,
     requestBody: request.body
       ? adapter(request.body)
       : undefined
@@ -27,6 +34,16 @@ const forwardRequest = async (requestPath: string[], request: NextApiRequest, se
 
   return await clientCredentialsRestClient(service, restRequest);
 };
+
+const extractMessage = (error: any): string => {
+
+  let originalMessage;
+  if (error instanceof AxiosError) {
+    originalMessage = error.response?.data?.message;
+  }
+
+  return originalMessage ?? error?.message;
+}
 
 /**
  * Increased request size limit for file uploads.
@@ -61,7 +78,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   } catch (error: any) {
 
     let status = 500;
-    const errorResponse = { message: error?.message };
+    const errorResponse = { message: extractMessage(error) };
     if (error instanceof ExternalServiceCallError) {
       status = error.statusCode;
     }

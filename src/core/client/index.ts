@@ -3,5 +3,6 @@
  */
 export enum ExternalService {
 
-  RESOURCE_SERVER = "lsrs"
+  RESOURCE_SERVER = "lsrs",
+  LOG_PROCESSOR = "tlp"
 }
