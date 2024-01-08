@@ -58,6 +58,8 @@
     "file.edit.physical-relative-path": "Relative path to physical location in VFS",
     "file.edit.reference": "Public file reference",
 
+    "logs.query": "TLQL query",
+
     "tag.edit.name": "Tag",
     "tag.edit.created-at": "Created at",
     "tag.edit.general-status": "General status",
@@ -133,16 +135,24 @@
     "header.article-search.dates": "Created, last modified, published",
     "header.article-search.status": "General and publication status, pending comments",
     "header.article-search.operations": "Article operations",
-    "header.tags.tag": "Tag",
-    "header.tags.dates": "Created, last modified",
-    "header.tags.status": "General status",
-    "header.tags.operations": "Tag operations",
     "header.category.title": "Category title",
     "header.category.dates": "Created, last modified",
     "header.category.status": "General status",
     "header.category.operations": "Category operations",
+    "header.logs.level": "Level",
+    "header.logs.logged-at": "Logged at",
+    "header.logs.logger": "Logger name",
+    "header.logs.source": "Source",
+    "header.logs.thread": "Execution thread",
+    "header.tags.tag": "Tag",
+    "header.tags.dates": "Created, last modified",
+    "header.tags.status": "General status",
+    "header.tags.operations": "Tag operations",
 
     "modal.title.rendered-article": "Rendered article",
+
+    "notification.logs.no-entry-found": "No log entry found by the provided query",
+    "notification.logs.found": "Found {{total}} items, {{visible}} visible on this page (page: {{currentPage}}/{{totalPage}})",
 
     "page-operations.article": "Article operations",
     "page-operations.article.back-to-articles": "Back to article manager",
@@ -178,6 +188,8 @@
     "page-operations.file.show-current-folder": "Show contents of current folder",
     "page-operations.file.upload-here": "Upload file into this folder",
     "page-operations.file.view": "View file details",
+    "page-operations.logs": "Log management operations",
+    "page-operations.logs.query": "Query logs",
     "page-operations.tag": "Tag operations",
     "page-operations.tag.back-to-tags": "Back to all tags",
     "page-operations.tag.delete": "Delete tag",
@@ -193,6 +205,7 @@
     "page.sub-title.article.rendered-content": "Rendered content",
     "page.sub-title.article.seo": "SEO Attributes",
     "page.sub-title.article.tags": "Tags",
+    "page.sub-title.system.logs.query": "Search logs",
 
     "page.title.default": "Dashboard",
     "page.title.home": "Home",
@@ -211,6 +224,7 @@
     "page.title.files.create-upload-here": "Upload file in [{{current}}]",
     "page.title.files.edit-metadata": "Edit metadata",
     "page.title.files.view": "View file details",
+    "page.title.system.logs": "Log management",
     "page.title.tag.create": "Create new tag",
     "page.title.tag.edit": "Edit existing tag",
     "page.title.tag.view": "Tag details",
@@ -227,6 +241,8 @@
     "toast.article.message.status.publication.DRAFT": "marked as draft",
     "toast.article.message.status.publication.PUBLIC": "published",
     "toast.article.message.status.publication.REVIEW": "submitted for review",
+
+    "toast.log-management.query-failure": "Failed to query logs",
 
     "toast.template.title.failure": "Failed to update {{domain}}",
     "toast.template.title.success.created": "{{domain}} created",

@@ -16,3 +16,7 @@
   padding: 10px 20px;
   border-left: 5px solid #eee;
 }
+
+.code {
+  font-family: Consolas, serif;
+}

@@ -7,6 +7,7 @@ interface TextareaProps extends ValidatedInput {
   label: string;
   id: string;
   defaultRowCount?: number;
+  additionalClass?: string;
 }
 
 /**
@@ -17,14 +18,15 @@ interface TextareaProps extends ValidatedInput {
  * @param id ID of the textarea
  * @param errorSupplier validation error supplier
  * @param defaultRowCount default row count of the textarea (defaults to 3 rows)
+ * @param additionalClass additional classes to be attached to the button
  */
-export const Textarea = ({ registerReturn, label, id, errorSupplier, defaultRowCount = 3 }: TextareaProps): ReactNode => {
+export const Textarea = ({ registerReturn, label, id, errorSupplier, defaultRowCount = 3, additionalClass }: TextareaProps): ReactNode => {
 
   return (
     <div className="mb-3 max-w-[95%]">
       <div className="relative mb-3" data-te-input-wrapper-init="">
       <textarea
-        className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        className={`${additionalClass} peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0`}
         id={id}
         rows={defaultRowCount}
         placeholder={label}
