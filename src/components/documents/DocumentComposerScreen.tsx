@@ -11,8 +11,10 @@ import { DefaultSubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { generateLinkByTitle } from "@/components/utility/generate-link";
-import { articleComposerFacade } from "@/core/facade/article-composer-facade";
-import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
+import { convertDocumentToEditRequest } from "@/core/converters/documents";
+import { ResponseWrapper } from "@/core/model/common";
+import { DocumentEditRequest, DocumentModel } from "@/core/model/document";
+import documentService from "@/core/service/document-service";
 import { useSessionHelper } from "@/hooks/use-session-helper";
 import { faEye, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,36 +24,35 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
-interface ArticleComposerScreenProps {
+interface DocumentComposerScreenProps {
   environment: APIEnvironment;
-  commonData: ArticleComposerCommonData;
-  mutate?: KeyedMutator<ArticleComposerCommonData>;
+  document?: ResponseWrapper<DocumentModel>;
+  mutate?: KeyedMutator<ResponseWrapper<DocumentModel>>;
 }
 
 /**
- * Screen used by article manager's create/edit operations. For editing purpose, provide the article itself in the
- * common data parameter, as well as an SWR mutate function to invalidate the common data cache for the edited article.
+ * Screen used by document manager's create/edit operations. For editing purpose, provide the document itself, as well
+ * as an SWR mutate function to invalidate the cache for the edited document.
  *
  * @param environment APIEnvironment object defining the target API configuration
- * @param commonData pre-loaded form data (categories, tags, files)
+ * @param document document data for the editor
  * @param mutate SWR mutate function for data invalidation
  */
-export const ArticleComposerScreen = ({ environment, commonData, mutate }: ArticleComposerScreenProps): ReactNode => {
+export const DocumentComposerScreen = ({ environment, document, mutate }: DocumentComposerScreenProps): ReactNode => {
 
-  const { submitArticle } = articleComposerFacade(environment);
+  const { createDocument, updateDocument } = documentService(environment);
   const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>({
+  const { register, handleSubmit, formState: { errors } } = useForm<DocumentEditRequest>({
     defaultValues: {
       userID: getUserInfo().id,
-      status: ArticleStatus.DRAFT,
-      ...commonData.article
+      ...(document ? convertDocumentToEditRequest(document) : undefined)
     }
   });
   const router = useRouter();
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
-  const articleID = router.query.id as number | undefined;
+  const documentID = router.query.id as number | undefined;
 
   useEffect(() => {
     generateLinkByTitle(generateLink);
@@ -66,27 +67,24 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   }, []);
 
   return (
-    <SubmitOperation domain={"article"} mutate={mutate} titleSupplier={article => article.title}
+    <SubmitOperation domain={"document"} mutate={mutate}
+                     titleSupplier={document => document.title}
                      handleSubmit={handleSubmit}
-                     serviceCall={article => submitArticle(article, articleID)}>
+                     serviceCall={document => documentID
+                       ? updateDocument(documentID, document)
+                       : createDocument(document)}>
       <input type="hidden" {...register("userID")} />
-      <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
         <WidePane>
-          <CardWithTitle title={commonData.article?.title ?? t("page.title.article.create")}>
+          <CardWithTitle title={document?.body.title ?? t("page.title.document.create")}>
             <TabbedScreen
               titles={[
-                t("tab.article.create.base"),
-                t("tab.article.create.seo"),
-                t("tab.article.create.content"),
-                t("tab.article.create.tags-attachments"),
+                t("tab.document.create.base"),
+                t("tab.document.create.seo"),
+                t("tab.document.create.content")
               ]}>
               <div>
                 <DataRow>
-                  <WideDataCell>
-                    <Select registerReturn={register("categoryID")} label={t("forms:article.edit.category")}
-                            optionMap={commonData.categories} />
-                  </WideDataCell>
                   <WideDataCell>
                     <Select registerReturn={register("locale")} label={t("forms:common.edit.language")} optionMap={{
                       "HU": t("forms:common.edit.language.HU"),
@@ -97,7 +95,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
                 <DataRow>
                   <WideDataCell>
                     <Input registerReturn={register("title", { required: t("forms:validation.common.required") })}
-                           label={t("forms:article.edit.title")} id={"article-title"}
+                           label={t("forms:document.edit.title")} id={"article-title"}
                            errorSupplier={() => errors.title?.message} />
                   </WideDataCell>
                   <WideDataCell>
@@ -109,41 +107,33 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
                       </button>
                       <div className="flex-grow">
                         <Input registerReturn={register("link", { required: t("forms:validation.common.required") })}
-                               label={t("forms:article.edit.link")} id={"article-link"}
+                               label={t("forms:document.edit.link")} id={"article-link"}
                                readonly={generateLink}
                                errorSupplier={() => errors.link?.message} />
                       </div>
                     </div>
                   </WideDataCell>
                 </DataRow>
-                <DataRow>
-                  <FullWidthDataCell>
-                    <Textarea registerReturn={register("prologue", { required: t("forms:validation.common.required") })}
-                              label={t("forms:article.edit.prologue")}
-                              id={"article-prologue"}
-                              errorSupplier={() => errors.prologue?.message} />
-                  </FullWidthDataCell>
-                </DataRow>
               </div>
               <div>
                 <DataRow>
                   <WideDataCell>
                     <Input registerReturn={register("metaTitle", { required: t("forms:validation.common.required") })}
-                           label={t("forms:article.edit.seo.title")}
-                           id={"article-seo-title"}
+                           label={t("forms:document.edit.seo.title")}
+                           id={"document-seo-title"}
                            errorSupplier={() => errors.metaTitle?.message} />
                   </WideDataCell>
                   <WideDataCell>
-                    <Input registerReturn={register("metaKeywords")} label={t("forms:article.edit.seo.keywords")}
-                           id={"article-seo-keywords"} />
+                    <Input registerReturn={register("metaKeywords")} label={t("forms:document.edit.seo.keywords")}
+                           id={"document-seo-keywords"} />
                   </WideDataCell>
                 </DataRow>
                 <DataRow>
                   <FullWidthDataCell>
                     <Textarea
                       registerReturn={register("metaDescription", { required: t("forms:validation.common.required") })}
-                      label={t("forms:article.edit.seo.description")}
-                      id={"article-seo-description"}
+                      label={t("forms:document.edit.seo.description")}
+                      id={"document-seo-description"}
                       errorSupplier={() => errors.metaDescription?.message} />
                   </FullWidthDataCell>
                 </DataRow>
@@ -153,37 +143,25 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
                   <FullWidthDataCell>
                     <Textarea
                       registerReturn={register("rawContent", { required: t("forms:validation.common.required") })}
-                      label={t("forms:article.edit.raw-content")}
-                      id={"article-raw-content"}
+                      label={t("forms:document.edit.raw-content")}
+                      id={"document-raw-content"}
                       defaultRowCount={50}
                       errorSupplier={() => errors.rawContent?.message} />
                   </FullWidthDataCell>
-                </DataRow>
-              </div>
-              <div>
-                <DataRow>
-                  <WideDataCell>
-                    <Select registerReturn={register("tags")} label={t("forms:article.edit.tags")}
-                            optionMap={commonData.tags} multiple={true} search={true} />
-                  </WideDataCell>
-                  <WideDataCell>
-                    <Select registerReturn={register("attachments")} label={t("forms:article.edit.attachments")}
-                            optionMap={commonData.files} multiple={true} search={true} />
-                  </WideDataCell>
                 </DataRow>
               </div>
             </TabbedScreen>
           </CardWithTitle>
         </WidePane>
         <NarrowPane>
-          <PageOperationCard title={t("page-operations.article")}>
-            <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList}
-                                 link={"/articles"} />
-            {articleID && <PageOperationButton label={t("page-operations.article.view")} icon={faEye}
-                                               link={`/articles/view/${articleID}`} />}
+          <PageOperationCard title={t("page-operations.document")}>
+            <PageOperationButton label={t("page-operations.document.back-to-documents")} icon={faList}
+                                 link={"/documents"} />
+            {documentID && <PageOperationButton label={t("page-operations.document.view")} icon={faEye}
+                                                link={`/documents/view/${documentID}`} />}
             <RenderedArticleModal content={contentToRender} resourceServer={environment.resourceServer}
                                   onRender={() => {
-                                    const sourceInput = document.getElementById("article-raw-content") as HTMLInputElement;
+                                    const sourceInput = global.document.getElementById("document-raw-content") as HTMLInputElement;
                                     setContentToRender(sourceInput.value);
                                   }} />
             <DefaultSubmitButton />
