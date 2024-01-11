@@ -27,7 +27,7 @@ const rootGroup: MenuItemData[] = [
 const quickCreation: MenuItemData[] = [
   {
     itemKey: "group.quick_creation.item.article",
-    path: "/article/new",
+    path: "/articles/create",
     icon: faPlus,
     requiredScope: Permission.WRITE_ENTRIES
   }

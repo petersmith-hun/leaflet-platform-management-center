@@ -10,5 +10,5 @@ export const dateFormatter = (dateString?: string | null): string | undefined =>
 
   return dateString
     ? DateTime.fromISO(dateString).toLocaleString(DateTime.DATETIME_FULL)
-    : "";
+    : undefined;
 }

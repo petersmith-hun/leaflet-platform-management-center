@@ -76,8 +76,8 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
                             children={dateFormatter(article.body.lastModified) ?? t("article.label.never-modified")} />
           </DataRow>
           <DataRow>
-            <WideDataCell title={t("forms:article.edit.language")}
-                          children={t(`forms:article.edit.language.${article.body.locale}`)} />
+            <WideDataCell title={t("forms:common.edit.language")}
+                          children={t(`forms:common.edit.language.${article.body.locale}`)} />
             <NarrowDataCell title={t("forms:article.edit.published-at")}
                             children={dateFormatter(article.body.published) ?? t("article.label.not-published")} />
           </DataRow>
