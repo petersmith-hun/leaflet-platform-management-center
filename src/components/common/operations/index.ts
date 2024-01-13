@@ -1,7 +1,7 @@
 /**
  * Supported operation domains (target entity types) for commonly usable operations.
  */
-export type OperationDomain = "article" | "category" | "directory" | "document" | "file" | "fileView" | "tag" | "user";
+export type OperationDomain = "article" | "category" | "comment" | "directory" | "document" | "file" | "fileView" | "tag" | "user";
 
 /**
  * Redirection paths to be used after successful submit operations
@@ -9,6 +9,7 @@ export type OperationDomain = "article" | "category" | "directory" | "document" 
 export const redirectMap: { [key in OperationDomain]: string } = {
   article: "/articles",
   category: "/categories",
+  comment: "/comments",
   directory: "/files/browse",
   document: "/documents",
   file: "/files/browse",

@@ -5,7 +5,7 @@ import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { MultiPaneScreen, NarrowPane } from "@/components/common/ScreenLayout";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
-import articleService from "@/core/service/article-service";
+import { articleLookupFacade } from "@/core/facade/article-lookup-facade";
 import { swrKey } from "@/core/util/swr-key";
 import { faEdit, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ import useSWR from "swr";
  */
 export const ArticleSearchScreen = ({ environment }: ScreenParameters): ReactNode => {
 
-  const { searchArticles } = articleService(environment);
+  const { searchArticles } = articleLookupFacade(environment);
   const { t } = useTranslation();
   const { query } = useRouter();
   const { isLoading, data, error } = useSWR(swrKey("article/search", query), _ => searchArticles(query));

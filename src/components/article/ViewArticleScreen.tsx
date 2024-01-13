@@ -8,7 +8,8 @@ import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag
 import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
 import { GeneralStatusUpdateOperation } from "@/components/common/operations/GeneralStatusUpdateOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
-import { OperationButton, PageOperationButton } from "@/components/navigation/OperationButton";
+import { AwarenessLevel, OperationButton, PageOperationButton } from "@/components/navigation/OperationButton";
+import { ArticleModel } from "@/core/model/article";
 import articleService from "@/core/service/article-service";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { PageContext } from "@/pages/_app";
@@ -24,6 +25,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+
+const getHandleCommentButtonSuffix = (article: ArticleModel): string => {
+
+  return article.pendingCommentCount
+    ? ` (${article.pendingCommentCount})`
+    : "";
+}
 
 /**
  * Article viewer screen component. Renders a static page with every information of the given article.
@@ -50,7 +58,7 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
           <DataRow>
             <WideDataCell title={t("forms:article.edit.category")}>
               <OperationButton label={article.body.category.title} icon={faFolder}
-                               link={`/categories/${article.body.category.id}`}
+                               link={`/categories/view/${article.body.category.id}`}
                                additionalClass="mt-2 w-6/12 inline-block" />
             </WideDataCell>
             <NarrowDataCell title={t("forms:article.edit.general-status")}>
@@ -121,7 +129,7 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
           <div className="flex flex-row">
             {article.body.attachments.map(file =>
               <OperationButton key={`attachment-${file.reference}`} label={file.originalFilename} icon={faDownload}
-                               link={`/files/view/${file.reference}`} />
+                               link={`/files/view/${file.reference.split("/")[1]}`} />
             )}
           </div>
         </CardWithTitle>
@@ -129,12 +137,16 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
       </WidePane>
       <NarrowPane>
         <PageOperationCard title={t("page-operations.article")}>
-          <PageOperationButton label={t("page-operations.article.handle-comments")} icon={faCommenting}
-                               link={`/comments/${article.body.id}`} />
+          <PageOperationButton
+            label={t("page-operations.article.handle-comments") + getHandleCommentButtonSuffix(article.body)}
+            icon={faCommenting}
+            awareness={article.body.pendingCommentCount ? AwarenessLevel.WARNING : AwarenessLevel.NORMAL}
+            link={`/comments/${article.body.id}`} />
           <PageOperationButton label={t("page-operations.article.edit")} icon={faPencil}
                                link={`/articles/edit/${article.body.id}`} />
           <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList} link={"/articles"} />
-          <GeneralStatusUpdateOperation domain={"article"} entity={article.body} titleSupplier={article => article.title}
+          <GeneralStatusUpdateOperation domain={"article"} entity={article.body}
+                                        titleSupplier={article => article.title}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <ArticlePublicationStatusUpdate article={article} environment={environment} mutate={mutate} />
           <DeleteOperation domain={"article"} entity={article.body} titleSupplier={article => article.title}

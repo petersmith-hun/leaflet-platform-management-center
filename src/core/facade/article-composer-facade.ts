@@ -24,7 +24,7 @@ interface ArticleComposerFacade {
    * Retrieves the commonly used pieces of data for the article composer screen (list of categories, tags, uploaded
    * files). Also retrieves the article data for the article editor screen (if the ID is provided).
    *
-   * @param articleID ID of the article of return data of
+   * @param articleID ID of the article to return data of
    */
   getCommonData: (articleID?: number) => Promise<ArticleComposerCommonData>;
 

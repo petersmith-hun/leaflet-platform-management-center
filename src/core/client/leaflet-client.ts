@@ -24,6 +24,12 @@ export enum LeafletPath {
   CATEGORY_BY_ID = "/categories/{id}",
   CATEGORY_GENERAL_STATUS = "/categories/{id}/status",
 
+  // -- comments
+  COMMENTS_BY_ID = "/comments/{id}",
+  COMMENTS_SEARCH = "/comments/search",
+  COMMENTS_ALL_PAGE_BY_ARTICLE = "/comments/entry/{id}/{page}/all",
+  COMMENTS_GENERAL_STATUS = "/comments/{id}/status",
+
   // -- documents --
   DOCUMENTS = "/documents",
   DOCUMENTS_BY_ID = "/documents/{id}",

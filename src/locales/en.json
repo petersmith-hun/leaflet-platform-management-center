@@ -43,6 +43,13 @@
     "category.edit.last-modified-at": "Last modified at",
     "category.edit.title": "Category title",
 
+    "comment.edit.article": "Related article",
+    "comment.edit.content": "Comment content",
+    "comment.edit.created-at": "Created at",
+    "comment.edit.general-status": "Status",
+    "comment.edit.last-modified-at": "Last modified at",
+    "comment.edit.owner": "Comment author",
+
     "common.edit.language": "Language",
     "common.edit.language.EN": "English",
     "common.edit.language.HU": "Hungarian",
@@ -94,8 +101,8 @@
     "group.system_management.item.registry": "Docker Registry browser",
     "group.system_management.item.logs": "Logs",
 
-    "group.user_management": "User management",
-    "group.user_management.item.users": "User management",
+    "group.access_management": "Access management",
+    "group.access_management.item.users": "User management",
 
     "group.document_management": "Document management",
     "group.document_management.item.documents": "Document management",
@@ -123,11 +130,16 @@
     "common.loading": "Retrieving data ...",
     "common.updated": "updated",
 
+    "comments.label.deleted": "This comment has been deleted",
+    "comments.label.never-modified": "Never modified",
+    "comments.label.pending-comments": "There are new pending comments, please review them",
+
     "document.label.never-modified": "Never modified",
     "document.label.seo-keywords-none-specified": "None specified",
 
     "domain.article": "Article",
     "domain.category": "Category",
+    "domain.comment": "Comment",
     "domain.directory": "Directory",
     "domain.document": "Document",
     "domain.file": "File",
@@ -153,6 +165,10 @@
     "header.category.dates": "Created, last modified",
     "header.category.status": "General status",
     "header.category.operations": "Category operations",
+    "header.comment.content": "Comment content",
+    "header.comment.dates": "Created, last modified",
+    "header.comment.status": "General status",
+    "header.comment.operations": "Comment ops.",
     "header.document.title": "Document title",
     "header.document.dates": "Created, last modified",
     "header.document.status": "General status",
@@ -166,6 +182,8 @@
     "header.tags.dates": "Created, last modified",
     "header.tags.status": "General status",
     "header.tags.operations": "Tag operations",
+
+    "home.label.welcome": "Welcome back, {{username}}!",
 
     "modal.title.rendered-article": "Rendered article",
 
@@ -195,6 +213,13 @@
     "page-operations.category.enable": "Enable category",
     "page-operations.category.new": "New category",
     "page-operations.category.view": "View category",
+    "page-operations.comment": "Comment operations",
+    "page-operations.comment.back-to-comments": "Back to article comments",
+    "page-operations.comment.delete": "Delete comment",
+    "page-operations.comment.disable": "Unpublish comment",
+    "page-operations.comment.edit": "Moderate comment",
+    "page-operations.comment.enable": "Publish comment",
+    "page-operations.comment.view": "View comment",
     "page-operations.directory": "Folder operations",
     "page-operations.document": "Document operations",
     "page-operations.document.back-to-documents": "Back to all documents",
@@ -245,6 +270,9 @@
     "page.title.category.edit": "Edit existing category",
     "page.title.category.view": "Category details",
     "page.title.categories": "Categories",
+    "page.title.comment.edit": "Moderate comment",
+    "page.title.comment.list": "Comments of article",
+    "page.title.comment.view": "View comment details",
     "page.title.documents": "Documents",
     "page.title.document.edit": "Edit existing document",
     "page.title.document.create": "Compose new document",
