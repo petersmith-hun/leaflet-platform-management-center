@@ -1,3 +1,4 @@
+import { ArticlePendingCommentsFlag } from "@/components/article/ArticlePendingCommentsFlag";
 import { ArticlePublishStatusFlag } from "@/components/article/ArticleStatusFlag";
 import { ItemListCard } from "@/components/common/Cards";
 import { FormattedArticleDate } from "@/components/common/FormattedDateItem";
@@ -36,8 +37,8 @@ export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
         </h5>
         <Separator thick={false} />
         <p className="flex flex-row">
-          <OperationButton label={article.category.title} icon={faFolder} link={`categories/${article.category.id}`} />
-          <OperationButton label={article.user.username} icon={faUser} link={`users/${article.user.id}`} />
+          <OperationButton label={article.category.title} icon={faFolder} link={`categories/view/${article.category.id}`} />
+          <OperationButton label={article.user.username} icon={faUser} link={`users/view/${article.user.id}`} />
         </p>
       </div>
       <div className="w-3/12 text-sm text-neutral-300">
@@ -48,6 +49,7 @@ export const ArticleCard = ({ article }: ArticleCardProps): ReactNode => {
       <div className="w-2/12 text-center">
         <ItemEnabledStatusFlag item={article} />
         <ArticlePublishStatusFlag article={article} />
+        {(article.pendingCommentCount ?? 0) > 0 && <ArticlePendingCommentsFlag article={article} />}
       </div>
       <div className="w-2/12 flex flex-col items-end">
         <DropdownMenu id={`article-${article.id}`}>

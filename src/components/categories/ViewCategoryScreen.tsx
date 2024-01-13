@@ -21,7 +21,7 @@ interface ViewCategoryScreenParameters {
 }
 
 /**
- * Category viewer screen component. Renders a static page with every information of the given category.
+ * Category viewer screen component. Renders a static page with all information of the given category.
  *
  * @param category data of an existing category
  * @param environment APIEnvironment object defining the target API configuration

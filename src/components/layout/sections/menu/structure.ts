@@ -79,7 +79,7 @@ const systemManagement: MenuItemData[] = [
 
 const userManagement: MenuItemData[] = [
   {
-    itemKey: "group.user_management.item.users",
+    itemKey: "group.access_management.item.users",
     path: "/users",
     icon: faUsers,
     requiredScope: Permission.READ_USERS
@@ -160,7 +160,7 @@ export const mainMenu: MenuGroupData[] = [
     requiredScope: Permission.READ_ADMIN
   },
   {
-    groupKey: "group.user_management",
+    groupKey: "group.access_management",
     menuItems: userManagement,
     requiredScope: Permission.READ_USERS
   },

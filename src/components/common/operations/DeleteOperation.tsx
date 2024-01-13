@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel> extends OperationProps<T> {
   serviceCall: (id: ID) => Promise<void>;
   idProvider?: (entity: T) => ID;
+  redirectOverride?: (entity: T) => string;
 }
 
 /**
@@ -23,9 +24,12 @@ interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | File
  * @param titleSupplier supplier function to provide the "display name" of the entity
  * @param serviceCall service entry point to execute deletion
  * @param mutate SWR mutate function for data invalidation
+ * @param redirectOverride target href if the auto-generated one does not fit the use case
  */
 export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel>(
-  { domain, entity, titleSupplier, serviceCall, idProvider = entity => (entity as IdentifiedModel<ID>).id }: DeletionProps<ID, T>): ReactNode => {
+  { domain, entity, titleSupplier, serviceCall,
+    idProvider = entity => (entity as IdentifiedModel<ID>).id,
+    redirectOverride }: DeletionProps<ID, T>): ReactNode => {
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -36,7 +40,9 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
 
     setOperationInProgress(true);
     serviceCall(idProvider(entity))
-      .then(_ => router.push(redirectMap[domain]))
+      .then(_ => router.push(redirectOverride
+        ? redirectOverride(entity)
+        : redirectMap[domain]))
       .then(_ => showCustomToast(
         t(`toast.template.title.success.updated`, {
           domain: t(`domain.${domain}`)

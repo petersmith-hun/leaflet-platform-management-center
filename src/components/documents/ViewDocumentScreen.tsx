@@ -26,7 +26,7 @@ export interface ViewDocumentScreenParameters {
 }
 
 /**
- * Document viewer screen component. Renders a static page with every information of the given document.
+ * Document viewer screen component. Renders a static page with all information of the given document.
  *
  * @param document document data to be rendered
  * @param environment APIEnvironment object defining the target API configuration

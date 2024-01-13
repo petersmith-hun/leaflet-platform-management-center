@@ -40,7 +40,8 @@ export interface ArticleModel extends IdentifiedSelfStatusAwareModel<number> {
   locale: string;
   published: string;
   rawContent: string;
-  entryStatus: ArticleStatus
+  entryStatus: ArticleStatus;
+  pendingCommentCount?: number;
 }
 
 /**
