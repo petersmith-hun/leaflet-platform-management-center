@@ -46,7 +46,7 @@ export const commentFacade = (environment: APIEnvironment): CommentFacade => {
   const groupCountByArticleID = (articleIDsWithPendingComment: number[]): Record<number, number> => {
 
     return articleIDsWithPendingComment
-      .reduce((accumulator, currentValue ) => {
+      .reduce((accumulator, currentValue) => {
 
         if (!accumulator.hasOwnProperty(currentValue)) {
           accumulator[currentValue] = 0;

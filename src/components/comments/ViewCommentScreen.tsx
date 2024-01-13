@@ -22,7 +22,7 @@ interface ViewCommentScreenParameters {
 }
 
 /**
- * Comment viewer screen component. Renders a static page with every information of the given comment.
+ * Comment viewer screen component. Renders a static page with all information of the given comment.
  *
  * @param comment data of an existing comment
  * @param environment APIEnvironment object defining the target API configuration

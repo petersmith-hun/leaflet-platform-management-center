@@ -9,7 +9,7 @@ interface CommentStatusFlagProps {
 }
 
 /**
- * Flag component for indicating the status of a comment. Show a "deleted" indicator if the comment is logically
+ * Flag component for indicating the status of a comment. Shows a "deleted" indicator if the comment is logically
  * deleted, otherwise it shows the enabled/disabled status flag.
  *
  * @param comment comment data

@@ -81,7 +81,7 @@ export const UnreviewedCommentList = ({ environment }: ScreenParameters): ReactN
 }
 
 /**
- * Main screen of tag manager.
+ * Main screen of comment manager.
  *
  * @param environment APIEnvironment object defining the target API configuration
  */

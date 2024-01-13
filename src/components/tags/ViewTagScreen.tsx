@@ -21,7 +21,7 @@ interface ViewTagScreenParameters {
 }
 
 /**
- * Tag viewer screen component. Renders a static page with every information of the given tag.
+ * Tag viewer screen component. Renders a static page with all information of the given tag.
  *
  * @param tag data of an existing tag
  * @param environment APIEnvironment object defining the target API configuration

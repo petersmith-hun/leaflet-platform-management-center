@@ -34,7 +34,7 @@ const getHandleCommentButtonSuffix = (article: ArticleModel): string => {
 }
 
 /**
- * Article viewer screen component. Renders a static page with every information of the given article.
+ * Article viewer screen component. Renders a static page with all information of the given article.
  *
  * @param article article data to be rendered
  * @param environment APIEnvironment object defining the target API configuration

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 export const getServerSideProps = environmentProperties;
 
 /**
- * View comments or article page.
+ * View comments of article page.
  * Mapped to /comments/:id
  *
  * @param environment APIEnvironment object defining the target API configuration
