@@ -95,8 +95,7 @@ jobs:
       - run:
           name: Compile Next.js application
           command: npm run build
-      - setup_remote_docker:
-          version: 20.10.18
+      - setup_remote_docker
       - run:
           name: Package and upload Docker image
           command: |
