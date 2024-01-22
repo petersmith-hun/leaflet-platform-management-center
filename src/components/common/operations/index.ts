@@ -15,7 +15,7 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   file: "/files/browse",
   fileView: "/files",
   tag: "/tags",
-  user: "/user"
+  user: "/users"
 };
 
 /**

@@ -83,6 +83,24 @@
     "tag.edit.general-status": "General status",
     "tag.edit.last-modified-at": "Last modified at",
 
+    "user.edit.created-at": "Registered at",
+    "user.edit.current-password": "Current password",
+    "user.edit.email": "Email address",
+    "user.edit.last-modified-at": "Last profile update",
+    "user.edit.username": "Username",
+    "user.edit.password": "Password",
+    "user.edit.password-confirmation": "Password confirmation",
+    "user.edit.role": "Role",
+    "user.edit.role.ADMIN": "Administrator",
+    "user.edit.role.ADMIN.hint": "Full system access, all permission granted",
+    "user.edit.role.EDITOR": "Editor",
+    "user.edit.role.EDITOR.hint": "Able to access blog management features, no special permissions",
+    "user.edit.role.EXTERNAL_USER": "External user",
+    "user.edit.role.EXTERNAL_USER.hint": "Account managed by external IDP, commenting possible, no direct control over own profile",
+    "user.edit.role.USER": "User",
+    "user.edit.role.USER.hint": "Basic system access, control over own profile, commenting",
+    "user.edit.type-email-to-proceed": "Type your email address to proceed",
+
     "validation.common.required": "Please provide a value"
   },
 
@@ -115,10 +133,15 @@
 
     "group.external_systems": "External systems",
 
-    "user.sign_out": "Sign out"
+    "user.sign_out": "Sign out",
+    "user.account.update-profile": "Update profile",
+    "user.account.change-password": "Change password"
   },
 
   "translations": {
+    "account.label.account-deletion-warning": "This operation permanently removes your account and its related data, with no means to recover it. If you really wish to proceed, please provide your email address as confirmation, then click 'I proceed deleting my account'!",
+    "account.label.delete-email-mismatch": "The provided email address does not match your currently used one",
+
     "article.label.never-modified": "Never modified",
     "article.label.not-published": "Not published",
     "article.label.seo-keywords-none-specified": "None specified",
@@ -150,6 +173,7 @@
     "dropdown.operation.delete": "Delete",
     "dropdown.operation.edit": "Edit",
     "dropdown.operation.handle-comments": "Handle comments",
+    "dropdown.operation.user.change-role": "Change user role",
     "dropdown.operation.view": "View",
 
     "error.unauthenticated": "You are not authenticated, or your session has expired. Please try signing back in!",
@@ -182,6 +206,10 @@
     "header.tags.dates": "Created, last modified",
     "header.tags.status": "General status",
     "header.tags.operations": "Tag operations",
+    "header.user.name-email": "Username and email",
+    "header.user.role": "Role",
+    "header.user.dates": "Sign up, last update",
+    "header.user.operations": "User operations",
 
     "home.label.welcome": "Welcome back, {{username}}!",
 
@@ -190,6 +218,12 @@
     "notification.logs.no-entry-found": "No log entry found by the provided query",
     "notification.logs.found": "Found {{total}} items, {{visible}} visible on this page (page: {{currentPage}}/{{totalPage}})",
 
+    "page-operations.account": "Account operations",
+    "page-operations.account.view": "View your account details",
+    "page-operations.account.change-password": "Update your password",
+    "page-operations.account.update-profile": "Update your profile",
+    "page-operations.account.delete": "Delete your account",
+    "page-operations.account.confirm-delete-account": "I proceed deleting my account",
     "page-operations.article": "Article operations",
     "page-operations.article.back-to-articles": "Back to article manager",
     "page-operations.article.delete": "Delete article",
@@ -249,6 +283,11 @@
     "page-operations.tag.enable": "Enable tag",
     "page-operations.tag.new": "New tag",
     "page-operations.tag.view": "View tag",
+    "page-operations.user": "User operations",
+    "page-operations.user.back-to-users": "Back to users",
+    "page-operations.user.edit.change-role": "Change user role",
+    "page-operations.user.new": "Create local user",
+    "page-operations.user.view": "View user details",
 
     "page-operations.common.save": "Save",
 
@@ -260,6 +299,9 @@
     "page.sub-title.document.seo": "SEO Attributes",
     "page.sub-title.system.logs.query": "Search logs",
 
+    "page.title.account.change-password": "Change your password",
+    "page.title.account.delete-account": "Account deletion - proceed with caution!",
+    "page.title.account.update-profile": "Update your profile",
     "page.title.default": "Dashboard",
     "page.title.home": "Home",
     "page.title.article.create": "Compose new article",
@@ -289,6 +331,10 @@
     "page.title.tag.edit": "Edit existing tag",
     "page.title.tag.view": "Tag details",
     "page.title.tags": "Tags",
+    "page.title.users": "User accounts",
+    "page.title.user.create": "Create a new user account",
+    "page.title.user.edit.change-role": "Change user's current role",
+    "page.title.user.view": "View user details",
 
     "pagination.page-previous": "Previous",
     "pagination.page-next": "Next",
@@ -315,6 +361,10 @@
     "toast.template.message.status": "{{domain}} '{{title}}' has been {{status}}",
 
     "toast.error.validation-error": "Validation error",
-    "toast.error.unknown-error": "Unknown error"
+    "toast.error.unknown-error": "Unknown error",
+
+    "user.label.external-user-role-locked": "Changing the role of external accounts is not possible, due to the lack of a local password",
+    "user.label.never-modified": "Never updated",
+    "user.label.notification-change-password": "The account will be created with an auto-generated temporary password. Please notify the user to request password reset immediately after creating the account!"
   }
 }

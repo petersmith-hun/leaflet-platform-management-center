@@ -5,7 +5,7 @@ import { toastHandler } from "@/components/utility/toast-handler";
 import { IdentifiedModel } from "@/core/model/common";
 import { FileDataModel } from "@/core/model/files";
 import { PageContext } from "@/pages/_app";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -66,7 +66,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
   }
 
   return (
-    <ConfirmedOperationButton label={t(`page-operations.${domain}.delete`)} icon={faPencil}
+    <ConfirmedOperationButton label={t(`page-operations.${domain}.delete`)} icon={faTrash}
                               id={`${domain}-delete-${idProvider(entity)}`}
                               onSubmit={() => handleDeletion()}
                               awareness={AwarenessLevel.ALERT} />
