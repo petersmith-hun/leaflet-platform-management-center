@@ -26,8 +26,7 @@ export default function ViewUser(environment: APIEnvironment) {
   const {
     isLoading,
     data,
-    error,
-    mutate
+    error
   } = useSWR(swrNumberKey("users/view", router.query.id), (key) => getUserByID(key.parameter));
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function ViewUser(environment: APIEnvironment) {
 
   return (
     <SWRManagedScreen isLoading={isLoading} error={error}>
-      {() => <ViewUserScreen environment={environment} user={data!} mutate={mutate} />}
+      {() => <ViewUserScreen user={data!} />}
     </SWRManagedScreen>
   )
 }
