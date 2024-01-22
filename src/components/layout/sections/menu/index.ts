@@ -27,5 +27,5 @@ export interface MenuItemData {
 export interface UserMenuData {
   name: string;
   path: string;
-  clickHandler: () => void
+  clickHandler?: () => void
 }

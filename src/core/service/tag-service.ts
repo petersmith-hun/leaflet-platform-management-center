@@ -22,7 +22,7 @@ interface TagService {
   getTagByID: (id: number) => Promise<TagModel>;
 
   /**
-   * Created a new tag.
+   * Creates a new tag.
    *
    * @param tag tag data to be submitted
    */
