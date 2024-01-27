@@ -30,6 +30,9 @@ export enum LeafletPath {
   COMMENTS_ALL_PAGE_BY_ARTICLE = "/comments/entry/{id}/{page}/all",
   COMMENTS_GENERAL_STATUS = "/comments/{id}/status",
 
+  // -- DCP --
+  DCP = "/dcp",
+
   // -- documents --
   DOCUMENTS = "/documents",
   DOCUMENTS_BY_ID = "/documents/{id}",

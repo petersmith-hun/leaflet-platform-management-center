@@ -78,6 +78,11 @@
 
     "logs.query": "TLQL query",
 
+    "seo.edit.page-title": "Site (global) title",
+    "seo.edit.default-title": "Default article title",
+    "seo.edit.default-description": "Default article description",
+    "seo.edit.default-keywords": "Default article keywords",
+
     "tag.edit.name": "Tag",
     "tag.edit.created-at": "Created at",
     "tag.edit.general-status": "General status",
@@ -275,6 +280,7 @@
     "page-operations.file.view": "View file details",
     "page-operations.logs": "Log management operations",
     "page-operations.logs.query": "Query logs",
+    "page-operations.seo": "SEO operations",
     "page-operations.tag": "Tag operations",
     "page-operations.tag.back-to-tags": "Back to all tags",
     "page-operations.tag.delete": "Delete tag",
@@ -298,6 +304,7 @@
     "page.sub-title.document.rendered-content": "Rendered content",
     "page.sub-title.document.seo": "SEO Attributes",
     "page.sub-title.system.logs.query": "Search logs",
+    "page.sub-title.system.seo-update": "Update default SEO configuration",
 
     "page.title.account.change-password": "Change your password",
     "page.title.account.delete-account": "Account deletion - proceed with caution!",
@@ -327,6 +334,7 @@
     "page.title.files.edit-metadata": "Edit metadata",
     "page.title.files.view": "View file details",
     "page.title.system.logs": "Log management",
+    "page.title.system.seo": "Default SEO configuration",
     "page.title.tag.create": "Create new tag",
     "page.title.tag.edit": "Edit existing tag",
     "page.title.tag.view": "Tag details",
@@ -353,6 +361,9 @@
     "toast.article.message.status.publication.REVIEW": "submitted for review",
 
     "toast.log-management.query-failure": "Failed to query logs",
+
+    "toast.system-configuration.seo.updated": "Default SEO configuration successfully updated",
+    "toast.system-configuration.updated": "System configuration updated",
 
     "toast.template.title.failure": "Failed to update {{domain}}",
     "toast.template.title.success.created": "{{domain}} created",
