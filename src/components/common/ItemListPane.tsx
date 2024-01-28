@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 interface ChildrenListProps {
   children: ReactNode[];
+  title?: string;
 }
 
 interface ItemListProps extends ChildrenListProps {
@@ -14,7 +15,7 @@ interface ItemListProps extends ChildrenListProps {
 
 interface ItemListHeaderItemProps {
   titleKey: string;
-  widthClass: "w-1/12" | "w-2/12" | "w-3/12" | "w-5/12" | "w-8/12";
+  widthClass: "w-1/12" | "w-2/12" | "w-3/12" | "w-4/12" | "w-5/12" | "w-8/12";
 }
 
 interface ItemListBodyProps<T> {
@@ -26,13 +27,17 @@ interface ItemListBodyProps<T> {
  * Renders a header above the item list.
  *
  * @param children contents to be rendered within
+ * @param title optional header title
  */
-export const ItemListHeader = ({ children }: ChildrenListProps): ReactNode => {
+export const ItemListHeader = ({ children, title }: ChildrenListProps): ReactNode => {
 
   return (
     <div
-      className="rounded-lg bg-white p-2 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 md:flex flex-row text-center text-xs text-neutral-400 hidden">
-      {children}
+      className="rounded-lg bg-white p-2 mb-3 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:shadow-lg dark:bg-neutral-700 md:flex flex-col text-center text-xs text-neutral-400 hidden">
+      {title && <p className="pl-2 text-left text-lg text-neutral-50">{title}</p>}
+      <div className="md:flex flex-row">
+        {children}
+      </div>
     </div>
   )
 }
