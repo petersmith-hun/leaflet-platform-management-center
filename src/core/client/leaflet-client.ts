@@ -38,6 +38,11 @@ export enum LeafletPath {
   DOCUMENTS_BY_ID = "/documents/{id}",
   DOCUMENTS_GENERAL_STATUS = "/documents/{id}/status",
 
+  // -- routes --
+  ROUTES = "/routes",
+  ROUTES_BY_ID = "/routes/{id}",
+  ROUTES_GENERAL_STATUS = "/routes/{id}/status",
+
   // -- tags --
   TAGS_ALL = "/tags",
   TAGS_ASSIGN = "/tags/assign",
