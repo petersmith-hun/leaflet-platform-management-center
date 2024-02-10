@@ -11,6 +11,7 @@ export type OperationDomain =
   | "fileView"
   | "route"
   | "tag"
+  | "translation"
   | "user";
 
 /**
@@ -26,6 +27,7 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   fileView: "/files",
   route: "/system/routes",
   tag: "/tags",
+  translation: "/system/translations",
   user: "/users"
 };
 

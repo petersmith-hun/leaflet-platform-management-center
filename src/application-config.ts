@@ -32,7 +32,8 @@ const applicationConfig: ApplicationConfig = {
     tokenPath: process.env.SERVICE_AUTH_TOKEN_PATH as string,
     clients: {
       [ExternalService.RESOURCE_SERVER]: createClientConfig(ExternalService.RESOURCE_SERVER),
-      [ExternalService.LOG_PROCESSOR]: createClientConfig(ExternalService.LOG_PROCESSOR)
+      [ExternalService.LOG_PROCESSOR]: createClientConfig(ExternalService.LOG_PROCESSOR),
+      [ExternalService.TRANSLATION_MANAGER]: createClientConfig(ExternalService.TRANSLATION_MANAGER),
     }
   }
 }
