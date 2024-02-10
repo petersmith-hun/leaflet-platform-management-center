@@ -5,20 +5,14 @@ import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag
 import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
 import { GeneralStatusUpdateOperation } from "@/components/common/operations/GeneralStatusUpdateOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
+import { Tooltip } from "@/components/common/Tooltip";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { FrontEndRouteDataModel } from "@/core/model/routes";
 import { routesService } from "@/core/service/routes-service";
 import { dateFormatter } from "@/core/util/date-formatter";
-import {
-  faCircleInfo,
-  faList,
-  faLocationArrow,
-  faPencil,
-  faRoute,
-  faUserShield
-} from "@fortawesome/free-solid-svg-icons";
+import { faList, faLocationArrow, faPencil, faRoute, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
@@ -29,25 +23,7 @@ interface ViewRouteDetailsScreenProps {
 }
 
 const RouteIDTooltip = (): ReactNode => {
-
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const init = async () => {
-      const { Tooltip, initTE } = await import("tw-elements");
-      initTE({ Tooltip }, { allowReinits: true });
-    };
-    init();
-  }, []);
-
-  return (
-    <span
-      className="transititext-primary text-neutral transition duration-150 ease-in-out hover:text-neutral-600 focus:text-neutral-600 active:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500 dark:active:text-neutral-600"
-      data-te-toggle="tooltip"
-      title={t("system.route.label.route-id")}>
-      <FontAwesomeIcon icon={faCircleInfo} />
-    </span>
-  )
+  return <Tooltip tooltipKey={"system.route.label.route-id"} />
 }
 
 /**

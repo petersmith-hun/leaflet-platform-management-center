@@ -3,6 +3,7 @@ import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
+import { Tooltip } from "@/components/common/Tooltip";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { DefaultSubmitButton } from "@/components/form/SubmitButton";
@@ -10,7 +11,7 @@ import { Textarea } from "@/components/form/Textarea";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { PackLocale, TranslationPackCreationFormData, TranslationPackCreationRequest } from "@/core/model/translations";
 import { translationService } from "@/core/service/translation-service";
-import { faCheckCircle, faCircleInfo, faList, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faList, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TFunction } from "i18next";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -29,27 +30,8 @@ const generateOptions = (t: TFunction): Record<string, string> => {
   return Object.fromEntries(entries);
 }
 
-// TODO extract tooltip (3 usage already)
 const DefinitionTooltip = (): ReactNode => {
-
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const init = async () => {
-      const { Tooltip, initTE } = await import("tw-elements");
-      initTE({ Tooltip }, { allowReinits: true });
-    };
-    init();
-  }, []);
-
-  return (
-    <span
-      className="transititext-primary text-neutral transition duration-150 ease-in-out hover:text-neutral-600 focus:text-neutral-600 active:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500 dark:active:text-neutral-600"
-      data-te-toggle="tooltip"
-      title={t("system.translations.definitions.label.identified-tooltip")}>
-      <FontAwesomeIcon icon={faCircleInfo} />
-    </span>
-  )
+  return <Tooltip tooltipKey={"system.translations.definitions.label.identified-tooltip"} />
 }
 
 const splitDefinitions = (definitionCSV: string): Record<string, string> => {
