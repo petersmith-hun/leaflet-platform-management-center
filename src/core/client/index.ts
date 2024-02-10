@@ -4,5 +4,6 @@
 export enum ExternalService {
 
   RESOURCE_SERVER = "lsrs",
-  LOG_PROCESSOR = "tlp"
+  LOG_PROCESSOR = "tlp",
+  TRANSLATION_MANAGER = "tms"
 }
