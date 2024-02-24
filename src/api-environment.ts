@@ -1,6 +1,9 @@
+import applicationConfig from "@/application-config";
+import { ExternalService } from "@/core/client";
+import { getServiceToken } from "@/core/client/client-credentials-registry";
 import { options } from "@/pages/api/auth/[...nextauth]";
 import { NextPageContext } from "next";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import { v5 as uuidv5 } from 'uuid';
 
 /**
@@ -46,6 +49,22 @@ export interface APIEnvironment extends HostEnvironment {
 }
 
 /**
+ * LSAS API environment parameters.
+ */
+export interface ClusterMonitoringAPIEnvironment extends HostEnvironment {
+
+  /**
+   * Authorization header to verify the admin user session.
+   */
+  authorization: Record<string, string> | null;
+
+  /**
+   * Authorization header for LSAS streaming connections.
+   */
+  monitoringAuthorization?: Record<string, string>;
+}
+
+/**
  * Parameters passed directly to a page component.
  */
 export interface ScreenParameters {
@@ -61,9 +80,8 @@ const environmentProperties = async (context: NextPageContext): Promise<{ props:
 
   // @ts-ignore
   const session = await getServerSession(context.req, context.res, options);
-  const tokenExpiresAt = new Date(session?.expiresAt ?? 0).getTime();
 
-  if (tokenExpiresAt < new Date().getTime()) {
+  if (isTokenExpired(session)) {
     return { props: {} };
   }
 
@@ -77,6 +95,36 @@ const environmentProperties = async (context: NextPageContext): Promise<{ props:
       resourceServer: requireParameter(process.env.RESOURCE_SERVER)
     }
   }
+}
+
+/**
+ * Generates the server side properties needed by the cluster monitoring pages (communicating with LSAS).
+ *
+ * @param context NextPageContext object containing the HTTP request and response objects
+ */
+export const monitoringEnvironmentProperties = async (context: NextPageContext): Promise<{ props: ClusterMonitoringAPIEnvironment | object }> => {
+
+  // @ts-ignore
+  const session = await getServerSession(context.req, context.res, options);
+
+  if (isTokenExpired(session)) {
+    return { props: {} };
+  }
+
+  const lsasJSConfig = applicationConfig.services.clients.lsas_js;
+  const lsasJSToken = await getServiceToken(ExternalService.STACK_ADMIN_SERVICE_JS);
+
+  return {
+    props: {
+      api: requireParameter(lsasJSConfig.host),
+      authorization: createAuthorizationHeader(session?.accessToken),
+      monitoringAuthorization: createAuthorizationHeader(lsasJSToken)
+    }
+  }
+}
+
+const isTokenExpired = (session: Session | null): boolean => {
+  return new Date(session?.expiresAt ?? 0).getTime() < new Date().getTime();
 }
 
 const requireParameter = (parameter?: string | null): string => {

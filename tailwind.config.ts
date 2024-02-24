@@ -15,7 +15,8 @@ const config: Config = {
   },
   plugins: [
     require("tw-elements/dist/plugin.cjs"),
-    require('@tailwindcss/typography')
+    require('@tailwindcss/typography'),
+    require("daisyui")
   ],
 }
 export default config

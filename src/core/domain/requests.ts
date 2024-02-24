@@ -49,6 +49,11 @@ export class RESTRequest {
    */
   readonly headers?: Record<string, string>;
 
+  /**
+   * Optional parameter to enable streaming response.
+   */
+  readonly streaming?: boolean;
+
   constructor(opts: RESTRequest) {
     Object.assign(this, {
       authorization: {},
