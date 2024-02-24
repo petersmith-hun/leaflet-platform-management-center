@@ -31,7 +31,10 @@ const baseRestClient = <T>(environment: HostEnvironment, request: RESTRequest): 
     method: request.method,
     headers: headers,
     params: request.queryParameters,
-    data: request.requestBody
+    data: request.requestBody,
+    responseType: request.streaming
+      ? "stream"
+      : "json"
   });
 }
 

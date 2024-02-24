@@ -34,6 +34,8 @@ const applicationConfig: ApplicationConfig = {
       [ExternalService.RESOURCE_SERVER]: createClientConfig(ExternalService.RESOURCE_SERVER),
       [ExternalService.LOG_PROCESSOR]: createClientConfig(ExternalService.LOG_PROCESSOR),
       [ExternalService.TRANSLATION_MANAGER]: createClientConfig(ExternalService.TRANSLATION_MANAGER),
+      [ExternalService.STACK_ADMIN_SERVICE]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE),
+      [ExternalService.STACK_ADMIN_SERVICE_JS]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE_JS),
     }
   }
 }
