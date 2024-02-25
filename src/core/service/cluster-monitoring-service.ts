@@ -2,7 +2,7 @@ import { APIEnvironment, ClusterMonitoringAPIEnvironment } from "@/api-environme
 import { ExternalService } from "@/core/client";
 import { baseServiceGatewayRestClient } from "@/core/client/base-service-gateway-rest-client";
 import { RequestMethod, RESTRequest } from "@/core/domain/requests";
-import { Container, ContainerDetails, ContainerStats } from "@/core/model/cluster";
+import { Container, ContainerDetails, ContainerStats, RegisteredServices, ServiceStatus } from "@/core/model/cluster";
 import { createObservable } from "@/core/util/observable-factory";
 import { Observable } from "rxjs";
 
@@ -28,13 +28,25 @@ interface ClusterMonitoringService {
    * @param abortController AbortController instance to request stopping the data stream
    */
   getContainerStats: (containerIDs: string[], abortController: AbortController) => Observable<ContainerStats>;
+
+  /**
+   * Returns the list of registered services wrapped in RegisteredServices.
+   */
+  getServices: () => Promise<RegisteredServices>;
+
+  /**
+   * Returns detailed service status information about the registered services.
+   */
+  getServiceStatuses: () => Observable<ServiceStatus>;
 }
 
 enum MonitoringPath {
 
   CONTAINERS = "/containers",
   CONTAINERS_STATS = "/containers/stats",
-  CONTAINERS_DETAILS = "/containers/details"
+  CONTAINERS_DETAILS = "/containers/details",
+  DISCOVER = "/stack-status/discover",
+  REGISTERED_SERVICES = "/stack-status/registered-services"
 }
 
 /**
@@ -73,6 +85,26 @@ export const clusterMonitoringService = (environment: ClusterMonitoringAPIEnviro
 
     getContainerStats(containerIDs: string[], abortController: AbortController): Observable<ContainerStats> {
       return setupSubscription(MonitoringPath.CONTAINERS_STATS, containerIDs, abortController);
+    },
+
+    async getServices(): Promise<RegisteredServices> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.GET,
+        path: MonitoringPath.REGISTERED_SERVICES
+      });
+
+      return baseServiceGatewayRestClient(environment as APIEnvironment, ExternalService.STACK_ADMIN_SERVICE, request);
+    },
+
+    getServiceStatuses(): Observable<ServiceStatus> {
+
+      return createObservable(() => fetch(`${environment.api}${MonitoringPath.DISCOVER}`, {
+        headers: {
+          ...environment.monitoringAuthorization,
+          Accept: "text/event-stream"
+        }
+      }));
     }
   }
 }

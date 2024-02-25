@@ -26,7 +26,7 @@ interface ContainerInfoProps {
  * @param environment ClusterMonitoringAPIEnvironment object defining the target API configuration
  * @param containers list of registered containers
  */
-export const ContainerInfo = ({ environment, containers }: ContainerInfoProps): ReactNode => {
+export const ContainerInfoScreen = ({ environment, containers }: ContainerInfoProps): ReactNode => {
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -70,7 +70,7 @@ export const ContainerInfo = ({ environment, containers }: ContainerInfoProps): 
         </ItemListBody>
       </ItemListPane>
       <NarrowPane>
-        <PageOperationCard title={t("page-operation.cluster.summary")}>
+        <PageOperationCard title={t("page-operations.cluster.summary")}>
           <div className="flex flex-row text-center">
             <div className="flex flex-col flex-grow">
               <div
@@ -78,18 +78,18 @@ export const ContainerInfo = ({ environment, containers }: ContainerInfoProps): 
               <div>
                 <ContainerCountIndicator stopped={clusterStatus.countStopped} total={clusterStatus.containers.length} />
               </div>
-              {clusterStatus.countStopped && (
+              {clusterStatus.countStopped ? (
                 <div className="text-xs text-warning py-2">
                   <FontAwesomeIcon className="mr-1" icon={faWarning} />
                   {t("system.cluster.label.summary.count-stopped", { count: clusterStatus.countStopped })}
                 </div>
-              )}
-              {!clusterStatus.countStopped && (
+              ) : null}
+              {!clusterStatus.countStopped ? (
                 <div className="text-xs text-success py-2">
                   <FontAwesomeIcon className="mr-1" icon={faCheckCircle} />
                   {t("system.cluster.label.summary.all-running")}
                 </div>
-              )}
+              ) : null}
             </div>
             <div className="flex flex-col flex-grow">
               <div className="text-xs text-neutral-300 py-2">{t("system.cluster.label.summary.total-cpu")}</div>

@@ -1,6 +1,6 @@
 import { ClusterMonitoringAPIEnvironment, monitoringEnvironmentProperties } from "@/api-environment";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
-import { ContainerInfoScreen } from "@/components/system/cluster/ContainerInfoScreen";
+import { ServiceDashboardScreen } from "@/components/system/services/ServiceDashboardScreen";
 import { clusterMonitoringService } from "@/core/service/cluster-monitoring-service";
 import { PageContext } from "@/pages/_app";
 import { useContext, useEffect } from "react";
@@ -10,25 +10,25 @@ import useSWR from "swr";
 export const getServerSideProps = monitoringEnvironmentProperties;
 
 /**
- * Docker cluster status page.
- * Mapped to /system/docker/status
+ * Service health monitoring page.
+ * Mapped to /system/services
  *
  * @param environment APIEnvironment object defining the target API configuration
  */
-export default function DockerClusterStatus(environment: ClusterMonitoringAPIEnvironment) {
+export default function Services(environment: ClusterMonitoringAPIEnvironment) {
 
-  const { getContainers } = clusterMonitoringService(environment);
+  const { getServices } = clusterMonitoringService(environment);
   const { t } = useTranslation();
   const pageContext = useContext(PageContext);
-  const { isLoading, data, error } = useSWR("system/monitoring/docker/containers", getContainers);
+  const { isLoading, data, error } = useSWR("system/monitoring/services", getServices);
 
   useEffect(() => {
-    pageContext.updatePageTitle(t("page.title.system.docker.cluster-status"));
+    pageContext.updatePageTitle(t("page.title.system.services"));
   }, []);
 
   return (
     <SWRManagedScreen isLoading={isLoading} error={error}>
-      {() => <ContainerInfoScreen environment={environment} containers={data!} />}
+      {() => <ServiceDashboardScreen environment={environment} services={data!} />}
     </SWRManagedScreen>
   )
 }

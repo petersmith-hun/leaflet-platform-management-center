@@ -1,5 +1,5 @@
 import { ClusterMonitoringAPIEnvironment } from "@/api-environment";
-import { Container, ContainerDetails, ContainerStats } from "@/core/model/cluster";
+import { Container, ContainerDetails, ContainerStats, ServiceStatus } from "@/core/model/cluster";
 import { clusterMonitoringService } from "@/core/service/cluster-monitoring-service";
 import { NextRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
@@ -9,6 +9,11 @@ interface DockerMonitoringState {
 
   setDetails: Dispatch<SetStateAction<Record<string, ContainerDetails>>>;
   setStats: Dispatch<SetStateAction<Record<string, ContainerStats>>>;
+}
+
+interface HealthcheckState {
+
+  setHealthcheck: Dispatch<SetStateAction<Record<string, ServiceStatus>>>;
 }
 
 interface ClusterMonitoringFacade {
@@ -21,6 +26,13 @@ interface ClusterMonitoringFacade {
    * @param state React state update methods to set live data on UI
    */
   startDockerMonitoring(state: DockerMonitoringState): void;
+
+  /**
+   * Triggers an asynchronous healthcheck operation for each registered service.
+   *
+   * @param state React state update method to set live data on UI
+   */
+  executeHealthcheck(state: HealthcheckState): void;
 }
 
 /**
@@ -32,7 +44,7 @@ interface ClusterMonitoringFacade {
  */
 export const clusterMonitoringFacade = (environment: ClusterMonitoringAPIEnvironment, router: NextRouter, containers: Container[]): ClusterMonitoringFacade => {
 
-  const { getContainerDetails, getContainerStats } = clusterMonitoringService(environment);
+  const { getContainerDetails, getContainerStats, getServiceStatuses } = clusterMonitoringService(environment);
 
   const subscribe = <T extends { id: string }>(observable: Observable<T>, stateUpdater: Dispatch<SetStateAction<Record<string, T>>>): void => {
 
@@ -55,6 +67,17 @@ export const clusterMonitoringFacade = (environment: ClusterMonitoringAPIEnviron
       subscribe(getContainerStats(containerIDs, abortController), state.setStats);
 
       router.events.on("routeChangeStart", () => abortController.abort());
+    },
+
+    executeHealthcheck(state: HealthcheckState): void {
+
+      getServiceStatuses().subscribe(status => {
+        console.log(status)
+        state.setHealthcheck(item => {
+          item[status.app.abbreviation] = status;
+          return Object.assign({}, item);
+        })
+      });
     }
   }
 }
