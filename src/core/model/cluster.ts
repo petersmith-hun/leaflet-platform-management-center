@@ -74,3 +74,48 @@ export interface ClusterStatus {
   totalRAMUsagePercentage: number;
   totalCPUUsagePercentage: number;
 }
+
+/**
+ * Response object containing the list of abbreviations of the registered services.
+ */
+export interface RegisteredServices {
+
+  registeredServices: string[];
+}
+
+/**
+ * Response object containing the basic information of a registered service.
+ */
+export interface ServiceInfo {
+
+  name: string;
+  abbreviation: string;
+}
+
+/**
+ * Response object containing the build information of a registered service.
+ */
+export interface BuildInfo {
+
+  time: string;
+  version: string;
+}
+
+/**
+ * Response object wrapping a registered service's basic and build information, as well as its overall status.
+ */
+export interface ServiceStatus {
+
+  app: ServiceInfo;
+  build: BuildInfo;
+  up: boolean | "polling";
+}
+
+/**
+ * Domain object containing status summary of the registered services.
+ */
+export interface ServiceStatusSummary {
+
+  countAll: number;
+  countNotResponding: number;
+}

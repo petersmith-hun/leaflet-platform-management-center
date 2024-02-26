@@ -12,13 +12,14 @@ import {
   faLanguage,
   faNewspaper,
   faPlus,
+  faSignal,
   faTags,
   faUsers
 } from "@fortawesome/free-solid-svg-icons";
 
 const rootGroup: MenuItemData[] = [
   {
-    itemKey: "Home",
+    itemKey: "group.root.item.home",
     path: "/",
     icon: faHome
   }
@@ -34,6 +35,12 @@ const quickCreation: MenuItemData[] = [
 ];
 
 const systemManagement: MenuItemData[] = [
+  {
+    itemKey: "group.system_management.item.services",
+    path: "/system/services",
+    icon: faSignal,
+    requiredScope: Permission.READ_ADMIN
+  },
   {
     itemKey: "group.system_management.item.seo",
     path: "/system/seo",
