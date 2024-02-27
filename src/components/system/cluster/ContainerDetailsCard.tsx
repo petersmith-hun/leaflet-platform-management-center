@@ -5,7 +5,14 @@ import { UtilizationIndicator } from "@/components/system/cluster/UtilizationInd
 import { ContainerStatus, ContainerView } from "@/core/model/cluster";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { faDocker } from "@fortawesome/free-brands-svg-icons";
-import { faCalendarPlus, faFileText, faFingerprint, faTag, faWarning } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarPlus,
+  faCompactDisc,
+  faFileText,
+  faFingerprint,
+  faTag,
+  faWarning
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateTime } from "luxon";
 import React, { ReactNode } from "react";
@@ -42,14 +49,18 @@ export const ContainerDetailsCard = ({ containerView }: ContainerDetailsCardProp
         </h5>
         <Separator thick={false} />
         <span>
-          <FontAwesomeIcon className="h-4 w-4" icon={faFingerprint} /> {containerView.id}
+          <FontAwesomeIcon className="h-4 w-4" icon={faCompactDisc} /> {containerView.image}
         </span>
         <span>
-          <FontAwesomeIcon className="ml-2 h-4 w-4" icon={faTag} /> {containerView.image}
+          <FontAwesomeIcon className="h-4 w-4 ml-2" icon={faTag} /> {containerView.version}
+        </span>
+        <br />
+        <span className="text-xs">
+          <FontAwesomeIcon className="h-4 w-4" icon={faFingerprint} /> {containerView.id}
         </span>
         {containerView.status !== ContainerStatus.UNKNOWN && (
           <>
-            <span>
+            <span className="text-xs">
               <FontAwesomeIcon className="pl-2 h-4 w-4"
                                icon={faCalendarPlus} /> {dateFormatter(containerView.startedAt)}
             </span>
@@ -60,10 +71,13 @@ export const ContainerDetailsCard = ({ containerView }: ContainerDetailsCardProp
           </>
         )}
         {containerView.status === ContainerStatus.UNKNOWN && (
-          <span className="text-warning">
-            <FontAwesomeIcon className="ml-2 mr-1 h-4 w-4" icon={faWarning} />
-            {t("system.cluster.label.alert.awaiting-data")}
-          </span>
+          <>
+            <br />
+            <span className="text-warning">
+              <FontAwesomeIcon className="h-4 w-4" icon={faWarning} />
+              {t("system.cluster.label.alert.awaiting-data")}
+            </span>
+          </>
         )}
       </div>
       <div className="w-2/12 text-center">

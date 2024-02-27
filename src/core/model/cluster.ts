@@ -52,6 +52,7 @@ export interface ContainerView {
 
   id: string;
   image: string;
+  version: string;
   name: string;
   cpuUsagePercent: number;
   memoryUsagePercent: number;
