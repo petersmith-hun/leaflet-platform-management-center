@@ -1,7 +1,7 @@
 /**
  * Cache key model for SWR operations.
  */
-interface SWRKey<T> {
+export interface SWRKey<T> {
 
   /**
    * Arbitrary operation identifier.

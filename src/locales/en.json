@@ -56,6 +56,7 @@
 
     "confirmation.cancel": "Cancel",
     "confirmation.delete.article": "Are you sure you want to delete this article?",
+    "confirmation.delete.docker-tag": "Are you sure you want to delete this Docker image tag?",
 
     "directory.edit.name": "Folder name",
 
@@ -248,6 +249,13 @@
     "header.system.cluster.status.container-status": "Status, uptime",
     "header.system.cluster.status.cpu-utilization": "CPU %",
     "header.system.cluster.status.memory-utilization": "RAM %, MB",
+    "header.system.docker-registry.operations": "Registry operations",
+    "header.system.docker-registry.registry-data": "Registry name and URL",
+    "header.system.docker-repository.name": "Repository name",
+    "header.system.docker-repository.operations": "Repository operations",
+    "header.system.docker-tag.created": "Created (built)",
+    "header.system.docker-tag.name": "Docker tag name",
+    "header.system.docker-tag.operations": "Tag operations",
     "header.system.services.name": "Service abbreviation, full name",
     "header.system.services.status": "Status",
     "header.system.services.build-info": "Version, built at",
@@ -309,6 +317,9 @@
     "page-operations.comment.enable": "Publish comment",
     "page-operations.comment.view": "View comment",
     "page-operations.directory": "Folder operations",
+    "page-operations.docker-registry-browser": "Docker Registry Browser operations",
+    "page-operations.docker-registry-browser.list-registries": "List configured registries",
+    "page-operations.docker-registry-browser.list-repositories": "List repositories in Registry",
     "page-operations.document": "Document operations",
     "page-operations.document.back-to-documents": "Back to all documents",
     "page-operations.document.delete": "Delete document",
@@ -402,6 +413,9 @@
     "page.title.files.edit-metadata": "Edit metadata",
     "page.title.files.view": "View file details",
     "page.title.system.docker.cluster-status": "Docker cluster live status",
+    "page.title.system.docker.registry-browser": "Configured Docker Registry instances",
+    "page.title.system.docker.registry-browser.registry-contents": "Repositories in selected Docker Registry",
+    "page.title.system.docker.registry-browser.repository-contents": "Tags in selected repository",
     "page.title.system.logs": "Log management",
     "page.title.system.route.create": "Create new frontend route",
     "page.title.system.route.edit": "Edit existing frontend route",
@@ -438,6 +452,8 @@
     "system.cluster.label.summary.number-of-containers": "Container #",
     "system.cluster.label.summary.total-cpu": "Total CPU %",
     "system.cluster.label.summary.total-ram": "Total RAM %",
+    "system.docker-registry.label.number-of-repositories": "Number of repositories in registry: {{count}}",
+    "system.docker-registry.label.number-of-tags": "Number of tags in repository: {{count}}",
     "system.route.label.route-id": "Use this ID in the frontend application to reference a route to be displayed",
     "system.services.label.no-healthcheck-response": "Service is not responding to healthcheck request",
     "system.services.label.summary.all-up": "All up",
@@ -461,6 +477,9 @@
     "toast.article.message.status.publication.DRAFT": "marked as draft",
     "toast.article.message.status.publication.PUBLIC": "published",
     "toast.article.message.status.publication.REVIEW": "submitted for review",
+
+    "toast.docker.registry.tag-deleted": "Docker image tag '{{repository}}:{{tag}}' deleted",
+    "toast.docker-registry.updated": "Docker Registry updated",
 
     "toast.log-management.query-failure": "Failed to query logs",
 
