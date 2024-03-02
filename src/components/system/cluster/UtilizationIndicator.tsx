@@ -19,9 +19,9 @@ export const UtilizationIndicator = ({ percentage }: UtilizationIndicatorProps):
   const percent = Math.round(percentage);
 
   return (
-    <div className="radial-progress bg-neutral-400 text-primary-content border-4 border-neutral-400"
+    <div className="daisy-radial-progress border-4 border-neutral-700 text-neutral-300"
       // @ts-ignore
-         style={{ "--value": percent }}
+         style={{ "--value": percent, boxShadow: "0px 0px 0px 8px rgb(82, 82, 82) inset" }}
          role="progressbar">{percent}%
     </div>
   )
@@ -38,9 +38,9 @@ export const ContainerCountIndicator = ({ stopped, total }: ContainerCountIndica
   const percent = Math.round((total - stopped) / total * 100);
 
   return (
-    <div className="radial-progress bg-neutral-400 text-primary-content border-4 border-neutral-400 text-[32px]"
+    <div className="daisy-radial-progress border-4 border-neutral-700 text-neutral-300 text-[28px]"
       // @ts-ignore
-         style={{ "--value": percent }}
+         style={{ "--value": percent, boxShadow: "0px 0px 0px 8px rgb(82, 82, 82) inset" }}
          role="progressbar">{total}
     </div>
   )

@@ -50,7 +50,7 @@ export const ContainerInfoScreen = ({ environment, containers }: ContainerInfoPr
   return (
     <MultiPaneScreen>
       <ItemListPane pagination={noOpPagination}>
-        {clusterStatus.countStopped && (
+        {clusterStatus.countStopped ? (
           <SimpleCard>
             <p className="text-warning flex flex-row">
               <FontAwesomeIcon className="w-8 h-8 mr-2" icon={faWarning} />
@@ -58,7 +58,7 @@ export const ContainerInfoScreen = ({ environment, containers }: ContainerInfoPr
                 {t("system.cluster.label.alert.not-running-containers", { count: clusterStatus.countStopped })}</span>
             </p>
           </SimpleCard>
-        )}
+        ) : null}
         <ItemListHeader>
           <ItemListHeaderItem titleKey={"header.system.cluster.status.container-info"} widthClass={"w-5/12"} />
           <ItemListHeaderItem titleKey={"header.system.cluster.status.container-status"} widthClass={"w-2/12"} />

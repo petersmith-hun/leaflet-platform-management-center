@@ -18,5 +18,10 @@ const config: Config = {
     require('@tailwindcss/typography'),
     require("daisyui")
   ],
+
+  daisyui: {
+    prefix: "daisy-",
+    themeRoot: ":daisy"
+  }
 }
 export default config
