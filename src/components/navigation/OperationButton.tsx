@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -100,11 +101,8 @@ export const ConfirmedOperationButton = ({ label, popconfirmDomain = "article", 
   const { handleSubmit } = useForm<never>();
 
   useEffect(() => {
-    const init = async () => {
-      const { Popconfirm, initTE } = await import("tw-elements");
-      initTE({ Popconfirm }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Popconfirm]));
   }, []);
 
   const popConfirmID = `popConfirm-${id}`;

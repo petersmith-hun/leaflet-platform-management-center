@@ -1,5 +1,6 @@
 import { ValidatedInput, Validation } from "@/components/form/Validation";
-import { ReactNode } from "react";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
+import { ReactNode, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps extends ValidatedInput {
@@ -22,6 +23,11 @@ interface InputProps extends ValidatedInput {
  * @param password indicates the input to be rendered as password input (defaults to false)
  */
 export const Input = ({ registerReturn, label, id, readonly = false, errorSupplier, password = false }: InputProps): ReactNode => {
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input]));
+  }, []);
 
   return (
     <div className="mb-3 max-w-[90%]">

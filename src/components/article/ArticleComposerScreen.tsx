@@ -11,6 +11,7 @@ import { DefaultSubmitButton } from "@/components/form/SubmitButton";
 import { Textarea } from "@/components/form/Textarea";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { generateLinkByTitle } from "@/components/utility/generate-link";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
@@ -58,11 +59,8 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   }, [generateLink]);
 
   useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input, TWElement.Select]));
   }, []);
 
   return (

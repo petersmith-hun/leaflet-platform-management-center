@@ -10,7 +10,7 @@ import { TagEditRequest, TagModel } from "@/core/model/tag";
 import tagService from "@/core/service/tag-service";
 import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -38,14 +38,6 @@ export const TagComposerScreen = ({ environment, tag, mutate }: TagComposerScree
   });
   const router = useRouter();
   const tagID = router.query.id as number | undefined;
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"tag"} mutate={mutate} titleSupplier={tag => tag.name}

@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
+import React, { ReactNode, useEffect } from "react";
 
 interface ModalProps {
   id: string;
@@ -37,6 +38,11 @@ const CloseButton = (): ReactNode => {
  * @param children contents to be rendered within
  */
 export const Modal = ({ id, title, children }: ModalProps) => {
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Modal]));
+  }, []);
 
   return (
     <div

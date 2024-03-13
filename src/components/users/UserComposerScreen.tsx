@@ -12,7 +12,7 @@ import { UserCreationRequestModel, UserModel } from "@/core/model/user";
 import { userService } from "@/core/service/user-service";
 import { faList, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -71,14 +71,6 @@ export const UserComposerScreen = ({ environment, mutate }: UserComposerScreenPr
     handleSubmit,
     formState: { errors }
   } = useForm<UserCreationRequestModel>();
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <>

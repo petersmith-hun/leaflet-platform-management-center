@@ -9,7 +9,7 @@ import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { DirectoryCreationRequestModel, PathInfo } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { faFolderOpen, faList } from "@fortawesome/free-solid-svg-icons";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -29,14 +29,6 @@ export const DirectoryComposerScreen = ({ environment, pathInfo }: DirectoryComp
   const { createDirectory } = fileService(environment);
   const { t } = useTranslation();
   const { register, handleSubmit, formState: { errors } } = useForm<DirectoryCreationRequestModel>()
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"directory"}

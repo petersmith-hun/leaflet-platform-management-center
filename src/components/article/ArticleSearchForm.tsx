@@ -2,6 +2,7 @@ import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { SubmitButton } from "@/components/form/SubmitButton";
 import { createQueryString } from "@/components/utility/query-string-util";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { ArticleStatus } from "@/core/model/article";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
@@ -34,11 +35,8 @@ export const ArticleSearchForm = (): ReactNode => {
   }
 
   useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input, TWElement.Select]));
   }, []);
 
   return (
