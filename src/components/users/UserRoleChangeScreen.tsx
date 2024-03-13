@@ -10,7 +10,7 @@ import { Role, UserModel, UserRoleUpdateRequestModel } from "@/core/model/user";
 import { userService } from "@/core/service/user-service";
 import { faArrowCircleRight, faEye, faList, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -81,14 +81,6 @@ export const UserRoleChangeScreen = ({ environment, user, mutate }: UserRoleChan
   const { register, handleSubmit } = useForm<UserRoleUpdateRequestModel>({
     defaultValues: user
   });
-
-  useEffect(() => {
-    const init = async () => {
-      const { Select, initTE } = await import("tw-elements");
-      initTE({ Select }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"user"} mutate={mutate} titleSupplier={_ => user.username}

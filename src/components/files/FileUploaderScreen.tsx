@@ -10,7 +10,7 @@ import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { FileUploadRequest, PathInfo } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { faFolderOpen, faList } from "@fortawesome/free-solid-svg-icons";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -30,14 +30,6 @@ export const FileUploaderScreen = ({ environment, pathInfo }: FileUploaderProps)
   const { uploadFile } = fileService(environment);
   const { t } = useTranslation();
   const { register, handleSubmit, formState: { errors } } = useForm<FileUploadRequest>();
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"fileView"} handleSubmit={handleSubmit}

@@ -2,6 +2,7 @@
 
 import { MenuGroup } from "@/components/layout/sections/menu/MenuGroup";
 import { mainMenu } from "@/components/layout/sections/menu/structure";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { ReactNode, useEffect } from "react";
 
 /**
@@ -10,11 +11,8 @@ import { ReactNode, useEffect } from "react";
 export const SideMenu = (): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Sidenav, initTE } = await import("tw-elements");
-      initTE({ Sidenav });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Sidenav], false));
   }, []);
 
   return (

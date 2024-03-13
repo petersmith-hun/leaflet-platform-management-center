@@ -58,14 +58,6 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
     generateLinkByTitle(generateLink);
   }, [generateLink]);
 
-  useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
-  }, []);
-
   return (
     <SubmitOperation domain={"document"} mutate={mutate}
                      titleSupplier={document => document.title}

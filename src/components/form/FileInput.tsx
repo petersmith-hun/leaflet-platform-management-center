@@ -1,5 +1,6 @@
 import { ValidatedInput, Validation } from "@/components/form/Validation";
-import { ReactNode } from "react";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
+import { ReactNode, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +18,11 @@ interface FileInputProps extends ValidatedInput {
 export const FileInput = ({ registerReturn, errorSupplier }: FileInputProps): ReactNode => {
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input]));
+  }, []);
 
   return (
     <div className="mb-3 max-w-[90%]">

@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode, useEffect } from "react";
@@ -17,11 +18,8 @@ export const Tooltip = ({ tooltipKey }: TooltipProps): ReactNode => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const init = async () => {
-      const { Tooltip, initTE } = await import("tw-elements");
-      initTE({ Tooltip }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Tooltip]));
   }, []);
 
   return (

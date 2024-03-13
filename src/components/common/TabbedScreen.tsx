@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { ReactNode, useEffect } from "react";
 
 interface TabItemProps {
@@ -87,11 +88,8 @@ const TabContentWrapper = ({ id, child }: TabContentProps): ReactNode => {
 export const TabbedScreen = ({ titles, children }: TabbedScreenProps): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Tab, initTE } = await import("tw-elements");
-      initTE({ Tab });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Tab], false));
   }, []);
 
   if (titles.length !== children.length) {

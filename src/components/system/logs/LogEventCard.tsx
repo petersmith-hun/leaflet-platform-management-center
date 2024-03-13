@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { LoggingEvent } from "@/core/model/logs";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { ReactNode, useEffect } from "react";
@@ -70,11 +71,8 @@ const ExceptionAccordion = ({ log, id }: { log: LoggingEvent, id: string }): Rea
 export const LogEventCard = ({ log, id }: LogEventCardProps): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Collapse, initTE } = await import("tw-elements");
-      initTE({ Collapse }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Collapse]));
   }, []);
 
   return (

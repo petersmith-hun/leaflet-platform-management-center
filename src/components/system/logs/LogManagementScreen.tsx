@@ -16,7 +16,7 @@ import { PageContext } from "@/pages/_app";
 import { faInfoCircle, faSearch, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -34,14 +34,6 @@ export const LogManagementScreen = ({ environment }: ScreenParameters): ReactNod
   const { register, handleSubmit, formState: { errors } } = useForm<LogRequest>();
   const { triggerToast } = useContext(PageContext);
   const { showCustomToast } = toastHandler(triggerToast, t);
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   const onSubmit: SubmitHandler<LogRequest> = (logRequest: LogRequest): void => {
 

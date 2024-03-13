@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { PageContext } from "@/pages/_app";
 import { ReactNode, useContext, useEffect } from "react";
 
@@ -95,11 +96,8 @@ const colorMap = {
 export const OperationResultToast = ({ type, title, message }: ToastProperties): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Toast, initTE } = await import("tw-elements");
-      initTE({ Toast });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Toast], false));
   }, []);
 
   return (

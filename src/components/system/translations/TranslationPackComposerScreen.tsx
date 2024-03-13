@@ -67,11 +67,6 @@ export const TranslationPackComposerScreen = ({ environment }: TranslationPackCo
   const [definitionsCount, setDefinitionsCount] = useState(0);
 
   useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
 
     const definitionTextarea = document.querySelector("#pack-definitions") as HTMLInputElement | null;
     definitionTextarea?.addEventListener("keyup", () => {

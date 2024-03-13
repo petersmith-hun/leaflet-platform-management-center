@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { faBars, faEye, faPencil, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -70,11 +71,8 @@ export const EditDropdownMenuItem = ({ link }: SpecificDropdownMenuItemProps): R
 export const DropdownMenu = ({ children, id }: DropdownMenuProps): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Dropdown, initTE } = await import("tw-elements");
-      initTE({ Dropdown });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Dropdown], false));
   }, []);
 
   return (

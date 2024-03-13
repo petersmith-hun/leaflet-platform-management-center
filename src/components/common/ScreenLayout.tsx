@@ -1,3 +1,4 @@
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { ReactNode, useEffect } from "react";
 
 interface PaneProps {
@@ -12,13 +13,9 @@ interface PaneProps {
 export const MultiPaneScreen = ({ children }: PaneProps): ReactNode => {
 
   useEffect(() => {
-    const init = async () => {
-      const { Sticky, initTE } = await import("tw-elements");
-      initTE({ Sticky }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Sticky]));
   }, []);
-
 
   return (
     <div className="flex flex-row justify-between">

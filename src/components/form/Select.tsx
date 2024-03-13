@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
+import React, { ReactNode, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface SelectProps {
@@ -24,6 +25,11 @@ interface SelectWithHintProps extends Omit<SelectProps, "optionMap"> {
  */
 export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false }: SelectProps): ReactNode => {
 
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input, TWElement.Select]));
+  }, []);
+
   return (
     <div className="mb-3 max-w-[90%]">
       <select data-te-select-init="" {...registerReturn} multiple={multiple} data-te-select-filter={search}>
@@ -45,6 +51,11 @@ export const Select = ({ registerReturn, label, optionMap, multiple = false, sea
  * @param search enables rendering a search input
  */
 export const SelectWithHint = ({ registerReturn, label, optionMap, multiple = false, search = false }: SelectWithHintProps): ReactNode => {
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input, TWElement.Select]));
+  }, []);
 
   return (
     <div className="mb-3 max-w-[90%]">

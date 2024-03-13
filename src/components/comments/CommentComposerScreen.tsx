@@ -10,7 +10,7 @@ import { CommentEditRequest, CommentModel } from "@/core/model/comment";
 import { commentService } from "@/core/service/comment-service";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -38,14 +38,6 @@ export const CommentComposerScreen = ({ environment, comment, mutate }: CommentC
   });
   const router = useRouter();
   const commentID = router.query.id as unknown as number;
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"comment"} mutate={mutate} titleSupplier={comment => comment.content}

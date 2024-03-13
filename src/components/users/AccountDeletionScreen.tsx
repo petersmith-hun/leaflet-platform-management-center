@@ -13,7 +13,7 @@ import { PageContext } from "@/pages/_app";
 import { faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
-import React, { ReactNode, useContext, useEffect } from "react";
+import React, { ReactNode, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -40,14 +40,6 @@ export const AccountDeletionScreen = ({ environment, user }: AccountDeletionScre
   } = useForm<AccountDeletionRequestModel>();
   const { triggerToast, setOperationInProgress } = useContext(PageContext);
   const { handleAxiosError } = toastHandler(triggerToast, t);
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   const handleDeletion = (): void => {
 

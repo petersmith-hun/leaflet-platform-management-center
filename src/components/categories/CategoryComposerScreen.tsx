@@ -11,7 +11,7 @@ import { CategoryEditRequest, CategoryModel } from "@/core/model/category";
 import categoryService from "@/core/service/category-service";
 import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -39,14 +39,6 @@ export const CategoryComposerScreen = ({ environment, category, mutate }: Catego
   });
   const router = useRouter();
   const categoryID = router.query.id as number | undefined;
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"category"} mutate={mutate} titleSupplier={category => category.title}

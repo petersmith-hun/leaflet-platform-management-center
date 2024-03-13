@@ -12,7 +12,7 @@ import { routesService } from "@/core/service/routes-service";
 import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
 import { TFunction } from "i18next";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -48,14 +48,6 @@ export const RouteComposerScreen = ({ environment, route, mutate }: RouteCompose
   });
   const router = useRouter();
   const routeID = router.query.id as number | undefined;
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, Select, initTE } = await import("tw-elements");
-      initTE({ Input, Select }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"route"} mutate={mutate} titleSupplier={route => route.name}

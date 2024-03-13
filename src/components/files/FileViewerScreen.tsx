@@ -4,6 +4,7 @@ import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/Da
 import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { AwarenessLevel, PageOperationButton } from "@/components/navigation/OperationButton";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { FileDataModel, PathInfo } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { faCheck, faCopy, faFolderOpen, faList, faPencil, IconDefinition } from "@fortawesome/free-solid-svg-icons";
@@ -59,11 +60,8 @@ export const FileViewerScreen = ({ environment, file, pathInfo }: FileViewerProp
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const init = async () => {
-      const { Clipboard, initTE } = await import("tw-elements");
-      initTE({ Clipboard }, { allowReinits: true });
-    };
-    init();
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Clipboard]));
   }, []);
 
   return (

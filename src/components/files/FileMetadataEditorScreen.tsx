@@ -10,7 +10,7 @@ import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { FileDataModel, FileMetadataUpdateRequestModel } from "@/core/model/files";
 import { fileService } from "@/core/service/file-service";
 import { faEye, faList } from "@fortawesome/free-solid-svg-icons";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -41,14 +41,6 @@ export const FileMetadataEditorScreen = ({ environment, pathUUID, file, mutate }
       description: file.description
     }
   });
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <SubmitOperation domain={"fileView"} handleSubmit={handleSubmit} mutate={mutate}

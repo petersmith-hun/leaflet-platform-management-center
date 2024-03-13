@@ -1,5 +1,6 @@
 import { ValidatedInput, Validation } from "@/components/form/Validation";
-import { ReactNode } from "react";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
+import { ReactNode, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface TextareaProps extends ValidatedInput {
@@ -21,6 +22,11 @@ interface TextareaProps extends ValidatedInput {
  * @param additionalClass additional classes to be attached to the button
  */
 export const Textarea = ({ registerReturn, label, id, errorSupplier, defaultRowCount = 3, additionalClass }: TextareaProps): ReactNode => {
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input]));
+  }, []);
 
   return (
     <div className="mb-3 max-w-[95%]">

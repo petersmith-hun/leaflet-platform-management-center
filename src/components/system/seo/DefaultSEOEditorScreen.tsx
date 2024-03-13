@@ -11,7 +11,7 @@ import defaultSEOFacade from "@/core/facade/default-seo-facade";
 import { SEOConfigurationModel } from "@/core/model/dcp";
 import { swrKey } from "@/core/util/swr-key";
 import { PageContext } from "@/pages/_app";
-import React, { ReactNode, useContext, useEffect } from "react";
+import React, { ReactNode, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useSWR, { KeyedMutator } from "swr";
@@ -31,14 +31,6 @@ const SEOEditor = ({ environment, seo, mutate }: SEOEditorProps): ReactNode => {
   });
   const { setOperationInProgress, triggerToast } = useContext(PageContext);
   const { showCustomToast, handleAxiosError } = toastHandler(triggerToast, t);
-
-  useEffect(() => {
-    const init = async () => {
-      const { Input, initTE } = await import("tw-elements");
-      initTE({ Input }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   const onSubmit: SubmitHandler<SEOConfigurationModel> = (request: SEOConfigurationModel) => {
 

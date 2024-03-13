@@ -2,7 +2,7 @@ import { Modal } from "@/components/common/Modal";
 import { AwarenessLevel } from "@/components/navigation/OperationButton";
 import { faPrint, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -70,14 +70,6 @@ export const RenderedArticle = ({ content, resourceServer }: RenderedArticleProp
 export const RenderedArticleModal = ({ content, resourceServer, onRender }: RenderedArticleModalProps): ReactNode => {
 
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const init = async () => {
-      const { Modal, initTE } = await import("tw-elements");
-      initTE({ Modal }, { allowReinits: true });
-    };
-    init();
-  }, []);
 
   return (
     <>
