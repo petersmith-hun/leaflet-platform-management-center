@@ -8,14 +8,17 @@ import {
 } from "@/core/model/article";
 import { CategoryModel } from "@/core/model/category";
 import { ResponseWrapper } from "@/core/model/common";
+import { FileDataModel } from "@/core/model/files";
 import { TagAssignmentRequest, TagModel } from "@/core/model/tag";
 import articleService from "@/core/service/article-service";
 import categoryService from "@/core/service/category-service";
+import { fileService } from "@/core/service/file-service";
 import tagService from "@/core/service/tag-service";
 import { entityDifferentCalculator } from "@/core/util/entity-difference-calculator";
 
 const articlePromiseIndex = 0;
 const categoriesPromiseIndex = 1;
+const filesPromiseIndex = 2;
 const tagsPromiseIndex = 3;
 
 interface ArticleComposerFacade {
@@ -44,17 +47,27 @@ const convertCategories = (categories: CategoryModel[]): SelectOptionsObject => 
     .map(category => [category.id, category.title]))
 }
 
+const convertFiles = (files: FileDataModel[]): SelectOptionsObject => {
+
+  return Object.fromEntries(files
+    .map(file => [file.pathUUID, file.originalFilename]));
+}
+
 const convertTags = (tags: TagModel[]): SelectOptionsObject => {
 
   return Object.fromEntries(tags
     .map(tag => [tag.id, tag.name]));
 }
 
+const convertFileReferenceToID = (file: FileDataModel): string => {
+  return file.reference.split("/")[1];
+}
+
 const convertArticleToEditRequest = (article: ResponseWrapper<ArticleModel>): ArticleEditRequest => {
 
   return {
     attachments: article.body.attachments
-      .map(file => file.pathUUID),
+      .map(convertFileReferenceToID),
     categoryID: article.body.category.id,
     enabled: article.body.enabled,
     link: article.body.link,
@@ -99,25 +112,27 @@ const executeAssignments = async <T>(serviceCall: (request: T) => Promise<void>,
 export const articleComposerFacade = (environment: APIEnvironment): ArticleComposerFacade => {
 
   const { getArticleByID, createArticle, updateArticle, attachFile, detachFile } = articleService(environment);
+  const { getUploadedFiles } = fileService(environment);
   const { getAllCategories } = categoryService(environment);
   const { getAllTags, attachTag, detachTag } = tagService(environment);
 
   return {
 
-    getCommonData(articleID?: number): Promise<ArticleComposerCommonData> {
+    async getCommonData(articleID?: number): Promise<ArticleComposerCommonData> {
 
       const categories = getAllCategories();
+      const files = getUploadedFiles();
       const tags = getAllTags();
       const article = articleID
         ? getArticleByID(articleID).then(convertArticleToEditRequest)
         : Promise.resolve(undefined);
 
-      return Promise.all([article, categories, Promise.resolve(undefined), tags])
+      return Promise.all([article, categories, files, tags])
         .then(results => {
           return {
             article: results[articlePromiseIndex],
             categories: convertCategories(results[categoriesPromiseIndex]),
-            files: {},
+            files: convertFiles(results[filesPromiseIndex]),
             tags: convertTags(results[tagsPromiseIndex])
           }
         });
@@ -130,8 +145,10 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
         : createArticle(articleEditRequest));
       const createdArticleID = createdArticle.id;
 
-      const tags = entityDifferentCalculator(createdArticle.tags, articleEditRequest.tags, tag => tag.id);
-      const files = entityDifferentCalculator(createdArticle.attachments, articleEditRequest.attachments, file => file.pathUUID);
+      // same issue here as on line #84
+      // @ts-ignore
+      const tags = entityDifferentCalculator(createdArticle.tags, articleEditRequest.tags, tag => `${tag.id}`);
+      const files = entityDifferentCalculator(createdArticle.attachments, articleEditRequest.attachments, convertFileReferenceToID);
 
       await executeAssignments(attachTag, tags.attach
         .map(tagID => createTagAssignment(createdArticleID, tagID)));
