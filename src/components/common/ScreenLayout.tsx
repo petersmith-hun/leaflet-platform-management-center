@@ -18,7 +18,7 @@ export const MultiPaneScreen = ({ children }: PaneProps): ReactNode => {
   }, []);
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex lg:flex-row flex-col-reverse justify-between">
       {children}
     </div>
   )
@@ -32,7 +32,7 @@ export const MultiPaneScreen = ({ children }: PaneProps): ReactNode => {
 export const WidePane = ({ children }: PaneProps): ReactNode => {
 
   return (
-    <div className="w-9/12 max-w-7xl mr-3">
+    <div className="w-full lg:w-9/12 max-w-7xl mr-3">
       {children}
     </div>
   )
@@ -46,7 +46,7 @@ export const WidePane = ({ children }: PaneProps): ReactNode => {
 export const NarrowPane = ({ children }: PaneProps): ReactNode => {
 
   return (
-    <div className="w-3/12" data-te-sticky-init="" data-te-sticky-direction="both">
+    <div className="w-full lg:w-3/12" data-te-sticky-init="" data-te-sticky-direction="both">
       {children}
     </div>
   )

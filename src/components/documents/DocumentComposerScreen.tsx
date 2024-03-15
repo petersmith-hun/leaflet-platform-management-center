@@ -1,7 +1,8 @@
 import { APIEnvironment } from "@/api-environment";
-import { RenderedArticleModal } from "@/components/article/RenderedArticle";
+import { RenderArticleButton, RenderedArticle } from "@/components/article/RenderedArticle";
 import { CardWithTitle, PageOperationCard } from "@/components/common/Cards";
 import { DataRow, FullWidthDataCell, WideDataCell } from "@/components/common/DataRow";
+import { Modal } from "@/components/common/Modal";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
@@ -53,6 +54,11 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const documentID = router.query.id as number | undefined;
+
+  const renderDocument = (): void => {
+    const sourceInput = global.document.getElementById("document-raw-content") as HTMLInputElement;
+    setContentToRender(sourceInput.value);
+  };
 
   useEffect(() => {
     generateLinkByTitle(generateLink);
@@ -151,14 +157,13 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
                                  link={"/documents"} />
             {documentID && <PageOperationButton label={t("page-operations.document.view")} icon={faEye}
                                                 link={`/documents/view/${documentID}`} />}
-            <RenderedArticleModal content={contentToRender} resourceServer={environment.resourceServer}
-                                  onRender={() => {
-                                    const sourceInput = global.document.getElementById("document-raw-content") as HTMLInputElement;
-                                    setContentToRender(sourceInput.value);
-                                  }} />
+            <RenderArticleButton onClick={renderDocument} />
             <DefaultSubmitButton />
           </PageOperationCard>
         </NarrowPane>
+        <Modal id={"article-render-modal"} title={t("modal.title.rendered-article")}>
+          <RenderedArticle content={contentToRender} resourceServer={environment.resourceServer} />
+        </Modal>
       </MultiPaneScreen>
     </SubmitOperation>
   )

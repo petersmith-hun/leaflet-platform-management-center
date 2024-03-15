@@ -17,7 +17,16 @@ enum ResourceServerPath {
   FILES_DIRECTORIES = "/files/directories"
 }
 
+interface WrappedFileList {
+  files: FileDataModel[];
+}
+
 interface FileService {
+
+  /**
+   * Returns the list of uploaded files.
+   */
+  getUploadedFiles: () => Promise<FileDataModel[]>;
 
   /**
    * Retrieves the contents of the VFS under the given path.
@@ -73,6 +82,17 @@ interface FileService {
 export const fileService = (environment: APIEnvironment): FileService => {
 
   return {
+
+    async getUploadedFiles(): Promise<FileDataModel[]> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.GET,
+        path: ResourceServerPath.FILES,
+      });
+
+      return baseServiceGatewayRestClient<WrappedFileList>(environment, ExternalService.RESOURCE_SERVER, request)
+        .then(response => response?.files ?? []);
+    },
 
     async browse(path: string): Promise<VFSBrowserModel> {
 

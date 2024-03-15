@@ -72,7 +72,6 @@ export const clusterMonitoringFacade = (environment: ClusterMonitoringAPIEnviron
     executeHealthcheck(state: HealthcheckState): void {
 
       getServiceStatuses().subscribe(status => {
-        console.log(status)
         state.setHealthcheck(item => {
           item[status.app.abbreviation] = status;
           return Object.assign({}, item);

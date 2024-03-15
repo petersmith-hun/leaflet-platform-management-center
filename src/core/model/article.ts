@@ -95,7 +95,7 @@ export interface ArticleEditRequest {
 /**
  * Type directive for select dropdown field options.
  */
-export type SelectOptionsObject = { [id: number]: string };
+export type SelectOptionsObject = { [id: number | string]: string };
 
 /**
  * Wrapper object representing all data returned to the article composer screen.
