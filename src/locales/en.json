@@ -182,6 +182,8 @@
     "article.label.not-published": "Not published",
     "article.label.seo-keywords-none-specified": "None specified",
 
+    "category.label.never-modified": "Never modified",
+
     "common.created": "created",
     "common.deleted": "deleted",
     "common.disabled": "disabled",

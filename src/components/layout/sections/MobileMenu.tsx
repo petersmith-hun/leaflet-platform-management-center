@@ -22,7 +22,7 @@ export const MobileMenu = ({ userMenuData, userInfo }: MobileMenuData): ReactNod
   const { t } = useTranslation("menu");
 
   return (
-    <Disclosure.Panel className="md:hidden">
+    <Disclosure.Panel className="lg:hidden">
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
         {mainMenu.map(group => (
           <React.Fragment key={`group_${group.groupKey}`}>
