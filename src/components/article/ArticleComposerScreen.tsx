@@ -6,6 +6,7 @@ import { Modal } from "@/components/common/Modal";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
+import { AutoSaved, SubmitListener } from "@/components/form/AutoSaved";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { DefaultSubmitButton } from "@/components/form/SubmitButton";
@@ -19,7 +20,7 @@ import { useSessionHelper } from "@/hooks/use-session-helper";
 import { faEye, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -43,7 +44,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   const { submitArticle } = articleComposerFacade(environment);
   const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors } } = useForm<ArticleEditRequest>({
+  const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm<ArticleEditRequest>({
     defaultValues: {
       userID: getUserInfo().id,
       status: ArticleStatus.DRAFT,
@@ -54,6 +55,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const articleID = router.query.id as number | undefined;
+  const submitListener = useMemo(() => new SubmitListener(), []);
 
   const renderArticle = (): void => {
     const sourceInput = document.getElementById("article-raw-content") as HTMLInputElement;
@@ -72,12 +74,16 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   return (
     <SubmitOperation domain={"article"} mutate={mutate} titleSupplier={article => article.title}
                      handleSubmit={handleSubmit}
-                     serviceCall={article => submitArticle(article, articleID)}>
+                     serviceCall={article => {
+                       submitListener.submitted();
+                       return submitArticle(article, articleID);
+                     }}>
       <input type="hidden" {...register("userID")} />
       <input type="hidden" {...register("status")} />
       <MultiPaneScreen>
         <WidePane>
           <CardWithTitle title={commonData.article?.title ?? t("page.title.article.create")}>
+            <AutoSaved getValues={getValues} reset={reset} submitListener={submitListener} />
             <TabbedScreen
               titles={[
                 t("tab.article.create.base"),

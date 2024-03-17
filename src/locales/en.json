@@ -182,6 +182,10 @@
     "article.label.not-published": "Not published",
     "article.label.seo-keywords-none-specified": "None specified",
 
+    "auto-saved.label.restored": "Restored, last saved: {{lastSaved}}",
+    "auto-saved.label.saved": "Auto-save enabled, last saved: {{lastSaved}}",
+    "auto-saved.label.never-saved": "never",
+
     "category.label.never-modified": "Never modified",
 
     "common.created": "created",
