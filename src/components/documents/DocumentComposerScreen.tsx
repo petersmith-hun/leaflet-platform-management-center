@@ -6,6 +6,7 @@ import { Modal } from "@/components/common/Modal";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
+import { AutoSaved, SubmitListener } from "@/components/form/AutoSaved";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { DefaultSubmitButton } from "@/components/form/SubmitButton";
@@ -20,7 +21,7 @@ import { useSessionHelper } from "@/hooks/use-session-helper";
 import { faEye, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
@@ -44,7 +45,7 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
   const { createDocument, updateDocument } = documentService(environment);
   const { getUserInfo } = useSessionHelper();
   const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors } } = useForm<DocumentEditRequest>({
+  const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm<DocumentEditRequest>({
     defaultValues: {
       userID: getUserInfo().id,
       ...(document ? convertDocumentToEditRequest(document) : undefined)
@@ -54,6 +55,7 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const documentID = router.query.id as number | undefined;
+  const submitListener = useMemo(() => new SubmitListener(), []);
 
   const renderDocument = (): void => {
     const sourceInput = global.document.getElementById("document-raw-content") as HTMLInputElement;
@@ -68,13 +70,17 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
     <SubmitOperation domain={"document"} mutate={mutate}
                      titleSupplier={document => document.title}
                      handleSubmit={handleSubmit}
-                     serviceCall={document => documentID
-                       ? updateDocument(documentID, document)
-                       : createDocument(document)}>
+                     serviceCall={document => {
+                       submitListener.submitted();
+                       return documentID
+                         ? updateDocument(documentID, document)
+                         : createDocument(document);
+                     }}>
       <input type="hidden" {...register("userID")} />
       <MultiPaneScreen>
         <WidePane>
           <CardWithTitle title={document?.body.title ?? t("page.title.document.create")}>
+            <AutoSaved getValues={getValues} reset={reset} submitListener={submitListener} />
             <TabbedScreen
               titles={[
                 t("tab.document.create.base"),
