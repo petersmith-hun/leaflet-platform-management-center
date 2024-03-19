@@ -7,5 +7,6 @@ export enum ExternalService {
   LOG_PROCESSOR = "tlp",
   TRANSLATION_MANAGER = "tms",
   STACK_ADMIN_SERVICE = "lsas",
-  STACK_ADMIN_SERVICE_JS = "lsas_js"
+  STACK_ADMIN_SERVICE_JS = "lsas_js",
+  FAILOVER = "cbfs"
 }
