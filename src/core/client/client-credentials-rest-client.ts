@@ -17,7 +17,10 @@ const clientCredentialsRestClient = async <T>(service: ExternalService, request:
 
   const serviceParameter = applicationConfig.services.clients[service];
   const hostEnvironment: HostEnvironment = { api: serviceParameter.host };
-  request.authorization!.Authorization = `Bearer ${await getServiceToken(service)}`;
+
+  if (serviceParameter.clientID) {
+    request.authorization!.Authorization = `Bearer ${await getServiceToken(service)}`;
+  }
 
   return baseRestClient(hostEnvironment, request);
 }
