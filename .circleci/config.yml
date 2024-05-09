@@ -2,8 +2,9 @@ version: 2.1
 
 orbs:
   jira: circleci/jira@2.1.0
-  node: circleci/node@5.0.3
+  node: circleci/node@5.2.0
   jq: circleci/jq@3.0.0
+  gh: circleci/github-cli@2.3.0
 
 # Common parameters for CircleCI build config
 parameters:
@@ -37,14 +38,16 @@ commands:
         default: "rc"
         enum: ["rc", "release"]
     steps:
+      - checkout
       - attach_workspace:
           at: << pipeline.parameters.workspace_dir >>
+      - gh/setup
       - run:
           name: "Publish Release on GitHub"
           command: |
             [[ "<< parameters.release-type >>" = "release" ]] && VERSION_QUALIFIER=".release" || VERSION_QUALIFIER=""
             VERSION=v$(cat << pipeline.parameters.workspace_dir >>/<< pipeline.parameters.version_file >>)$VERSION_QUALIFIER
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} << pipeline.parameters.workspace_dir >>/<< pipeline.parameters.distribution_archive >>
+            gh release create ${VERSION} --target ${CIRCLE_SHA1} --title ${VERSION} << pipeline.parameters.workspace_dir >>/<< pipeline.parameters.distribution_archive >>
 
 jobs:
 
@@ -56,7 +59,7 @@ jobs:
         default: "rc"
         enum: ["rc", "release"]
     docker:
-      - image: cimg/node:18.18.2
+      - image: cimg/node:20.13.0
     steps:
       - checkout
       - run:
@@ -183,7 +186,7 @@ jobs:
   # Leaflet Platform Management Center - Publish tag (and release) on GitHub for RC versions
   publish-github-rc:
     docker:
-      - image: cibuilds/github:0.10
+      - image: cimg/base:stable
     steps:
       - github_release:
           release-type: rc
@@ -191,7 +194,7 @@ jobs:
   # Leaflet Platform Management Center - Publish tag (and release) on GitHub for RELEASE versions
   publish-github-release:
     docker:
-      - image: cibuilds/github:0.10
+      - image: cimg/base:stable
     steps:
       - github_release:
           release-type: release
