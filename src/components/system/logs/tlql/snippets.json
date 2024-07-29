@@ -1,0 +1,42 @@
+[
+  {
+    "label": "condition-block",
+    "insert": "with conditions\n\t${1:variable}",
+    "documentation": "Basic condition"
+  },
+  {
+    "label": "either-block",
+    "insert": "either ('${1:first}', '${2:second}')",
+    "documentation": "Basic either expression"
+  },
+  {
+    "label": "none-block",
+    "insert": "none ('${1:first}', '${2:second}')",
+    "documentation": "Basic none expression"
+  },
+  {
+    "label": "offset-block",
+    "insert": "with offset ${1:offsetValue}",
+    "documentation": "Offset clause"
+  },
+  {
+    "label": "limit-block",
+    "insert": "with limit ${1:limitValue}",
+    "documentation": "Limit clause"
+  },
+  {
+    "label": "order-block",
+    "insert": "with order by ${1:variable} ${2:direction}",
+    "documentation": "Order by clause"
+  },
+  {
+    "label": "order-chain",
+    "insert": "\tthen order by ${1:variable} ${2:direction}",
+    "documentation": "Order by clause chaining"
+  },
+  {
+    "label": "timestamp-between",
+    "insert": "timestamp between ${1:datetime-start} and ${2:datetime-end}",
+    "documentation": "Timestamp between clause"
+  }
+]
