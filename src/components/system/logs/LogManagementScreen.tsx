@@ -5,9 +5,10 @@ import { InlineLoadingIndicator } from "@/components/common/InlineLoadingIndicat
 import { ToastType } from "@/components/common/OperationResultToast";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { SubmitButton } from "@/components/form/SubmitButton";
-import { Textarea } from "@/components/form/Textarea";
 import { AwarenessLevel } from "@/components/navigation/OperationButton";
 import { LogEventResults } from "@/components/system/logs/LogEventResults";
+import { TLQL } from "@/components/system/logs/tlql";
+import { tlqlMonacoEditorInit } from "@/components/system/logs/tlql/monaco-editor";
 import { toastHandler } from "@/components/utility/toast-handler";
 import { ErrorResponse } from "@/core/model/common";
 import { emptyLogEventPage, LogEventPage, LogRequest } from "@/core/model/logs";
@@ -16,7 +17,8 @@ import { PageContext } from "@/pages/_app";
 import { faInfoCircle, faSearch, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
-import React, { ReactNode, useContext, useState } from "react";
+import dynamic from "next/dynamic";
+import React, { ReactNode, useContext, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -31,15 +33,22 @@ export const LogManagementScreen = ({ environment }: ScreenParameters): ReactNod
   const { t } = useTranslation();
   const [logs, setLogs] = useState<LogEventPage>(emptyLogEventPage);
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<LogRequest>();
+  const query = useRef<string>("");
+  const { handleSubmit } = useForm<LogRequest>();
   const { triggerToast } = useContext(PageContext);
   const { showCustomToast } = toastHandler(triggerToast, t);
+  const MonacoEditor = dynamic(import("@monaco-editor/react"), { ssr: false });
 
-  const onSubmit: SubmitHandler<LogRequest> = (logRequest: LogRequest): void => {
+  const onSubmit: SubmitHandler<LogRequest> = (): void => {
+
+    if (!query.current) {
+      showCustomToast(t("toast.log-management.query-failure"), t("forms:validation.common.required"), ToastType.WARNING);
+      return;
+    }
 
     setLoading(true);
 
-    getLogs(logRequest.query)
+    getLogs(query.current!)
       .then(setLogs)
       .catch((axiosError: AxiosError) => {
         setLogs(emptyLogEventPage);
@@ -62,10 +71,11 @@ export const LogManagementScreen = ({ environment }: ScreenParameters): ReactNod
             <CardWithTitle title={t("page.sub-title.system.logs.query")}>
               <DataRow>
                 <FullWidthDataCell>
-                  <Textarea registerReturn={register("query", { required: t("forms:validation.common.required") })}
-                            label={t("forms:logs.query")} id={"log-query"}
-                            errorSupplier={() => errors.query?.message}
-                            additionalClass={"code text-sm"} defaultRowCount={6} />
+                  <MonacoEditor height="20vh" defaultLanguage={TLQL.languageID} theme={TLQL.theme}
+                                onMount={editor => editor.setValue(query.current ?? "")}
+                                onChange={value => query.current = value ?? ""}
+                                beforeMount={tlqlMonacoEditorInit}
+                                options={{ minimap: { enabled: false } }} />
                 </FullWidthDataCell>
               </DataRow>
               {logs.entityCount > 0 && (

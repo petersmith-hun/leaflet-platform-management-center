@@ -49,6 +49,14 @@ commands:
             VERSION=v$(cat << pipeline.parameters.workspace_dir >>/<< pipeline.parameters.version_file >>)$VERSION_QUALIFIER
             gh release create ${VERSION} --target ${CIRCLE_SHA1} --title ${VERSION} << pipeline.parameters.workspace_dir >>/<< pipeline.parameters.distribution_archive >>
 
+executors:
+  node:
+    docker:
+      - image: cimg/node:20.13.0
+  base:
+    docker:
+      - image: cimg/base:stable
+
 jobs:
 
   # Leaflet Platform Management Center - Build and test application
@@ -58,8 +66,7 @@ jobs:
         type: enum
         default: "rc"
         enum: ["rc", "release"]
-    docker:
-      - image: cimg/node:20.13.0
+    executor: node
     steps:
       - checkout
       - run:
@@ -128,9 +135,9 @@ jobs:
 
   # Leaflet Platform Management Center - Deploy to production
   deploy:
-    docker:
-      - image: cimg/openjdk:11.0
+    executor: base
     steps:
+      - checkout
       - attach_workspace:
           at: << pipeline.parameters.workspace_dir >>
       - run:
@@ -185,16 +192,14 @@ jobs:
 
   # Leaflet Platform Management Center - Publish tag (and release) on GitHub for RC versions
   publish-github-rc:
-    docker:
-      - image: cimg/base:stable
+    executor: base
     steps:
       - github_release:
           release-type: rc
 
   # Leaflet Platform Management Center - Publish tag (and release) on GitHub for RELEASE versions
   publish-github-release:
-    docker:
-      - image: cimg/base:stable
+    executor: base
     steps:
       - github_release:
           release-type: release
