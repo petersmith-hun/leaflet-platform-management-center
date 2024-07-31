@@ -36,7 +36,7 @@
   },
   {
     "label": "timestamp-between",
-    "insert": "timestamp between ${1:datetime-start} and ${2:datetime-end}",
+    "insert": "timestamp between [${1:datetime-start}, ${2:datetime-end}]",
     "documentation": "Timestamp between clause"
   }
 ]
