@@ -8,5 +8,6 @@ export enum ExternalService {
   TRANSLATION_MANAGER = "tms",
   STACK_ADMIN_SERVICE = "lsas",
   STACK_ADMIN_SERVICE_JS = "lsas_js",
-  FAILOVER = "cbfs"
+  FAILOVER = "cbfs",
+  DOMINO = "domino"
 }

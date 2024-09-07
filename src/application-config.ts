@@ -36,7 +36,8 @@ const applicationConfig: ApplicationConfig = {
       [ExternalService.TRANSLATION_MANAGER]: createClientConfig(ExternalService.TRANSLATION_MANAGER),
       [ExternalService.STACK_ADMIN_SERVICE]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE),
       [ExternalService.STACK_ADMIN_SERVICE_JS]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE_JS),
-      [ExternalService.FAILOVER]: createClientConfig(ExternalService.FAILOVER)
+      [ExternalService.FAILOVER]: createClientConfig(ExternalService.FAILOVER),
+      [ExternalService.DOMINO]: createClientConfig(ExternalService.DOMINO)
     }
   }
 }

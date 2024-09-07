@@ -18,15 +18,21 @@ const forwardRequest = async (requestPath: string[], request: NextApiRequest, se
   const targetPath = requestPath.slice(1);
   const adapter = getProxyRequestBodyAdapter(request);
   const headers: Record<string, string> = {};
+  const queryParameters: Record<string, string> = {};
 
   if (request.headers["content-type"] && request.headers["content-type"] !== "application/json") {
     headers["Content-Type"] = request.headers["content-type"];
+  }
+
+  if (request.query.pageNumber) {
+    queryParameters["pageNumber"] = request.query.pageNumber as string;
   }
 
   const restRequest = new RESTRequest({
     method: request.method as RequestMethod,
     path: targetPath.join("/"),
     headers: headers,
+    queryParameters: queryParameters,
     requestBody: request.body
       ? adapter(request.body)
       : undefined

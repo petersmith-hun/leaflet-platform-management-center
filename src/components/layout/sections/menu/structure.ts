@@ -2,6 +2,7 @@ import { MenuGroupData, MenuItemData } from "@/components/layout/sections/menu/i
 import { Permission } from "@/core/domain/auth";
 import { faDocker } from "@fortawesome/free-brands-svg-icons";
 import {
+  faDice,
   faDirections,
   faExternalLink,
   faFile,
@@ -81,6 +82,12 @@ const systemManagement: MenuItemData[] = [
     path: "/system/logs",
     icon: faFileText,
     requiredScope: Permission.READ_ADMIN
+  },
+  {
+    itemKey: "group.system_management.item.domino",
+    path: "/system/deployments",
+    icon: faDice,
+    requiredScope: Permission.WRITE_ADMIN
   }
 ];
 
@@ -136,8 +143,8 @@ const externalSystems: MenuItemData[] = [
     icon: faExternalLink
   },
   {
-    itemKey: "Archiva",
-    path: "https://artifact-repo.ci.psprog.hu",
+    itemKey: "GitHub Packages",
+    path: "https://github.com/petersmith-hun?tab=packages",
     icon: faExternalLink
   },
   {
