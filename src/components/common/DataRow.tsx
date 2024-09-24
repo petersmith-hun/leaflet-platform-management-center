@@ -12,7 +12,7 @@ interface DataCellProps {
 }
 
 interface SizedDataCellProps extends DataCellProps {
-  widthClass: "w-3/12" | "w-6/12" | "w-full";
+  widthClass: "w-3/12" | "w-4/12" | "w-6/12" | "w-8/12" |"w-full";
 }
 
 /**
@@ -66,6 +66,16 @@ export const NarrowDataCell = ({ title, children }: DataCellProps): ReactNode =>
 }
 
 /**
+ * Renders a 1/3-width (w-4/12) data cell (a title if provided and below a value content).
+ *
+ * @param title title of the data cell
+ * @param children contents to be rendered within (string or another single React component)
+ */
+export const ThirdWidthDataCell = ({ title, children }: DataCellProps): ReactNode => {
+  return <DataCell widthClass={"w-4/12"} title={title} children={children} />
+}
+
+/**
  * Renders a wide (w-6/12) data cell (a title if provided and below a value content).
  *
  * @param title title of the data cell
@@ -73,6 +83,16 @@ export const NarrowDataCell = ({ title, children }: DataCellProps): ReactNode =>
  */
 export const WideDataCell = ({ title, children }: DataCellProps): ReactNode => {
   return <DataCell widthClass={"w-6/12"} title={title} children={children} />
+}
+
+/**
+ * Renders a 2/3-width (w-8/12) data cell (a title if provided and below a value content).
+ *
+ * @param title title of the data cell
+ * @param children contents to be rendered within (string or another single React component)
+ */
+export const TwoThirdWidthDataCell = ({ title, children }: DataCellProps): ReactNode => {
+  return <DataCell widthClass={"w-8/12"} title={title} children={children} />
 }
 
 /**

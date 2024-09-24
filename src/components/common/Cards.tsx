@@ -1,5 +1,7 @@
 import { ResizeBlockButton } from "@/components/common/ResizeBlockButton";
 import { Separator } from "@/components/common/Separator";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode } from "react";
 
 interface SimpleCardProps {
@@ -11,6 +13,7 @@ interface PageOperationCardProps extends SimpleCardProps {
 }
 
 interface CardWithTitleProps extends PageOperationCardProps {
+  icon?: IconDefinition;
   resizable?: string;
 }
 
@@ -52,14 +55,15 @@ export const ItemListCard = ({ children }: SimpleCardProps) => {
  *
  * @param children contents to be rendered within
  * @param title title of the card
- * @param resizable
+ * @param resizable adds a resize button to the card
+ * @param icon optional icon to be put before the title
  */
-export const CardWithTitle = ({ children, title, resizable }: CardWithTitleProps) => {
+export const CardWithTitle = ({ children, title, resizable, icon }: CardWithTitleProps) => {
 
   return (
     <SimpleCard>
       <h2 className="mb-2 mt-0 text-xl font-medium leading-tight text-primary-200 clear-both">
-        {title}
+        {icon && <FontAwesomeIcon icon={icon} />} {title}
         {resizable && <ResizeBlockButton resizableContainerID={resizable} />}
       </h2>
       <Separator thick={false} />
