@@ -51,7 +51,7 @@ export const SubmitOperation = <ID extends unknown, T extends FieldValues, R ext
         mutate && mutate();
         return entity;
       })
-      .then(entity => router.push( redirectOverride
+      .then(entity => router.push(redirectOverride
         ? redirectOverride(request)
         : `${redirectMap[domain]}/view/${idProvider(entity)}`))
       .then(() => showCustomToast(

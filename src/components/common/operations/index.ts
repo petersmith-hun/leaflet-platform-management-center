@@ -5,6 +5,7 @@ export type OperationDomain =
   "article"
   | "category"
   | "comment"
+  | "deployment"
   | "directory"
   | "document"
   | "file"
@@ -21,6 +22,7 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   article: "/articles",
   category: "/categories",
   comment: "/comments",
+  deployment: "/system/deployments",
   directory: "/files/browse",
   document: "/documents",
   file: "/files/browse",

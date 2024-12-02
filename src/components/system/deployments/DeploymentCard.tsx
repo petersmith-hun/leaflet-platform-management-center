@@ -1,9 +1,9 @@
 import { ItemListCard } from "@/components/common/Cards";
 import { Separator } from "@/components/common/Separator";
-import { DropdownMenu, ViewDropdownMenuItem } from "@/components/navigation/DropdownMenu";
+import { DropdownMenu, EditDropdownMenuItem, ViewDropdownMenuItem } from "@/components/navigation/DropdownMenu";
 import { descriptionMapping } from "@/components/system/deployments";
 import { DeploymentSummary } from "@/core/model/domino";
-import { faBoxArchive, faDice, faFileCode, faHouse, faRunning } from "@fortawesome/free-solid-svg-icons";
+import { faBoxArchive, faDice, faFileCode, faHouse, faLock, faRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React, { ReactNode } from "react";
@@ -31,7 +31,7 @@ export const DeploymentCard = ({ deployment }: DeploymentCardProps): ReactNode =
           </Link>
         </h5>
         <Separator thick={false} />
-        <span className="w-4/12 inline-block">
+        <span className="w-6/12 inline-block">
           <FontAwesomeIcon className="h-4 w-4" icon={faBoxArchive} /> {t(descriptionMapping.get(deployment.sourceType)!)}
         </span>
         <span>
@@ -46,10 +46,20 @@ export const DeploymentCard = ({ deployment }: DeploymentCardProps): ReactNode =
         <p className="pt-2">
           <FontAwesomeIcon className="h-4 w-4" icon={faFileCode} /> {deployment.resource}
         </p>
+        {deployment.locked ? (
+          <p className="inline-block text-warning text-xs">
+            <FontAwesomeIcon icon={faLock} /> {t("system.deployments.label.locked-for-modification")}
+          </p>
+        ) : null}
       </div>
       <div className="w-2/12 flex flex-col items-end">
         <DropdownMenu id={`deployment-${deployment.id}`}>
           <ViewDropdownMenuItem link={`/system/deployments/view/${deployment.id}`} />
+          <>
+            {!deployment.locked ? (
+              <EditDropdownMenuItem link={`/system/deployments/edit/${deployment.id}`} />
+            ) : null}
+          </>
         </DropdownMenu>
       </div>
     </ItemListCard>

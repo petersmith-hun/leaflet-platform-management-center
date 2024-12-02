@@ -28,6 +28,10 @@ const forwardRequest = async (requestPath: string[], request: NextApiRequest, se
     queryParameters["pageNumber"] = request.query.pageNumber as string;
   }
 
+  if (request.query.yaml) {
+    queryParameters["yaml"] = request.query.yaml as string;
+  }
+
   const restRequest = new RESTRequest({
     method: request.method as RequestMethod,
     path: targetPath.join("/"),
