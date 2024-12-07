@@ -130,6 +130,11 @@ export interface Deployment {
   execution: DeploymentExecution;
   healthcheck: OptionalDeploymentHealthcheck;
   info: OptionalDeploymentInfo;
+  metadata?: {
+    locked: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  }
 }
 
 /**
@@ -142,4 +147,58 @@ export interface DeploymentSummary {
   executionType: ExecutionType;
   home: string;
   resource: string;
+  locked: boolean;
+}
+
+/**
+ * Response model for YAML-formatted deployment definition exports. Response is still formatted as JSON, the definition
+ * itself is returned in the "definition" field as YAML-formatted string.
+ */
+export interface DeploymentExport {
+  definition: string;
+}
+
+/**
+ * Execution arguments part of the form representation for deployment definition editor.
+ */
+export interface ExecutionArgumentsForm {
+
+  commandLineArgs?: string;
+  commandArgs?: string;
+  environment?: string;
+  volumes?: string;
+  ports?: string;
+  restartPolicy?: string;
+  networkMode?: string;
+}
+
+/**
+ * Form representation for deployment definition editor.
+ */
+export interface DeploymentForm {
+
+  id: string;
+  source: DeploymentSource;
+  target: {
+    hosts: string;
+  };
+  execution: {
+    commandName: string;
+    via: ExecutionType;
+    asUser?: string;
+    runtime?: string;
+    args?: ExecutionArgumentsForm;
+  };
+  healthcheck: {
+    enabled: boolean;
+    endpoint?: string;
+    delay?: string;
+    timeout?: string;
+    maxAttempts?: string;
+  };
+  info: {
+    enabled: boolean;
+    endpoint?: string;
+    fieldMapping?: string;
+  };
 }

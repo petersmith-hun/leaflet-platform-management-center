@@ -40,6 +40,17 @@ interface ToastHandler {
  */
 export const toastHandler = (toastDispatcher: Dispatch<SetStateAction<ToastProperties | null>>, t: TFunction): ToastHandler => {
 
+  const extractErrorMessage = (axiosError: AxiosError): string | undefined => {
+    return (axiosError.response?.data as ErrorResponse).message;
+  }
+
+  const extractValidationErrorMessage = (axiosError: AxiosError): string | string[] | undefined => {
+
+    return (axiosError.response?.data as ValidationErrorResponse)
+      ?.validation
+      ?.map(item => `${item.field}: ${item.message}`);
+  }
+
   return {
 
     showCustomToast(title: string, message: string, type: ToastType | undefined = ToastType.SUCCESS): void {
@@ -60,9 +71,9 @@ export const toastHandler = (toastDispatcher: Dispatch<SetStateAction<ToastPrope
         toastDispatcher({
           type: ToastType.WARNING,
           title: t("toast.error.validation-error"),
-          message: (axiosError.response?.data as ValidationErrorResponse)
-            ?.validation
-            ?.map(item => `${item.field}: ${item.message}`)
+          message: extractValidationErrorMessage(axiosError)
+            ?? extractErrorMessage(axiosError)
+            ?? t("toast.error.unknown-error")
         })
       } else {
         toastDispatcher({
