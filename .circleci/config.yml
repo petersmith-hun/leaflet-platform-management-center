@@ -52,7 +52,7 @@ commands:
 executors:
   node:
     docker:
-      - image: cimg/node:20.13.0
+      - image: cimg/node:22.14
   base:
     docker:
       - image: cimg/base:stable
@@ -141,7 +141,7 @@ jobs:
       - jq/install
       - run:
           command: |
-            set +e
+            set -e
 
             oauth_token_response=${LEAFLET_CI_DOMINO_AUTH_TOKEN}
             if ! [[ $oauth_token_response ]]

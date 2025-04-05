@@ -45,7 +45,7 @@ export const ErrorScreen = ({ response }: ErrorParameter): ReactNode => {
 
   const { t } = useTranslation();
 
-  const warningIcon = (response?.status < 500 ?? false)
+  const warningIcon = (response.status < 500)
     ? <WarningIcon colorClass={"text-warning"} />
     : <WarningIcon colorClass={"text-danger"} />;
 
