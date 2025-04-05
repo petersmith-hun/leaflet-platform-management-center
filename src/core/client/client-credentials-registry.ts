@@ -22,7 +22,7 @@ const expirationThresholdInMS = 300_000;
 const tokenCache: { [key in ExternalService]?: CachedToken } = {};
 
 const requiresRenewal = (service: ExternalService) => {
-  return !tokenCache?.[service] || tokenCache[service]!.expiresAt < new Date().getTime() - expirationThresholdInMS;
+  return !tokenCache?.[service] || (tokenCache[service]!.expiresAt - new Date().getTime()) < expirationThresholdInMS;
 }
 
 const createTokenRequest = (service: ExternalService): RESTRequest => {

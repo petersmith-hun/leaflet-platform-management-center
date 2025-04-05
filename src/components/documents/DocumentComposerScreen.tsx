@@ -6,7 +6,7 @@ import { Modal } from "@/components/common/Modal";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
-import { AutoSaved, SubmitListener } from "@/components/form/AutoSaved";
+import { AutoSaved, SubmitListener } from "@/components/form/autosaved/AutoSaved";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { DefaultSubmitButton } from "@/components/form/SubmitButton";
@@ -55,7 +55,7 @@ export const DocumentComposerScreen = ({ environment, document, mutate }: Docume
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const documentID = router.query.id as number | undefined;
-  const submitListener = useMemo(() => new SubmitListener(), []);
+  const submitListener = useMemo(() => new SubmitListener(router), []);
 
   const renderDocument = (): void => {
     const sourceInput = global.document.getElementById("document-raw-content") as HTMLInputElement;

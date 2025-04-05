@@ -36,8 +36,8 @@ export const SourceConfigurationTab = ({ register, errors, setSelectedSourceType
                  errorSupplier={() => errors.id?.message} />
         </WideDataCell>
         <WideDataCell>
-          <Select onChange={(event) => setSelectedSourceType(event.target.value)}
-                  registerReturn={register("source.type")} label={t("forms:deployment.edit.source-type")}
+          <Select registerReturn={register("source.type", { onChange: (event) => setSelectedSourceType(event.target.value) })}
+                  label={t("forms:deployment.edit.source-type")}
                   optionMap={{
                     [SourceType.DOCKER]: t("system.deployments.label.source.docker"),
                     [SourceType.FILESYSTEM]: t("system.deployments.label.source.filesystem")

@@ -207,10 +207,14 @@
     "account.label.account-deletion-warning": "This operation permanently removes your account and its related data, with no means to recover it. If you really wish to proceed, please provide your email address as confirmation, then click 'I proceed deleting my account'!",
     "account.label.delete-email-mismatch": "The provided email address does not match your currently used one",
 
+    "article.label.files-unavailable": "Attachments are currently unavailable!",
     "article.label.never-modified": "Never modified",
     "article.label.not-published": "Not published",
     "article.label.seo-keywords-none-specified": "None specified",
 
+    "auto-saved.button.restore": "Restore",
+    "auto-saved.button.drop": "Drop",
+    "auto-saved.label.paused": "Auto-save paused: stored version found (saved at {{lastSaved}}), do you want to restore?",
     "auto-saved.label.restored": "Restored, last saved: {{lastSaved}}",
     "auto-saved.label.saved": "Auto-save enabled, last saved: {{lastSaved}}",
     "auto-saved.label.never-saved": "never",
