@@ -18,8 +18,7 @@ import { entityDifferentCalculator } from "@/core/util/entity-difference-calcula
 
 const articlePromiseIndex = 0;
 const categoriesPromiseIndex = 1;
-const filesPromiseIndex = 2;
-const tagsPromiseIndex = 3;
+const tagsPromiseIndex = 2;
 
 interface ArticleComposerFacade {
 
@@ -120,20 +119,29 @@ export const articleComposerFacade = (environment: APIEnvironment): ArticleCompo
 
     async getCommonData(articleID?: number): Promise<ArticleComposerCommonData> {
 
+      let filesAvailable = true;
+      let files: FileDataModel[];
+      try {
+        files = await getUploadedFiles();
+      } catch (error) {
+        filesAvailable = false;
+        files = [];
+      }
+
       const categories = getAllCategories();
-      const files = getUploadedFiles();
       const tags = getAllTags();
       const article = articleID
         ? getArticleByID(articleID).then(convertArticleToEditRequest)
         : Promise.resolve(undefined);
 
-      return Promise.all([article, categories, files, tags])
+      return Promise.all([article, categories, tags])
         .then(results => {
           return {
             article: results[articlePromiseIndex],
             categories: convertCategories(results[categoriesPromiseIndex]),
-            files: convertFiles(results[filesPromiseIndex]),
-            tags: convertTags(results[tagsPromiseIndex])
+            files: convertFiles(files),
+            tags: convertTags(results[tagsPromiseIndex]),
+            filesAvailable: filesAvailable
           }
         });
     },

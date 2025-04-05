@@ -106,6 +106,7 @@ export interface ArticleComposerCommonData {
   categories: SelectOptionsObject;
   files: SelectOptionsObject;
   tags: SelectOptionsObject;
+  filesAvailable: boolean;
 }
 
 /**

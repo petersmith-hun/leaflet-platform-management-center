@@ -2,11 +2,10 @@ import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { SubmitButton } from "@/components/form/SubmitButton";
 import { createQueryString } from "@/components/utility/query-string-util";
-import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { ArticleStatus } from "@/core/model/article";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -33,11 +32,6 @@ export const ArticleSearchForm = (): ReactNode => {
     const redirectPath = `/articles?${searchQuery}`;
     router.push(redirectPath);
   }
-
-  useEffect(() => {
-    tailwindElementsLoader()
-      .then(loader => loader.load([TWElement.Input, TWElement.Select]));
-  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

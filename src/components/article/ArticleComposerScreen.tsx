@@ -6,7 +6,7 @@ import { Modal } from "@/components/common/Modal";
 import { SubmitOperation } from "@/components/common/operations/SubmitOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
 import { TabbedScreen } from "@/components/common/TabbedScreen";
-import { AutoSaved, SubmitListener } from "@/components/form/AutoSaved";
+import { AutoSaved, SubmitListener } from "@/components/form/autosaved/AutoSaved";
 import { Input } from "@/components/form/Input";
 import { Select } from "@/components/form/Select";
 import { DefaultSubmitButton } from "@/components/form/SubmitButton";
@@ -17,7 +17,7 @@ import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind
 import { articleComposerFacade } from "@/core/facade/article-composer-facade";
 import { ArticleComposerCommonData, ArticleEditRequest, ArticleStatus } from "@/core/model/article";
 import { useSessionHelper } from "@/hooks/use-session-helper";
-import { faEye, faLink, faList, faUnlink } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faLink, faList, faUnlink, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
@@ -29,6 +29,25 @@ interface ArticleComposerScreenProps {
   environment: APIEnvironment;
   commonData: ArticleComposerCommonData;
   mutate?: KeyedMutator<ArticleComposerCommonData>;
+}
+
+const FilesUnavailableNotification = ({ commonData }: { commonData: ArticleComposerCommonData }): ReactNode => {
+
+  const { t } = useTranslation();
+
+  if (commonData.filesAvailable) {
+    return;
+  }
+
+  return (
+    <div
+      className={`w-full items-center rounded-lg px-6 py-2 mb-2 text-base bg-danger-100 text-danger-700 dark:bg-danger-950 dark:text-danger-500/80"`}
+      role="alert"
+      id="alert-autosave-status"
+      data-twe-alert-init="">
+      <FontAwesomeIcon icon={faWarning} className="mr-1" /> {t("article.label.files-unavailable")}
+    </div>
+  )
 }
 
 /**
@@ -55,7 +74,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
   const [generateLink, setGenerateLink] = useState(true);
   const [contentToRender, setContentToRender] = useState("");
   const articleID = router.query.id as number | undefined;
-  const submitListener = useMemo(() => new SubmitListener(), []);
+  const submitListener = useMemo(() => new SubmitListener(router), []);
 
   const renderArticle = (): void => {
     const sourceInput = document.getElementById("article-raw-content") as HTMLInputElement;
@@ -83,6 +102,7 @@ export const ArticleComposerScreen = ({ environment, commonData, mutate }: Artic
       <MultiPaneScreen>
         <WidePane>
           <CardWithTitle title={commonData.article?.title ?? t("page.title.article.create")}>
+            <FilesUnavailableNotification commonData={commonData} />
             <AutoSaved getValues={getValues} reset={reset} submitListener={submitListener} />
             <TabbedScreen
               titles={[

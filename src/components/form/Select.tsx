@@ -1,5 +1,5 @@
 import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
-import React, { ChangeEvent, ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface SelectProps {
@@ -8,7 +8,6 @@ interface SelectProps {
   optionMap: Record<number | string, string>;
   multiple?: boolean;
   search?: boolean;
-  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 interface SelectWithHintProps extends Omit<SelectProps, "optionMap"> {
@@ -22,10 +21,9 @@ interface SelectWithHintProps extends Omit<SelectProps, "optionMap"> {
  * @param label label of the select dropdown
  * @param optionMap select options to be rendered as a flat key-value object
  * @param multiple enables multiselect behaviors
- * @param search enables rendering a search input
- * @param onChange additional operation to execute upon changing option
+ * @param search allow rendering a search bar for the available options
  */
-export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false, onChange = undefined}: SelectProps): ReactNode => {
+export const Select = ({ registerReturn, label, optionMap, multiple = false, search = false}: SelectProps): ReactNode => {
 
   useEffect(() => {
     tailwindElementsLoader()
@@ -34,7 +32,7 @@ export const Select = ({ registerReturn, label, optionMap, multiple = false, sea
 
   return (
     <div className="mb-3 max-w-[90%]">
-      <select data-te-select-init="" {...registerReturn} multiple={multiple} data-te-select-filter={search} onChange={onChange}>
+      <select data-te-select-init="" {...registerReturn} multiple={multiple} data-te-select-filter={search}>
         {Object.entries(optionMap)
           .map(option => <option key={option[0]} value={option[0]}>{option[1]}</option>)}
       </select>
