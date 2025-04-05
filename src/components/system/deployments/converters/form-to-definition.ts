@@ -8,7 +8,7 @@ import {
   OptionalDeploymentInfo,
   SourceType
 } from "@/core/model/domino";
-import ms from "ms";
+import ms, { StringValue } from "ms";
 
 /**
  * Maps the given DeploymentForm object (form representation) to Deployment object (to be submitted to Domino).
@@ -60,8 +60,8 @@ const mapHealthcheck = (deploymentForm: DeploymentForm): OptionalDeploymentHealt
   return {
     enabled: true,
     endpoint: deploymentForm.healthcheck.endpoint!,
-    delay: ms(deploymentForm.healthcheck.delay!),
-    timeout: ms(deploymentForm.healthcheck.timeout!),
+    delay: ms(deploymentForm.healthcheck.delay! as StringValue),
+    timeout: ms(deploymentForm.healthcheck.timeout! as StringValue),
     maxAttempts: parseInt(deploymentForm.healthcheck.maxAttempts!)
   }
 }
