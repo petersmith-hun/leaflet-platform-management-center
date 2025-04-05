@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@types/luxon": "3.6.0",
+    "@types/ms": "2.1.0",
     "@types/node": "22.13.17",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
