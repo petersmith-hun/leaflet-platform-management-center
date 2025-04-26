@@ -1,18 +1,24 @@
 import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
-import React, { ReactNode, useEffect } from "react";
+import React, { MouseEventHandler, ReactNode, useEffect } from "react";
 
 interface ModalProps {
   id: string;
   title: string;
   children: ReactNode;
+  onClose?: MouseEventHandler;
 }
 
-const CloseButton = (): ReactNode => {
+interface CloseButtonProps {
+  onClose?: MouseEventHandler;
+}
+
+const CloseButton = ({ onClose }: CloseButtonProps): ReactNode => {
   return (
     <button
       type="button"
       className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
       data-te-modal-dismiss=""
+      onClick={onClose}
       aria-label="Close">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +42,9 @@ const CloseButton = (): ReactNode => {
  * @param id ID of the modal window
  * @param title title of the modal window
  * @param children contents to be rendered within
+ * @param onClose additional logic to be executed on close (optional)
  */
-export const Modal = ({ id, title, children }: ModalProps) => {
+export const Modal = ({ id, title, children, onClose }: ModalProps) => {
 
   useEffect(() => {
     tailwindElementsLoader()
@@ -65,7 +72,7 @@ export const Modal = ({ id, title, children }: ModalProps) => {
               id={`${id}-title`}>
               {title}
             </h5>
-            <CloseButton />
+            <CloseButton onClose={onClose} />
           </div>
 
           <div className="relative p-4">

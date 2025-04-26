@@ -57,6 +57,7 @@ export const ViewTagScreen = ({ tag, environment, mutate }: ViewTagScreenParamet
           <PageOperationButton label={t("page-operations.tag.back-to-tags")} icon={faList}
                                link={"/tags"} />
           <GeneralStatusUpdateOperation domain={"tag"} entity={tag} titleSupplier={tag => tag.name}
+                                        operation={tag.enabled ? "status-disable" : "status-enable"}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"tag"} entity={tag} titleSupplier={tag => tag.name}
                            serviceCall={deleteTagByID} />

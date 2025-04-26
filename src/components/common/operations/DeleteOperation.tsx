@@ -1,16 +1,17 @@
 import { ToastType } from "@/components/common/OperationResultToast";
-import { OperationProps, redirectMap } from "@/components/common/operations/index";
+import { OperationProps, redirectMap, sanitizeID } from "@/components/common/operations/index";
 import { AwarenessLevel, ConfirmedOperationButton } from "@/components/navigation/OperationButton";
 import { toastHandler } from "@/components/utility/toast-handler";
 import { IdentifiedModel } from "@/core/model/common";
 import { FileDataModel } from "@/core/model/files";
+import { SecretMetadataModel } from "@/core/model/secrets";
 import { PageContext } from "@/pages/_app";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel> extends OperationProps<T> {
+interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel | SecretMetadataModel> extends OperationProps<T> {
   serviceCall: (id: ID) => Promise<void>;
   idProvider?: (entity: T) => ID;
   redirectOverride?: (entity: T) => string;
@@ -26,7 +27,7 @@ interface DeletionProps<ID extends unknown, T extends IdentifiedModel<ID> | File
  * @param mutate SWR mutate function for data invalidation
  * @param redirectOverride target href if the auto-generated one does not fit the use case
  */
-export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel>(
+export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID> | FileDataModel | SecretMetadataModel>(
   { domain, entity, titleSupplier, serviceCall,
     idProvider = entity => (entity as IdentifiedModel<ID>).id,
     redirectOverride }: DeletionProps<ID, T>): ReactNode => {
@@ -67,7 +68,8 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
 
   return (
     <ConfirmedOperationButton label={t(`page-operations.${domain}.delete`)} icon={faTrash}
-                              id={`${domain}-delete-${idProvider(entity)}`}
+                              id={`${domain}-delete-${sanitizeID(idProvider(entity) as string)}`}
+                              popconfirmDomain={domain} operation={"delete"}
                               onSubmit={() => handleDeletion()}
                               awareness={AwarenessLevel.ALERT} />
   )

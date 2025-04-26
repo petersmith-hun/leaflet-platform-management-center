@@ -79,6 +79,7 @@ export const ViewRouteDetailsScreen = ({ environment, route, mutate }: ViewRoute
           <PageOperationButton label={t("page-operations.route.back-to-routes")} icon={faList}
                                link={"/system/routes"} />
           <GeneralStatusUpdateOperation domain={"route"} entity={route}
+                                        operation={route.enabled ? "status-disable" : "status-enable"}
                                         titleSupplier={route => route.name}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"route"} entity={route} titleSupplier={route => route.name}

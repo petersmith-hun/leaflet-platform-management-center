@@ -146,6 +146,7 @@ export const ViewArticleScreen = ({ article, environment, mutate }: ViewArticleS
                                link={`/articles/edit/${article.body.id}`} />
           <PageOperationButton label={t("page-operations.article.back-to-articles")} icon={faList} link={"/articles"} />
           <GeneralStatusUpdateOperation domain={"article"} entity={article.body}
+                                        operation={article.body.enabled ? "status-disable" : "status-enable"}
                                         titleSupplier={article => article.title}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <ArticlePublicationStatusUpdate article={article} environment={environment} mutate={mutate} />

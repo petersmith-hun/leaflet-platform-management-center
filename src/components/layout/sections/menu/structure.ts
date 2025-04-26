@@ -17,6 +17,7 @@ import {
   faTags,
   faUsers
 } from "@fortawesome/free-solid-svg-icons";
+import { faKey } from "@fortawesome/free-solid-svg-icons/faKey";
 
 const rootGroup: MenuItemData[] = [
   {
@@ -87,6 +88,12 @@ const systemManagement: MenuItemData[] = [
     itemKey: "group.system_management.item.domino",
     path: "/system/deployments",
     icon: faDice,
+    requiredScope: Permission.WRITE_ADMIN
+  },
+  {
+    itemKey: "group.system_management.item.secrets",
+    path: "/system/secrets",
+    icon: faKey,
     requiredScope: Permission.WRITE_ADMIN
   }
 ];

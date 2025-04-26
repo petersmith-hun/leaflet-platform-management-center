@@ -1,5 +1,5 @@
 import { ToastType } from "@/components/common/OperationResultToast";
-import { OperationProps } from "@/components/common/operations/index";
+import { OperationProps, OperationType, sanitizeID } from "@/components/common/operations/index";
 import { AwarenessLevel, ConfirmedOperationButton } from "@/components/navigation/OperationButton";
 import { toastHandler } from "@/components/utility/toast-handler";
 import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
 
 interface GeneralStatusUpdateProps<ID extends unknown, T extends IdentifiedSelfStatusAwareModel<ID>> extends OperationProps<T> {
+  operation: OperationType;
   serviceCall: (id: ID) => Promise<T>;
   mutate: KeyedMutator<any>;
 }
@@ -18,13 +19,14 @@ interface GeneralStatusUpdateProps<ID extends unknown, T extends IdentifiedSelfS
  * Component wrapping the general status change logic for any self-status-aware entity.
  *
  * @param domain entity group identifier (used for selecting the relevant set of labels, and also for generating IDs)
+ * @param operation operation label
  * @param entity entity data to be used to extract status information, ID and title
  * @param titleSupplier supplier function to provide the "display name" of the entity
  * @param serviceCall service entry point to execute status update
  * @param mutate SWR mutate function for data invalidation
  */
 export const GeneralStatusUpdateOperation = <ID extends unknown, T extends IdentifiedSelfStatusAwareModel<ID>>(
-  { domain, entity, titleSupplier, serviceCall, mutate }: GeneralStatusUpdateProps<ID, T>): ReactNode => {
+  { domain, operation, entity, titleSupplier, serviceCall, mutate }: GeneralStatusUpdateProps<ID, T>): ReactNode => {
 
   const { t } = useTranslation();
   const { triggerToast, setOperationInProgress } = useContext(PageContext);
@@ -67,12 +69,14 @@ export const GeneralStatusUpdateOperation = <ID extends unknown, T extends Ident
     <>
       {entity.enabled &&
         <ConfirmedOperationButton label={t(`page-operations.${domain}.disable`)} icon={faToggleOff}
-                                  id={`${domain}-general-status-${entity.id}`}
+                                  popconfirmDomain={domain === "secret-retrieval" ? "secret" : domain} operation={operation}
+                                  id={sanitizeID(`${domain}-general-status-${entity.id}`)}
                                   onSubmit={() => handleGeneralStatusChange()}
                                   awareness={AwarenessLevel.ALERT} />}
       {!entity.enabled &&
         <ConfirmedOperationButton label={t(`page-operations.${domain}.enable`)} icon={faToggleOn}
-                                  id={`${domain}-general-status-${entity.id}`}
+                                  popconfirmDomain={domain === "secret-retrieval" ? "secret" : domain} operation={operation}
+                                  id={sanitizeID(`${domain}-general-status-${entity.id}`)}
                                   onSubmit={() => handleGeneralStatusChange()}
                                   awareness={AwarenessLevel.POSITIVE} />}
     </>

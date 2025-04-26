@@ -85,6 +85,7 @@ export const ViewCommentScreen = ({ comment, environment, mutate }: ViewCommentS
           <PageOperationButton label={t("page-operations.comment.back-to-comments")} icon={faList}
                                link={`/comments/${comment.associatedEntry!.id}`} />
           <GeneralStatusUpdateOperation domain={"comment"} entity={comment} titleSupplier={comment => comment.content}
+                                        operation={comment.enabled ? "status-disable" : "status-enable"}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"comment"} entity={comment} titleSupplier={comment => comment.content}
                            serviceCall={deleteCommentByID}

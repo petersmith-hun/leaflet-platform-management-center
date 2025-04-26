@@ -45,7 +45,7 @@ const DominoDeploymentsList = ({ deployments }: DominoDeploymentsProps): ReactNo
 }
 
 /**
- * Screen component for listing the existing translation packs.
+ * Screen component for listing the existing deployments.
  *
  * @param environment APIEnvironment object defining the target API configuration
  */

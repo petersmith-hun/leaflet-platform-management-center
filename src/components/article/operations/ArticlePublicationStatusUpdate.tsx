@@ -58,16 +58,19 @@ export const ArticlePublicationStatusUpdate = ({ article, environment, mutate }:
     <>
       {article.body.entryStatus === ArticleStatus.PUBLIC &&
         <ConfirmedOperationButton label={t("page-operations.article.unpublish")} icon={faBan}
+                                  popconfirmDomain={"article"} operation={"publication-unpublish"}
                                   id={`article-publication-${article.body.id}`}
                                   onSubmit={() => handlePublicationStatusChange(article)}
                                   awareness={AwarenessLevel.ALERT} />}
       {article.body.entryStatus === ArticleStatus.REVIEW &&
         <ConfirmedOperationButton label={t("page-operations.article.publish")} icon={faGlobe}
+                                  popconfirmDomain={"article"} operation={"publication-publish"}
                                   id={`article-publication-${article.body.id}`}
                                   onSubmit={() => handlePublicationStatusChange(article)}
                                   awareness={AwarenessLevel.POSITIVE} />}
       {article.body.entryStatus === ArticleStatus.DRAFT &&
         <ConfirmedOperationButton label={t("page-operations.article.request-review")} icon={faEye}
+                                  popconfirmDomain={"article"} operation={"publication-review"}
                                   id={`article-publication-${article.body.id}`}
                                   onSubmit={() => handlePublicationStatusChange(article)}
                                   awareness={AwarenessLevel.WARNING} />}

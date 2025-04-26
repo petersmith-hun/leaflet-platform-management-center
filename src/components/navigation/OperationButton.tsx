@@ -1,3 +1,4 @@
+import { OperationDomain, OperationType } from "@/components/common/operations";
 import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -45,8 +46,8 @@ interface OperationButtonProperties extends PageOperationButtonProperties {
 
 interface ConfirmedOperationButtonProperties {
   label: string;
-  popconfirmDomain?: string;
-  operation?: string;
+  popconfirmDomain?: OperationDomain;
+  operation?: OperationType;
   icon: IconDefinition;
   id: string,
   awareness?: AwarenessLevel;
@@ -97,7 +98,7 @@ export const PageOperationButton = ({ label, icon, link, awareness = AwarenessLe
  * @param onSubmit submit handler function
  * @param awareness awareness level of the button
  */
-export const ConfirmedOperationButton = ({ label, popconfirmDomain = "article", operation = "delete", icon, id, onSubmit, awareness = AwarenessLevel.NORMAL }: ConfirmedOperationButtonProperties): ReactNode => {
+export const ConfirmedOperationButton = ({ label, popconfirmDomain, operation, icon, id, onSubmit, awareness = AwarenessLevel.NORMAL }: ConfirmedOperationButtonProperties): ReactNode => {
 
   const { t } = useTranslation("forms");
   const { handleSubmit } = useForm<never>();
@@ -118,8 +119,11 @@ export const ConfirmedOperationButton = ({ label, popconfirmDomain = "article", 
               id={popConfirmID}
               data-te-toggle="popconfirm"
               data-te-ripple-color="dark"
-              data-te-cancel-text={t("confirmation.cancel")}
-              data-te-message={t(`confirmation.${operation}.${popconfirmDomain}`)}
+              data-te-cancel-text={t("confirmation.label.operation.cancel")}
+              data-te-message={t(`confirmation.label.question`, {
+                operation: t(`confirmation.label.operation.${operation}`),
+                item: t(`domain.${popconfirmDomain}`)
+              })}
               data-te-class-message-text="text-warning dark:text-white"
               data-te-class-body="p-[1rem] bg-dark rounded-[0.5rem] opacity-0 dark:bg-neutral-700"
               className={`${awareness} text-left inline-block w-full rounded border-2 px-6 pb-[6px] pt-2 mb-3 text-xs font-medium uppercase leading-normal text-primary-100 transition duration-150 ease-in-out hover:border-primary-accent-100 hover:bg-neutral-500 hover:bg-opacity-10 focus:border-primary-accent-100 focus:outline-none focus:ring-0 active:border-primary-accent-200 dark:text-primary-100 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10`}>
