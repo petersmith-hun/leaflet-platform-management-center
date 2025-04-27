@@ -1,6 +1,7 @@
 import { APIEnvironment, ScreenParameters } from "@/api-environment";
 import { PageOperationCard } from "@/components/common/Cards";
 import { ItemListBody, ItemListHeader, ItemListHeaderItem, ItemListPane } from "@/components/common/ItemListPane";
+import { NoDataScreen } from "@/components/common/NoDataScreen";
 import { MultiPaneScreen, NarrowPane } from "@/components/common/ScreenLayout";
 import { SWRManagedScreen } from "@/components/common/SWRManagedScreen";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
@@ -21,9 +22,22 @@ interface SecretListProps {
   secrets: GroupedSecretMetadataModel[];
 }
 
-const SecretsList = ({ environment, secrets }: SecretListProps): ReactNode => {
+const SecretListOperations = (): ReactNode => {
 
   const { t } = useTranslation();
+
+  return (
+    <NarrowPane>
+      <PageOperationCard title={t("page-operations.secret")}>
+        <PageOperationButton label={t("page-operations.secret.new")} icon={faEdit}
+                             link="/system/secrets/create" />
+      </PageOperationCard>
+    </NarrowPane>
+  )
+}
+
+const SecretsList = ({ environment, secrets }: SecretListProps): ReactNode => {
+
   const [secretModalTitle, setSecretModalTitle] = useState("");
   const [secretModalValue, setSecretModalValue] = useState<ReactNode | string | null>(null);
 
@@ -31,6 +45,15 @@ const SecretsList = ({ environment, secrets }: SecretListProps): ReactNode => {
     await wait(300);
     setSecretModalTitle("");
     setSecretModalValue(null);
+  }
+
+  if (secrets.length === 0) {
+    return (
+      <MultiPaneScreen>
+        <NoDataScreen />
+        <SecretListOperations />
+      </MultiPaneScreen>
+    )
   }
 
   return secrets.map((group, index) => (
@@ -51,14 +74,7 @@ const SecretsList = ({ environment, secrets }: SecretListProps): ReactNode => {
             )}
           </ItemListBody>
         </ItemListPane>
-        {!index && (
-          <NarrowPane>
-            <PageOperationCard title={t("page-operations.secret")}>
-              <PageOperationButton label={t("page-operations.secret.new")} icon={faEdit}
-                                   link="/system/secrets/create" />
-            </PageOperationCard>
-          </NarrowPane>
-        )}
+        {!index && <SecretListOperations />}
       </MultiPaneScreen>
       {!index && (
         <SecretModal title={secretModalTitle} value={secretModalValue} onClose={handleModalClose} />

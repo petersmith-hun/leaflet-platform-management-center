@@ -348,6 +348,7 @@
     "modal.title.rendered-article": "Rendered article",
     "modal.title.deployment-definition-yaml": "Exported deployment definition",
 
+    "notification.common.no-data": "No data found",
     "notification.logs.no-entry-found": "No log entry found by the provided query",
     "notification.logs.found": "Found {{total}} items, {{visible}} visible on this page (page: {{currentPage}}/{{totalPage}})",
 
