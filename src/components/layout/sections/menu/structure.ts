@@ -38,12 +38,6 @@ const quickCreation: MenuItemData[] = [
 
 const systemManagement: MenuItemData[] = [
   {
-    itemKey: "group.system_management.item.services",
-    path: "/system/services",
-    icon: faSignal,
-    requiredScope: Permission.READ_ADMIN
-  },
-  {
     itemKey: "group.system_management.item.seo",
     path: "/system/seo",
     icon: faGlobe,
@@ -65,33 +59,42 @@ const systemManagement: MenuItemData[] = [
     itemKey: "group.system_management.item.failover",
     path: "/system/failover",
     requiredScope: Permission.READ_ADMIN
+  }
+];
+
+const infraManagement: MenuItemData[] = [
+  {
+    itemKey: "group.infra_management.item.services",
+    path: "/system/services",
+    icon: faSignal,
+    requiredScope: Permission.READ_ADMIN
   },
   {
-    itemKey: "group.system_management.item.cluster",
+    itemKey: "group.infra_management.item.cluster",
     path: "/system/docker/status",
     icon: faDocker,
     requiredScope: Permission.READ_ADMIN
   },
   {
-    itemKey: "group.system_management.item.registry",
+    itemKey: "group.infra_management.item.registry",
     path: "/system/docker/registry",
     icon: faDocker,
     requiredScope: Permission.READ_ADMIN
   },
   {
-    itemKey: "group.system_management.item.logs",
+    itemKey: "group.infra_management.item.logs",
     path: "/system/logs",
     icon: faFileText,
     requiredScope: Permission.READ_ADMIN
   },
   {
-    itemKey: "group.system_management.item.domino",
+    itemKey: "group.infra_management.item.domino",
     path: "/system/deployments",
     icon: faDice,
     requiredScope: Permission.WRITE_ADMIN
   },
   {
-    itemKey: "group.system_management.item.secrets",
+    itemKey: "group.infra_management.item.secrets",
     path: "/system/secrets",
     icon: faKey,
     requiredScope: Permission.WRITE_ADMIN
@@ -178,6 +181,11 @@ export const mainMenu: MenuGroupData[] = [
   {
     groupKey: "group.system_management",
     menuItems: systemManagement,
+    requiredScope: Permission.READ_ADMIN
+  },
+  {
+    groupKey: "group.infra_management",
+    menuItems: infraManagement,
     requiredScope: Permission.READ_ADMIN
   },
   {

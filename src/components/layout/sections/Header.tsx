@@ -7,6 +7,7 @@ import { PageContext } from "@/pages/_app";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import React, { Fragment, ReactNode, useContext } from 'react'
 import { useTranslation } from "react-i18next";
 
@@ -80,14 +81,14 @@ const UserMenu = ({ userInfo }: HeaderData): ReactNode => {
               {userMenuData.map((item) => (
                 <Menu.Item key={item.name}>
                   {({ active }) => (
-                    <a onClick={item.clickHandler}
+                    <Link onClick={item.clickHandler}
                        href={item.path}
                        className={classNames(
                          active ? 'bg-gray-100' : '',
                          'block px-4 py-2 text-sm text-gray-700'
                        )}>
                       {t(item.name)}
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
               ))}
