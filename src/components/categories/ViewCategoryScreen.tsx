@@ -62,6 +62,7 @@ export const ViewCategoryScreen = ({ category, environment, mutate }: ViewCatego
           <PageOperationButton label={t("page-operations.category.back-to-categories")} icon={faList}
                                link={"/categories"} />
           <GeneralStatusUpdateOperation domain={"category"} entity={category} titleSupplier={category => category.title}
+                                        operation={category.enabled ? "status-disable" : "status-enable"}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"category"} entity={category} titleSupplier={category => category.title}
                            serviceCall={deleteCategoryByID} />

@@ -66,6 +66,7 @@ export const RepositoryTagCard = ({ tag, environment, mutate }: RepositoryTagCar
       <div className="w-2/12 flex flex-col items-center">
         <DropdownMenu id={`tag-menu-${tag.tag}`}>
           <ConfirmedOperationButton label={t("dropdown.operation.delete")} popconfirmDomain={"docker-tag"}
+                                    operation={"delete"}
                                     icon={faTrash} awareness={AwarenessLevel.ALERT}
                                     id={`delete-${tag.tag.replaceAll(".", "_")}`}
                                     onSubmit={deleteHandler} />

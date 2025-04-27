@@ -152,15 +152,17 @@ export const ViewDeploymentScreen = ({ deployment, environment, mutate }: ViewDe
           {deployment.metadata?.locked ? (
             <ConfirmedOperationButton label={t("page-operations.deployment.unlock")} icon={faLockOpen}
                                       id={`deployment-${deployment.id}`}
-                                      popconfirmDomain={"deployment"} operation="unlock"
+                                      popconfirmDomain={"deployment"} operation="deployment-unlock"
                                       onSubmit={handleUnlock}
                                       awareness={AwarenessLevel.WARNING} />
           ) : (
-            <PageOperationButton label={t("page-operations.deployment.edit")} icon={faPencil}
-                                 link={`/system/deployments/edit/${deployment.id}`} />
+            <>
+              <PageOperationButton label={t("page-operations.deployment.edit")} icon={faPencil}
+                                   link={`/system/deployments/edit/${deployment.id}`} />
+              <DeleteOperation domain={"deployment"} entity={deployment} titleSupplier={deployment => deployment.id}
+                               serviceCall={deleteDeployment} />
+            </>
           )}
-          <DeleteOperation domain={"deployment"} entity={deployment} titleSupplier={deployment => deployment.id}
-                           serviceCall={deleteDeployment} />
           <ExportDeploymentButton onClick={renderExportedDeployment} />
         </PageOperationCard>
       </NarrowPane>

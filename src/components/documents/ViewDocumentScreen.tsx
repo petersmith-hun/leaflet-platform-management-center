@@ -92,6 +92,7 @@ export const ViewDocumentScreen = ({ document, environment, mutate }: ViewDocume
           <PageOperationButton label={t("page-operations.document.back-to-documents")} icon={faList}
                                link={"/documents"} />
           <GeneralStatusUpdateOperation domain={"document"} entity={document.body}
+                                        operation={document.body.enabled ? "status-disable" : "status-enable"}
                                         titleSupplier={document => document.title}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"document"} entity={document.body} titleSupplier={document => document.title}

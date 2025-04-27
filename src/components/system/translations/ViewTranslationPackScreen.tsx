@@ -65,6 +65,7 @@ export const ViewTranslationPackScreen = ({ pack, environment, mutate }: ViewTra
           <PageOperationButton label={t("page-operations.translation.back-to-packs")} icon={faList}
                                link={"/system/translations"} />
           <GeneralStatusUpdateOperation domain={"translation"} entity={pack} titleSupplier={pack => pack.packName}
+                                        operation={pack.enabled ? "status-disable" : "status-enable"}
                                         serviceCall={changeGeneralStatus} mutate={mutate} />
           <DeleteOperation domain={"translation"} entity={pack} titleSupplier={pack => pack.packName}
                            serviceCall={deletePackByID} />

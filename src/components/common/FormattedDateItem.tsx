@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode } from "react";
 
 interface FormattedArticleDataProps {
-  date: string;
+  date?: string;
   icon: IconDefinition;
 }
 
