@@ -68,7 +68,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
 
   return (
     <ConfirmedOperationButton label={t(`page-operations.${domain}.delete`)} icon={faTrash}
-                              id={`${domain}-delete-${sanitizeID(idProvider(entity) as string)}`}
+                              id={sanitizeID(`${domain}-delete-${idProvider(entity)}`)}
                               popconfirmDomain={domain} operation={"delete"}
                               onSubmit={() => handleDeletion()}
                               awareness={AwarenessLevel.ALERT} />
