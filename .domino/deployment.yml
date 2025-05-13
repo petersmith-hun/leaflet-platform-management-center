@@ -1,0 +1,39 @@
+domino:
+  deployments:
+    lpmc:
+      source:
+        type: DOCKER
+        home: "[dsm:common.home.docker]"
+        resource: lpmc
+      target:
+        hosts:
+          - psproghu
+      execution:
+        command-name: app_lpmc
+        via: STANDARD
+        args:
+          ports:
+            3100: 3100
+          network-mode: host
+          environment:
+            PORT: 3100
+            HOSTNAME: 0.0.0.0
+            NODE_OPTIONS: --max_old_space_size=128
+            NODE_ENV: production
+          volumes:
+            "[dsm:volume.config.lpmc]": "/opt/lpmc/.env:ro"
+            "/etc/timezone": "/etc/timezone:ro"
+            "/etc/localtime": "/etc/localtime:ro"
+          restart-policy: unless-stopped
+      health-check:
+        enabled: true
+        delay: 10 seconds
+        timeout: 2 seconds
+        max-attempts: 3
+        endpoint: "http://127.0.0.1:3100/api/actuator/info"
+      info:
+        enabled: true
+        endpoint: "http://127.0.0.1:3100/api/actuator/info"
+        field-mapping:
+          abbreviation: $.app.abbreviation
+          version: $.build.version
