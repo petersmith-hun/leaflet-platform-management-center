@@ -10,6 +10,8 @@ export enum Permission {
   READ_TAGS = "read:tags",
   READ_USERS = "read:users",
   READ_ADMIN = "read:admin",
+  READ_OAUTH_APPLICATIONS = "read:oauth:applications",
+  READ_PERMISSIONS = "read:permissions",
 
   WRITE_CATEGORIES = "write:categories",
   WRITE_COMMENTS = "write:comments",

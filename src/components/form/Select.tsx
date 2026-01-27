@@ -10,8 +10,10 @@ interface SelectProps {
   search?: boolean;
 }
 
+export type OptionWithHintRecord = Record<number | string, { value: string, hint: string }>;
+
 interface SelectWithHintProps extends Omit<SelectProps, "optionMap"> {
-  optionMap: Record<number | string, { value: string, hint: string }>;
+  optionMap: OptionWithHintRecord;
 }
 
 /**

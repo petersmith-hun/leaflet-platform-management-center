@@ -10,18 +10,21 @@ interface PageButtonProps {
   index: number;
   queryString: string;
   label?: string;
+  current: boolean;
 }
 
 interface PaginatorProps {
   pagination: Pagination;
 }
 
-const PageButton = ({ index, queryString, label }: PageButtonProps): ReactNode => {
+const PageButton = ({ index, queryString, label, current }: PageButtonProps): ReactNode => {
 
   return (
     <li>
       <Link
-        className="relative block rounded bg-transparent px-3 py-1.5 mx-1 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-800 dark:hover:text-white dark:bg-neutral-600"
+        className={current
+          ? "relative block rounded bg-primary-100 px-3 py-1.5 mx-1 text-sm font-medium text-primary-700 transition duration-300 focus:outline-none dark:bg-slate-900 dark:text-primary-500"
+          : "relative block rounded bg-transparent px-3 py-1.5 mx-1 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-800 dark:hover:text-white dark:bg-neutral-600"}
         href={`?page=${index}${queryString ? "&" + queryString : ""}`}>
         {label ? label : index}
       </Link>
@@ -43,18 +46,18 @@ export const Paginator = ({ pagination }: PaginatorProps): ReactNode => {
   let pageButtons: ReactNode[] = [];
   if (pagination.hasPrevious) {
     pageButtons.push(<PageButton key="page-previous" index={pagination.pageNumber - 1} queryString={queryString}
-                                 label={t("pagination.page-previous")} />)
+                                 label={t("pagination.page-previous")} current={false} />)
   }
 
   for (let index = 1; index <= (pagination.pageCount ?? 1); index++) {
     pageButtons.push(
-      <PageButton key={`page-${index}`} index={index} queryString={queryString} />
+      <PageButton key={`page-${index}`} index={index} queryString={queryString} current={pagination.pageNumber === index} />
     )
   }
 
   if (pagination.hasNext) {
     pageButtons.push(<PageButton key="page-next" index={pagination.pageNumber + 1} queryString={queryString}
-                                 label={t("pagination.page-next")} />)
+                                 label={t("pagination.page-next")} current={false} />)
   }
 
   return (

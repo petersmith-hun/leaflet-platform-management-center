@@ -1,6 +1,6 @@
 import { ExternalService } from "@/core/client";
 import clientCredentialsRestClient from "@/core/client/client-credentials-rest-client";
-import { RequestMethod, RESTRequest } from "@/core/domain/requests";
+import { RESTRequest } from "@/core/domain/requests";
 import { ExternalServiceCallError } from "@/core/support/service-gateway";
 import {
   assertPermission,
@@ -8,51 +8,39 @@ import {
   getRequiredSession,
   getTargetService
 } from "@/core/support/service-gateway/proxy-api-utilities";
-import { getProxyRequestBodyAdapter } from "@/core/support/service-gateway/proxy-request-adapters";
+import { adaptRequestBody } from "@/core/support/service-gateway/proxy-request-adapters";
 import { AxiosError, AxiosResponse } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session } from "next-auth";
 
-const forwardRequest = async (requestPath: string[], request: NextApiRequest, service: ExternalService): Promise<AxiosResponse<unknown>> => {
+const decodeRequest = (request: NextApiRequest): RESTRequest => {
 
-  const targetPath = requestPath.slice(1);
-  const adapter = getProxyRequestBodyAdapter(request);
-  const headers: Record<string, string> = {};
-  const queryParameters: Record<string, string> = {};
+  return JSON.parse(Buffer
+    .from(request.body.originalRequest, "base64")
+    .toString("utf-8"));
+}
 
-  if (request.headers["content-type"] && request.headers["content-type"] !== "application/json") {
-    headers["Content-Type"] = request.headers["content-type"];
-  }
+const forwardBundledRequest = async (request: NextApiRequest, service: ExternalService): Promise<AxiosResponse<unknown>> => {
 
-  if (request.query.pageNumber) {
-    queryParameters["pageNumber"] = request.query.pageNumber as string;
-  }
-
-  if (request.query.yaml) {
-    queryParameters["yaml"] = request.query.yaml as string;
-  }
-
+  const restRequestAttributes = decodeRequest(request);
   const restRequest = new RESTRequest({
-    method: request.method as RequestMethod,
-    path: targetPath.join("/"),
-    headers: headers,
-    queryParameters: queryParameters,
-    requestBody: request.body
-      ? adapter(request.body)
-      : undefined
+    ...restRequestAttributes,
+    requestBody: restRequestAttributes.requestBody
+      ? adaptRequestBody(restRequestAttributes)
+      : undefined,
   });
 
   return await clientCredentialsRestClient(service, restRequest);
-};
+}
 
-const extractMessage = (error: any): string => {
+const extractResponse = (error: any): unknown => {
 
-  let originalMessage;
+  let originalResponse;
   if (error instanceof AxiosError) {
-    originalMessage = error.response?.data?.message;
+    originalResponse = error.response?.data;
   }
 
-  return originalMessage ?? error?.message;
+  return originalResponse ?? { message: error?.message };
 }
 
 /**
@@ -82,13 +70,13 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const service: ExternalService = await getTargetService(requestPath);
     await assertPermission(service, session);
 
-    const result = await forwardRequest(requestPath, request, service);
+    const result = await forwardBundledRequest(request, service);
     response.status(200).json(result.data);
 
   } catch (error: any) {
 
     let status = 500;
-    const errorResponse = { message: extractMessage(error) };
+    const errorResponse = extractResponse(error);
     if (error instanceof ExternalServiceCallError) {
       status = error.statusCode;
     }

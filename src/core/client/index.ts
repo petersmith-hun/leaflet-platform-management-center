@@ -9,5 +9,6 @@ export enum ExternalService {
   STACK_ADMIN_SERVICE = "lsas",
   STACK_ADMIN_SERVICE_JS = "lsas_js",
   FAILOVER = "cbfs",
-  DOMINO = "domino"
+  DOMINO = "domino",
+  ACCESS_GATEWAY = "lags",
 }

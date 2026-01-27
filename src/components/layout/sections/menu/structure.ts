@@ -2,6 +2,7 @@ import { MenuGroupData, MenuItemData } from "@/components/layout/sections/menu/i
 import { Permission } from "@/core/domain/auth";
 import { faDocker } from "@fortawesome/free-brands-svg-icons";
 import {
+  faCircleNodes,
   faDice,
   faDirections,
   faExternalLink,
@@ -13,6 +14,7 @@ import {
   faLanguage,
   faNewspaper,
   faPlus,
+  faShieldHalved,
   faSignal,
   faTags,
   faUsers
@@ -101,12 +103,24 @@ const infraManagement: MenuItemData[] = [
   }
 ];
 
-const userManagement: MenuItemData[] = [
+const accessManagement: MenuItemData[] = [
   {
     itemKey: "group.access_management.item.users",
     path: "/users",
     icon: faUsers,
-    requiredScope: Permission.READ_USERS
+    requiredScope: Permission.READ_ADMIN
+  },
+  {
+    itemKey: "group.access_management.item.oauth_applications",
+    path: "/access/oauth-applications",
+    icon: faCircleNodes,
+    requiredScope: Permission.READ_ADMIN
+  },
+  {
+    itemKey: "group.access_management.item.permissions",
+    path: "/access/permissions",
+    icon: faShieldHalved,
+    requiredScope: Permission.READ_ADMIN
   }
 ];
 
@@ -190,8 +204,8 @@ export const mainMenu: MenuGroupData[] = [
   },
   {
     groupKey: "group.access_management",
-    menuItems: userManagement,
-    requiredScope: Permission.READ_USERS
+    menuItems: accessManagement,
+    requiredScope: Permission.READ_ADMIN
   },
   {
     groupKey: "group.document_management",

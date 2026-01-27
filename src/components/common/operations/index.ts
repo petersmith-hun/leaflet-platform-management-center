@@ -11,6 +11,8 @@ export type OperationDomain =
   | "document"
   | "file"
   | "fileView"
+  | "oauth-application"
+  | "permission"
   | "route"
   | "secret"
   | "secret-retrieval"
@@ -45,6 +47,8 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   document: "/documents",
   file: "/files/browse",
   fileView: "/files",
+  "oauth-application": "/access/oauth-applications",
+  "permission": "/access/permissions",
   secret: "/system/secrets",
   "secret-retrieval": "/system/secrets",
   route: "/system/routes",
