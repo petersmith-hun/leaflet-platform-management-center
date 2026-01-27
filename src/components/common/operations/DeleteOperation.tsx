@@ -35,7 +35,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
   const { t } = useTranslation();
   const router = useRouter();
   const { triggerToast, setOperationInProgress } = useContext(PageContext);
-  const { showCustomToast, showCustomErrorToast } = toastHandler(triggerToast, t);
+  const { showCustomToast, handleAxiosError } = toastHandler(triggerToast, t);
 
   const handleDeletion = (): void => {
 
@@ -54,15 +54,7 @@ export const DeleteOperation = <ID extends unknown, T extends IdentifiedModel<ID
           status: t("common.deleted")
         }), ToastType.WARNING
       ))
-      .catch(_ => showCustomErrorToast(
-        t(`toast.template.title.failure`, {
-          domain: t(`domain.${domain}`)
-        }),
-        t(`toast.template.message.failure`, {
-          domain: t(`domain.${domain}`),
-          title: titleSupplier(entity)
-        })
-      ))
+      .catch(handleAxiosError)
       .finally(() => setOperationInProgress(false));
   }
 

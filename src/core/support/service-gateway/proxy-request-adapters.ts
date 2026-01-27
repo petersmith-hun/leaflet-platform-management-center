@@ -1,6 +1,5 @@
-import { RequestMethod } from "@/core/domain/requests";
-import { FileUploadProxyRequest, PathInfo } from "@/core/model/files";
-import { NextApiRequest } from "next";
+import { RequestMethod, RESTRequest } from "@/core/domain/requests";
+import { FileUploadProxyRequest } from "@/core/model/files";
 
 /**
  * Converts the given FileUploadProxyRequest object to a multipart/form-data request object. As per the current
@@ -39,20 +38,16 @@ type Registry = {
 
 const registry: Registry = {
   [RequestMethod.POST]: {
-    "files": (data: FileUploadProxyRequest): FormData => convertBase64ImageToFormData(data)
+    "/files": (data: FileUploadProxyRequest): FormData => convertBase64ImageToFormData(data)
   }
 }
 
 /**
- * Returns an assigned service gateway request adapter for the current external service call. If none is registered,
- * returns the "identity" adapter.
+ * Selects an assigned service gateway request adapter for the current external service call, or the "identity" adapter,
+ * if none is registered, then immediately runs the request body through it.
  *
- * @param request NextApiRequest object to extract request information from
+ * @param request RESTRequest object containing the request parameters (method and path for adapter selection) and the request body
  */
-export const getProxyRequestBodyAdapter = <R, T>(request: NextApiRequest): (data: R) => T => {
-
-  const pathInfo = new PathInfo(request.query.path as string[]);
-  const method = RequestMethod[request.method! as keyof typeof RequestMethod];
-
-  return registry[method]?.[pathInfo.fullPath] ?? identity;
+export const adaptRequestBody = <T>(request: RESTRequest): T => {
+  return (registry[request.method]?.[request.path] ?? identity)(request.requestBody);
 }

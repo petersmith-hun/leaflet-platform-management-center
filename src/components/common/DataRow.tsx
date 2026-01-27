@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 interface DataRowProps {
   children: ReactNode | ReactNode[];
   additionalClasses?: string;
+  separator?: boolean;
 }
 
 interface DataCellProps {
@@ -20,15 +21,16 @@ interface SizedDataCellProps extends DataCellProps {
  *
  * @param children contents to be rendered within
  * @param additionalClasses optional, additional class definitions
+ * @param separator include separator (defaults to true)
  */
-export const DataRow = ({ children, additionalClasses }: DataRowProps): ReactNode => {
+export const DataRow = ({ children, additionalClasses, separator = true }: DataRowProps): ReactNode => {
 
   return (
     <>
       <div className={`flex flex-row ${additionalClasses}`}>
         {children}
       </div>
-      <Separator thick={false} />
+      {separator && <Separator thick={false} />}
     </>
   )
 }

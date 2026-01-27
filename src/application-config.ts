@@ -6,10 +6,10 @@ const createClientConfig = (service: ExternalService): ExternalServiceParameters
   const servicePrefix = service.toUpperCase();
 
   return {
+    clientID: process.env[`OAUTH_CLIENT_ID`] as string,
+    clientSecret: process.env[`OAUTH_CLIENT_SECRET`] as string,
     host: process.env[`SERVICE_${servicePrefix}_HOST`] as string,
     audience: process.env[`SERVICE_${servicePrefix}_AUDIENCE`] as string,
-    clientID: process.env[`SERVICE_${servicePrefix}_CLIENT_ID`] as string,
-    clientSecret: process.env[`SERVICE_${servicePrefix}_CLIENT_SECRET`] as string,
     scope: (process.env[`SERVICE_${servicePrefix}_SCOPE`] as string ?? "").split(","),
     requireUserScope: process.env[`SERVICE_${servicePrefix}_REQUIRED_USER_SCOPE`] as string
   }
@@ -37,7 +37,8 @@ const applicationConfig: ApplicationConfig = {
       [ExternalService.STACK_ADMIN_SERVICE]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE),
       [ExternalService.STACK_ADMIN_SERVICE_JS]: createClientConfig(ExternalService.STACK_ADMIN_SERVICE_JS),
       [ExternalService.FAILOVER]: createClientConfig(ExternalService.FAILOVER),
-      [ExternalService.DOMINO]: createClientConfig(ExternalService.DOMINO)
+      [ExternalService.DOMINO]: createClientConfig(ExternalService.DOMINO),
+      [ExternalService.ACCESS_GATEWAY]: createClientConfig(ExternalService.ACCESS_GATEWAY)
     }
   }
 }

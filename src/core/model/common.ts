@@ -83,3 +83,17 @@ export const noOpPagination: Pagination = {
   pageNumber: 1
 
 }
+
+/**
+ * Response model representing a page of items in the simplified fashion, used by LAGS and Domino.
+ */
+export interface SimplifiedPageModel<T> {
+
+  content: T[];
+  page: {
+    size: number;
+    number: number;
+    totalElements: number;
+    totalPages: number;
+  }
+}
