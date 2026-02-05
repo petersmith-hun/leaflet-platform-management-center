@@ -26,8 +26,8 @@ const PermissionListResult = ({ permissions }: PermissionListResultProps ): Reac
     <ItemListPane pagination={convertPageMeta(permissions)}>
       <ItemListHeader>
         <ItemListHeaderItem titleKey={"header.permission.name-and-description"} widthClass={"w-5/12"} />
-        <ItemListHeaderItem titleKey={"header.permission.status"} widthClass={"w-1/12"} />
-        <ItemListHeaderItem titleKey={"header.permission.dates"} widthClass={"w-3/12"} />
+        <ItemListHeaderItem titleKey={"header.permission.status"} widthClass={"w-3/12"} />
+        <ItemListHeaderItem titleKey={"header.permission.dates"} widthClass={"w-2/12"} />
         <ItemListHeaderItem titleKey={"header.permission.operations"} widthClass={"w-2/12"} />
       </ItemListHeader>
       <ItemListBody data={permissions.content}>
