@@ -5,7 +5,7 @@ import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ChildrenListProps {
-  children: ReactNode[];
+  children: ReactNode | ReactNode[];
   title?: string;
 }
 

@@ -13,6 +13,7 @@ export type OperationDomain =
   | "fileView"
   | "oauth-application"
   | "permission"
+  | "role"
   | "route"
   | "secret"
   | "secret-retrieval"
@@ -32,7 +33,9 @@ export type OperationType =
   | "retrieval-enable"
   | "retrieval-disable"
   | "status-enable"
-  | "status-disable";
+  | "status-disable"
+  | "mark-as-local-default"
+  | "mark-as-external-default";
 
 /**
  * Redirection paths to be used after successful submit operations
@@ -48,9 +51,10 @@ export const redirectMap: { [key in OperationDomain]: string } = {
   file: "/files/browse",
   fileView: "/files",
   "oauth-application": "/access/oauth-applications",
-  "permission": "/access/permissions",
+  permission: "/access/permissions",
   secret: "/system/secrets",
   "secret-retrieval": "/system/secrets",
+  role: "/access/roles",
   route: "/system/routes",
   tag: "/tags",
   translation: "/system/translations",

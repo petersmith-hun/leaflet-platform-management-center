@@ -37,10 +37,10 @@ export const PermissionCard = ({ permission }: PermissionCardProps): ReactNode =
           </>
         )}
       </div>
-      <div className="w-2/12 text-center">
+      <div className="w-3/12 text-center">
         <ItemEnabledStatusFlag item={permission} />
       </div>
-      <div className="w-3/12 text-sm text-neutral-300">
+      <div className="w-2/12 text-sm text-neutral-300">
         <FormattedArticleDate date={permission.created} icon={faEdit} />
         <FormattedArticleDate date={permission.lastModified} icon={faAsterisk} />
       </div>

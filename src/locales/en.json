@@ -57,6 +57,8 @@
     "confirmation.label.operation.cancel": "Cancel",
     "confirmation.label.operation.delete": "delete",
     "confirmation.label.operation.deployment-unlock": "unlock",
+    "confirmation.label.operation.mark-as-local-default": "mark as local default",
+    "confirmation.label.operation.mark-as-external-default": "mark as external default",
     "confirmation.label.operation.publication-publish": "publish",
     "confirmation.label.operation.publication-review": "request review of",
     "confirmation.label.operation.publication-unpublish": "unpublish",
@@ -149,6 +151,12 @@
     "permission.edit.last-modified-at": "Last modified at",
     "permission.edit.name": "Permission name",
 
+    "role.edit.created-at": "Created at",
+    "role.edit.description": "Role description",
+    "role.edit.general-status": "General status, default flags",
+    "role.edit.last-modified-at": "Last modified at",
+    "role.edit.name": "Role name",
+
     "route.edit.auth-requirement": "User authentication requirement",
     "route.edit.auth-requirement.SHOW_ALWAYS": "Always visible",
     "route.edit.auth-requirement.AUTHENTICATED": "Visible for authenticated users",
@@ -237,6 +245,7 @@
     "group.access_management.item.users": "User management",
     "group.access_management.item.oauth_applications": "OAuth applications",
     "group.access_management.item.permissions": "Permissions",
+    "group.access_management.item.roles": "Roles",
 
     "group.document_management": "Document management",
     "group.document_management.item.documents": "Document management",
@@ -298,6 +307,7 @@
     "domain.fileView": "File",
     "domain.oauth-application": "OAuth application",
     "domain.permission": "Permission",
+    "domain.role": "Role",
     "domain.route": "Frontend route",
     "domain.secret": "Secret",
     "domain.secret-retrieval": "Retrieval of secret",
@@ -349,6 +359,10 @@
     "header.permission.status": "General status",
     "header.permission.dates": "Created, last modified",
     "header.permission.operations": "Permission operations",
+    "header.role.name-and-description": "Role name and description",
+    "header.role.status": "General status, default flags",
+    "header.role.dates": "Created, last modified",
+    "header.role.operations": "Role operations",
     "header.routes.key-and-target": "Menu item key, sequence number and target path",
     "header.routes.type-and-auth": "Type by location, auth requirement",
     "header.routes.dates": "Created, last modified",
@@ -389,6 +403,7 @@
 
     "modal.title.rendered-article": "Rendered article",
     "modal.title.deployment-definition-yaml": "Exported deployment definition",
+    "modal.title.role-permission-assignments": "View/edit permission assignments of role: {{role}}",
     "modal.title.oauth-application-tree": "Direct relations of OAuth application: {{application}}",
     "modal.title.oauth-regenerate-secret": "Regenerate OAuth Client Secret for application: {{application}}",
 
@@ -396,6 +411,7 @@
     "modal.label.regenerate-secret.operation-details": "The operation will erase the current OAuth Client Secret of the application, and generate a new one. Afterward, the affected application's configuration needs to be updated (so it picks up the new secret) and must be restarted.",
     "modal.label.regenerate-secret.success": "New OAuth Client Secret has been generated:",
     "modal.label.regenerate-secret.failed": "Failed to regenerate OAuth Client Secret:",
+    "modal.label.permission-assignments.hide-unassigned": "Hide unassigned permissions",
 
     "notification.common.no-data": "No data found",
     "notification.logs.no-entry-found": "No log entry found by the provided query",
@@ -500,6 +516,17 @@
     "page-operations.permission.enable": "Enable permission",
     "page-operations.permission.new": "Create new permission",
     "page-operations.permission.view": "View permission details",
+    "page-operations.role": "Role operations",
+    "page-operations.role.back-to-roles": "Back to roles",
+    "page-operations.role.delete": "Delete role",
+    "page-operations.role.disable": "Disable role",
+    "page-operations.role.edit": "Edit role",
+    "page-operations.role.enable": "Enable role",
+    "page-operations.role.mark-as-local-default": "Mark as default for local users",
+    "page-operations.role.mark-as-external-default": "Mark as default for external users",
+    "page-operations.role.new": "Create new role",
+    "page-operations.role.show-permission-assignments": "View/edit permission assignments",
+    "page-operations.role.view": "View role details",
     "page-operations.route": "Frontend routing operations",
     "page-operations.route.back-to-routes": "Back to all routes",
     "page-operations.route.delete": "Delete route",
@@ -594,6 +621,10 @@
     "page.title.permission.create": "Create new permission",
     "page.title.permission.edit": "Edit existing permission",
     "page.title.permission.view": "View permission details",
+    "page.title.roles": "Role management",
+    "page.title.role.create": "Create new role",
+    "page.title.role.edit": "Edit existing role",
+    "page.title.role.view": "View role details",
     "page.title.system.deployments": "Domino managed deployments",
     "page.title.system.deployment.create": "Create new deployment definition",
     "page.title.system.deployment.edit": "Edit existing deployment definition: {{id}}",
@@ -627,6 +658,8 @@
 
     "pagination.page-previous": "Previous",
     "pagination.page-next": "Next",
+
+    "role.label.permission-count": "{{count}} permission(s) assigned",
 
     "system.cluster.label.alert.awaiting-data": "Awaiting container status data...",
     "system.cluster.label.alert.not-running-containers": "{{count}} containers are not running!",
@@ -718,6 +751,10 @@
     "toast.docker-registry.updated": "Docker Registry updated",
 
     "toast.log-management.query-failure": "Failed to query logs",
+
+    "toast.role.marked-as-local-default": "Role {{role}} has been marked as default for local users",
+    "toast.role.marked-as-external-default": "Role {{role}} has been marked as default for external users",
+    "toast.role.assignment-failed": "Failed to assign permission {{permission}} to role {{role}}",
 
     "toast.system-configuration.seo.updated": "Default SEO configuration successfully updated",
     "toast.system-configuration.updated": "System configuration updated",

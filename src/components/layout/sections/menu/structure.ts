@@ -11,13 +11,14 @@ import {
   faFolder,
   faGlobe,
   faHome,
+  faIdBadge,
   faLanguage,
   faNewspaper,
   faPlus,
   faShieldHalved,
   faSignal,
   faTags,
-  faUsers
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { faKey } from "@fortawesome/free-solid-svg-icons/faKey";
 
@@ -107,7 +108,7 @@ const accessManagement: MenuItemData[] = [
   {
     itemKey: "group.access_management.item.users",
     path: "/users",
-    icon: faUsers,
+    icon: faUser,
     requiredScope: Permission.READ_ADMIN
   },
   {
@@ -120,6 +121,12 @@ const accessManagement: MenuItemData[] = [
     itemKey: "group.access_management.item.permissions",
     path: "/access/permissions",
     icon: faShieldHalved,
+    requiredScope: Permission.READ_ADMIN
+  },
+  {
+    itemKey: "group.access_management.item.roles",
+    path: "/access/roles",
+    icon: faIdBadge,
     requiredScope: Permission.READ_ADMIN
   }
 ];
