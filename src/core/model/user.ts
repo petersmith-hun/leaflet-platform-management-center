@@ -1,4 +1,4 @@
-import { IdentifiedModel } from "@/core/model/common";
+import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
 
 /**
  * Supported user roles as enum.
@@ -20,17 +20,25 @@ export enum Locale {
   EN = "EN"
 }
 
+export enum AccountType {
+
+  LOCAL = "LOCAL",
+  GOOGLE = "GOOGLE",
+  GITHUB = "GITHUB"
+}
+
 /**
  * Response model representing the owner of an article.
  */
-export interface UserModel extends IdentifiedModel<number> {
+export interface UserModel extends IdentifiedSelfStatusAwareModel<number> {
 
   username: string;
   email: string,
   role: Role,
   locale: Locale,
-  created: string,
-  lastModified: string
+  accountType: AccountType,
+  externalID: string,
+  lastLogin: string
 }
 
 /**
@@ -63,7 +71,7 @@ export interface UserProfileUpdateRequestModel {
 /**
  * Request model representing a user creation request.
  */
-export interface UserCreationRequestModel extends PasswordRequestModel, UserProfileUpdateRequestModel {
+export interface UserCreationRequestModel extends UserProfileUpdateRequestModel {
 
   role: Role;
 }

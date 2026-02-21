@@ -23,11 +23,7 @@ export default function ViewUser(environment: APIEnvironment) {
   const { t } = useTranslation();
   const pageContext = useContext(PageContext);
   const router = useRouter();
-  const {
-    isLoading,
-    data,
-    error
-  } = useSWR(swrNumberKey("users/view", router.query.id), (key) => getUserByID(key.parameter));
+  const { isLoading, data, error, mutate } = useSWR(swrNumberKey("users/view", router.query.id), (key) => getUserByID(key.parameter));
 
   useEffect(() => {
     pageContext.updatePageTitle(t("page.title.user.view"));
@@ -35,7 +31,7 @@ export default function ViewUser(environment: APIEnvironment) {
 
   return (
     <SWRManagedScreen isLoading={isLoading} error={error}>
-      {() => <ViewUserScreen user={data!} />}
+      {() => <ViewUserScreen user={data!} environment={environment} mutate={mutate} />}
     </SWRManagedScreen>
   )
 }

@@ -13,18 +13,13 @@ import { userService } from "@/core/service/user-service";
 import { faList, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode } from "react";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { KeyedMutator } from "swr";
-import { v4 as uuidv4 } from 'uuid';
 
 interface UserComposerScreenProps {
   environment: APIEnvironment;
   mutate?: KeyedMutator<UserModel>;
-}
-
-interface TemporaryPasswordProps {
-  register: UseFormRegister<UserCreationRequestModel>;
 }
 
 const PasswordResetNotification = (): ReactNode => {
@@ -41,18 +36,6 @@ const PasswordResetNotification = (): ReactNode => {
         </SimpleCard>
       </WidePane>
     </MultiPaneScreen>
-  )
-}
-
-const TemporaryPassword = ({ register }: TemporaryPasswordProps): ReactNode => {
-
-  const temporaryPassword = uuidv4();
-
-  return (
-    <>
-      <input type="hidden" value={temporaryPassword} {...register("password")} />
-      <input type="hidden" value={temporaryPassword} {...register("passwordConfirmation")} />
-    </>
   )
 }
 
@@ -78,7 +61,6 @@ export const UserComposerScreen = ({ environment, mutate }: UserComposerScreenPr
       <SubmitOperation domain={"user"} mutate={mutate} titleSupplier={user => user.username}
                        handleSubmit={handleSubmit}
                        serviceCall={user => createUser(user)}>
-        <TemporaryPassword register={register as UseFormRegister<UserCreationRequestModel>} />
         <MultiPaneScreen>
           <WidePane>
             <CardWithTitle title={t("page.title.user.create")}>

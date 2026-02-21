@@ -1,6 +1,9 @@
 import { APIEnvironment } from "@/api-environment";
+import { ExternalService } from "@/core/client";
+import { baseServiceGatewayRestClient } from "@/core/client/base-service-gateway-rest-client";
 import leafletClient, { LeafletPath } from "@/core/client/leaflet-client";
 import { RequestMethod, RESTRequest } from "@/core/domain/requests";
+import { SimplifiedPageModel } from "@/core/model/common";
 import {
   PasswordChangeRequestModel,
   PasswordRequestModel,
@@ -10,16 +13,21 @@ import {
   UserRoleUpdateRequestModel
 } from "@/core/model/user";
 
-interface WrappedUserList {
-  users: UserModel[];
+enum UserPaths {
+  USERS = "/access-management/users",
+  USERS_BY_ID = "/access-management/users/{id}",
+  USERS_BY_ID_STATUS = "/access-management/users/{id}/status",
+  USERS_BY_ID_ROLE = "/access-management/users/{id}/role",
 }
 
 interface UserService {
 
   /**
    * Retrieves all existing user.
+   *
+   * @param page 1-based page number
    */
-  getAllUsers: () => Promise<UserModel[]>;
+  getAllUsers: (page?: number) => Promise<SimplifiedPageModel<UserModel>>;
 
   /**
    * Retrieves the user identified by the given ID.
@@ -34,6 +42,20 @@ interface UserService {
    * @param user user data to be submitted
    */
   createUser: (user: UserCreationRequestModel) => Promise<UserModel>;
+
+  /**
+   * Enables the given user.
+   *
+   * @param id ID of user to be updated
+   */
+  enableUser: (id: number) => Promise<UserModel>;
+
+  /**
+   * Disables the given user.
+   *
+   * @param id ID of user to be updated
+   */
+  disableUser: (id: number) => Promise<UserModel>;
 
   /**
    * Updates the role of the given user.
@@ -76,53 +98,71 @@ export const userService = (environment: APIEnvironment): UserService => {
 
   return {
 
-    async getAllUsers(): Promise<UserModel[]> {
+    async getAllUsers(page: number = 0): Promise<SimplifiedPageModel<UserModel>> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
-        path: LeafletPath.USERS,
-        authorization: environment.authorization!
+        path: UserPaths.USERS,
+        queryParameters: { page }
       });
 
-      return leafletClient<WrappedUserList>(environment, request)
-        .then(response => response?.users ?? []);
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
     },
 
     async getUserByID(id: number): Promise<UserModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.GET,
-        path: LeafletPath.USERS_BY_ID,
-        pathParameters: { id },
-        authorization: environment.authorization!
+        path: UserPaths.USERS_BY_ID,
+        pathParameters: { id }
       });
 
-      return leafletClient(environment, request);
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
     },
 
     async createUser(user: UserCreationRequestModel): Promise<UserModel> {
 
       const request = new RESTRequest({
         method: RequestMethod.POST,
-        path: LeafletPath.USERS,
-        requestBody: user,
-        authorization: environment.authorization!
+        path: UserPaths.USERS,
+        requestBody: user
       });
 
-      return leafletClient(environment, request);
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
+    },
+
+    async enableUser(id: number): Promise<UserModel> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.PUT,
+        path: UserPaths.USERS_BY_ID_STATUS,
+        pathParameters: { id }
+      });
+
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
+    },
+
+    async disableUser(id: number): Promise<UserModel> {
+
+      const request = new RESTRequest({
+        method: RequestMethod.DELETE,
+        path: UserPaths.USERS_BY_ID_STATUS,
+        pathParameters: { id }
+      });
+
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
     },
 
     async updateRole(id: number, role: UserRoleUpdateRequestModel): Promise<void> {
 
       const request = new RESTRequest({
         method: RequestMethod.PUT,
-        path: LeafletPath.USERS_ROLE,
+        path: UserPaths.USERS_BY_ID_ROLE,
         pathParameters: { id },
-        requestBody: role,
-        authorization: environment.authorization!
+        requestBody: role
       });
 
-      return leafletClient(environment, request);
+      return baseServiceGatewayRestClient(environment, ExternalService.ACCESS_GATEWAY, request);
     },
 
     async updateProfile(id: number, profile: UserProfileUpdateRequestModel): Promise<UserModel> {
