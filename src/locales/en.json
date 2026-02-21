@@ -199,6 +199,7 @@
     "user.edit.current-password": "Current password",
     "user.edit.email": "Email address",
     "user.edit.last-modified-at": "Last profile update",
+    "user.edit.last-login": "Last login",
     "user.edit.username": "Username",
     "user.edit.password": "Password",
     "user.edit.password-confirmation": "Password confirmation",
@@ -396,6 +397,7 @@
     "header.translation.operations": "Translation pack operations",
     "header.user.name-email": "Username and email",
     "header.user.role": "Role",
+    "header.user.status": "General status, account type",
     "header.user.dates": "Sign up, last update",
     "header.user.operations": "User operations",
 
@@ -563,6 +565,8 @@
     "page-operations.user.edit.change-role": "Change user role",
     "page-operations.user.new": "Create local user",
     "page-operations.user.view": "View user details",
+    "page-operations.user.enable": "Enable user",
+    "page-operations.user.disable": "Disable user",
 
     "page-operations.common.save": "Save",
 
@@ -769,6 +773,7 @@
     "toast.error.unknown-error": "Unknown error",
 
     "user.label.external-user-role-locked": "Changing the role of external accounts is not possible, due to the lack of a local password",
+    "user.label.never-logged-in": "Never logged in",
     "user.label.never-modified": "Never updated",
     "user.label.notification-change-password": "The account will be created with an auto-generated temporary password. Please notify the user to request password reset immediately after creating the account!"
   }

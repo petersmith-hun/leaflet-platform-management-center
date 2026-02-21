@@ -1,8 +1,10 @@
 import { ItemListCard } from "@/components/common/Cards";
 import { FormattedArticleDate } from "@/components/common/FormattedDateItem";
+import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag";
 import { DropdownMenu, DropdownMenuItem, ViewDropdownMenuItem } from "@/components/navigation/DropdownMenu";
+import { AccountTypeFlag } from "@/components/users/AccountTypeFlag";
 import { UserModel } from "@/core/model/user";
-import { faAsterisk, faEdit, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faAsterisk, faEdit, faSignIn, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +24,7 @@ export const UserCard = ({ user }: UserCardProps): ReactNode => {
 
   return (
     <ItemListCard>
-      <div className="w-5/12">
+      <div className="w-4/12">
         <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
           <Link href={`users/view/${user.id}`} className="text-primary-400 hover:text-primary-200">
             {user.username}
@@ -33,11 +35,17 @@ export const UserCard = ({ user }: UserCardProps): ReactNode => {
       <div className="w-2/12">
         {t(`forms:user.edit.role.${user.role}`)}
       </div>
+      <div className="w-2/12 text-center">
+        <ItemEnabledStatusFlag item={user} />
+        <span>&nbsp;</span>
+        <AccountTypeFlag user={user} />
+      </div>
       <div className="w-3/12 text-sm text-neutral-300">
         <FormattedArticleDate date={user.created} icon={faEdit} />
         <FormattedArticleDate date={user.lastModified} icon={faAsterisk} />
+        <FormattedArticleDate date={user.lastLogin} icon={faSignIn} />
       </div>
-      <div className="w-2/12 flex flex-col items-end">
+      <div className="w-1/12 flex flex-col items-end">
         <DropdownMenu id={`user-${user.id}`}>
           <ViewDropdownMenuItem link={`users/view/${user.id}`} />
           <DropdownMenuItem icon={faUserGroup} label={"dropdown.operation.user.change-role"}
