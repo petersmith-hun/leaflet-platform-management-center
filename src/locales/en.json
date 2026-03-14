@@ -260,8 +260,7 @@
     "group.external_systems": "External systems",
 
     "user.sign_out": "Sign out",
-    "user.account.update-profile": "Update profile",
-    "user.account.change-password": "Change password"
+    "user.account.manage-profile": "Manage profile"
   },
 
   "translations": {

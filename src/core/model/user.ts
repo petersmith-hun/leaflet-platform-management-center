@@ -42,23 +42,6 @@ export interface UserModel extends IdentifiedSelfStatusAwareModel<number> {
 }
 
 /**
- * Request model representing a password and its confirmation.
- */
-export interface PasswordRequestModel {
-
-  password: string;
-  passwordConfirmation: string;
-}
-
-/**
- * Request model representing a password update request.
- */
-export interface PasswordChangeRequestModel extends PasswordRequestModel {
-
-  currentPassword: string;
-}
-
-/**
  * Request model representing a user profile update request.
  */
 export interface UserProfileUpdateRequestModel {
@@ -82,12 +65,4 @@ export interface UserCreationRequestModel extends UserProfileUpdateRequestModel 
 export interface UserRoleUpdateRequestModel {
 
   role: Role;
-}
-
-/**
- * Request model representing an account deletion request.
- */
-export interface AccountDeletionRequestModel {
-
-  email: string;
 }

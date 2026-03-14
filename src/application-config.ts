@@ -25,7 +25,8 @@ const applicationConfig: ApplicationConfig = {
     authorizationServerURL: process.env.OAUTH_AUTHORIZATION_SERVER_URL as string,
     clientID: process.env.OAUTH_CLIENT_ID as string,
     clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
-    audience: process.env.OAUTH_AUDIENCE as string
+    audience: process.env.OAUTH_AUDIENCE as string,
+    profileManagementPath: process.env.OAUTH_PROFILE_MANAGEMENT_PATH as string
   },
   services: {
     authorizerHost: process.env.SERVICE_AUTH_AUTHORIZER_HOST as string,
