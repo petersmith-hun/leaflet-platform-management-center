@@ -35,6 +35,11 @@ export interface OAuthConfig {
    * OAuth audience of the target service.
    */
   audience: string;
+
+  /**
+   * Profile management root endpoint on the OAuth Authorization Server.
+   */
+  profileManagementPath: string;
 }
 
 /**

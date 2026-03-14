@@ -12,8 +12,7 @@ import React, { Fragment, ReactNode, useContext } from 'react'
 import { useTranslation } from "react-i18next";
 
 const userMenuData: UserMenuData[] = [
-  { name: "user.account.update-profile", path: "/account/update-profile" },
-  { name: "user.account.change-password", path: "/account/change-password" },
+  { name: "user.account.manage-profile", path: "/api/manage-profile" },
   { name: "user.sign_out", path: "#", clickHandler: () => signOut() }
 ]
 
