@@ -8,7 +8,7 @@ import { Tooltip } from "@/components/common/Tooltip";
 import { PageOperationButton } from "@/components/navigation/OperationButton";
 import { AccountTypeFlag } from "@/components/users/AccountTypeFlag";
 import { Permission } from "@/core/domain/auth";
-import { AccountType, Role, UserModel } from "@/core/model/user";
+import { AccountType, UserModel } from "@/core/model/user";
 import { userService } from "@/core/service/user-service";
 import { dateFormatter } from "@/core/util/date-formatter";
 import { useSessionHelper } from "@/hooks/use-session-helper";
@@ -26,9 +26,9 @@ interface ViewUserScreenParameters {
 
 const ExternalUserTooltip = ({ user }: { user: UserModel }): ReactNode => {
 
-  return user.role === Role.EXTERNAL_USER
-    ? (<Tooltip tooltipKey={"user.label.external-user-role-locked"} />)
-    : null
+  return user.accountType === AccountType.LOCAL
+    ? null
+    : (<Tooltip tooltipKey={"user.label.external-user-role-locked"} />)
 }
 
 /**
@@ -79,9 +79,9 @@ export const ViewUserScreen = ({ user, environment, mutate }: ViewUserScreenPara
           </DataRow>
           <DataRow>
             <WideDataCell title={t("forms:user.edit.role")}>
-              <p>{t(`forms:user.edit.role.${user.role}`)} <ExternalUserTooltip user={user} /></p>
+              <p>{user.role.name} <ExternalUserTooltip user={user} /></p>
               <span className="block text-[0.8rem] text-gray-500 dark:text-gray-300">
-                {t(`forms:user.edit.role.${user.role}.hint`)}
+                {user.role.description}
               </span>
             </WideDataCell>
           </DataRow>
@@ -91,7 +91,7 @@ export const ViewUserScreen = ({ user, environment, mutate }: ViewUserScreenPara
         <PageOperationCard title={t("page-operations.user")}>
           {hasPermission(Permission.READ_USERS) && (
             <>
-              {user.role !== Role.EXTERNAL_USER && (
+              {user.accountType === AccountType.LOCAL && (
                 <PageOperationButton label={t("page-operations.user.edit.change-role")} icon={faUserGroup}
                                      link={`/users/edit/role/${user.id}`} />
               )}
