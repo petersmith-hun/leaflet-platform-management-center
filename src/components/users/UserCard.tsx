@@ -7,7 +7,6 @@ import { UserModel } from "@/core/model/user";
 import { faAsterisk, faEdit, faSignIn, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import React, { ReactNode } from "react";
-import { useTranslation } from "react-i18next";
 
 interface UserCardProps {
   user: UserModel;
@@ -20,8 +19,6 @@ interface UserCardProps {
  */
 export const UserCard = ({ user }: UserCardProps): ReactNode => {
 
-  const { t } = useTranslation();
-
   return (
     <ItemListCard>
       <div className="w-4/12">
@@ -33,7 +30,7 @@ export const UserCard = ({ user }: UserCardProps): ReactNode => {
         <span>{user.email}</span>
       </div>
       <div className="w-2/12">
-        {t(`forms:user.edit.role.${user.role}`)}
+        {user.role.name}
       </div>
       <div className="w-2/12 text-center">
         <ItemEnabledStatusFlag item={user} />

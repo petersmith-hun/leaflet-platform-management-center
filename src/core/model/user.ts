@@ -1,15 +1,5 @@
 import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
-
-/**
- * Supported user roles as enum.
- */
-export enum Role {
-
-  ADMIN = "ADMIN",
-  EDITOR = "EDITOR",
-  USER = "USER",
-  EXTERNAL_USER = "EXTERNAL_USER"
-}
+import { RoleModel } from "@/core/model/role";
 
 /**
  * Supported user locales.
@@ -34,7 +24,7 @@ export interface UserModel extends IdentifiedSelfStatusAwareModel<number> {
 
   username: string;
   email: string,
-  role: Role,
+  role: RoleModel,
   locale: Locale,
   accountType: AccountType,
   externalID: string,
@@ -56,7 +46,7 @@ export interface UserProfileUpdateRequestModel {
  */
 export interface UserCreationRequestModel extends UserProfileUpdateRequestModel {
 
-  role: Role;
+  roleID: string;
 }
 
 /**
@@ -64,5 +54,5 @@ export interface UserCreationRequestModel extends UserProfileUpdateRequestModel 
  */
 export interface UserRoleUpdateRequestModel {
 
-  role: Role;
+  roleID: string;
 }
