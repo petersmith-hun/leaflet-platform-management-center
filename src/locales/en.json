@@ -663,6 +663,7 @@
     "pagination.page-next": "Next",
 
     "role.label.permission-count": "{{count}} permission(s) assigned",
+    "role.label.permission-assignment-filter": "Filter permissions",
 
     "system.cluster.label.alert.awaiting-data": "Awaiting container status data...",
     "system.cluster.label.alert.not-running-containers": "{{count}} containers are not running!",

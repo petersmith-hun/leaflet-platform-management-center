@@ -6,6 +6,7 @@ import { Modal } from "@/components/common/Modal";
 import { Separator } from "@/components/common/Separator";
 import { UnboundSwitch } from "@/components/form/Switch";
 import { AwarenessLevel } from "@/components/navigation/OperationButton";
+import { tailwindElementsLoader, TWElement } from "@/components/utility/tailwind-helper";
 import { toastHandler } from "@/components/utility/toast-handler";
 import { SimplifiedPageModel } from "@/core/model/common";
 import { PermissionModel } from "@/core/model/permission";
@@ -15,7 +16,7 @@ import { roleService } from "@/core/service/roles-service";
 import { PageContext } from "@/pages/_app";
 import { faCheck, faShieldHalved, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactNode, useContext, useState } from "react";
+import React, { Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useSWR, { KeyedMutator } from "swr";
 
@@ -44,6 +45,36 @@ interface PermissionAssignmentModalProps {
   mutate: KeyedMutator<RoleModel>;
 }
 
+interface PermissionFilterInputProps {
+  setFilter: Dispatch<SetStateAction<string | undefined>>;
+}
+
+const PermissionFilterInput = ({ setFilter }: PermissionFilterInputProps): ReactNode => {
+
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    tailwindElementsLoader()
+      .then(loader => loader.load([TWElement.Input]));
+  }, []);
+
+  return (
+    <div className="ml-2 max-w-[90%]">
+      <div className="relative" data-te-input-wrapper-init="">
+        <input type={"text"}
+               className="read-only:dark:bg-neutral-600 peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+               id={"permission-filter"}
+               placeholder={t("role.label.permission-assignment-filter")}
+               onChange={event => setFilter(event.target?.value?.toLowerCase())}/>
+        <label htmlFor={"permission-filter"}
+               className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
+          {t("role.label.permission-assignment-filter")}
+        </label>
+      </div>
+    </div>
+  )
+}
+
 /**
  * Modal window showing the assigned permissions of the given role, also letting to change the assignments.
  *
@@ -59,6 +90,7 @@ export const PermissionAssignmentModal = ({ role, environment, mutate }: Permiss
   const [hideUnassigned, setHideUnassigned] = useState(false);
   const [updateInProgressFor, setUpdateInProgressFor] = useState<string | undefined>();
   const [lastUpdated, setLastUpdated] = useState<string | undefined>();
+  const [filter, setFilter] = useState<string | undefined>();
   const { triggerToast } = useContext(PageContext);
   const { showCustomErrorToast } = toastHandler(triggerToast, t);
   const { isLoading: isPermissionListLoading, data: allPermissions } = useSWR("allPermissionsUnpaged", () => getAllPermissions());
@@ -101,14 +133,15 @@ export const PermissionAssignmentModal = ({ role, environment, mutate }: Permiss
       .includes(permission.id);
   }
 
-  const filterPermissions = (permissions?: SimplifiedPageModel<PermissionModel>): PermissionModel[] => {
+  const filterPermissions = (permissions: SimplifiedPageModel<PermissionModel> | undefined, filter: string | undefined): PermissionModel[] => {
 
-    if (!hideUnassigned) {
-      return permissions?.content ?? [];
-    }
-
-    return permissions?.content
-      .filter(permission => isAssigned(role, permission)) ?? [];
+    return (permissions?.content ?? [])
+      .filter(permission => filter
+        ? (permission.name.toLowerCase().includes(filter) || permission.description?.toLowerCase()?.includes(filter))
+        : true)
+      .filter(permission => hideUnassigned
+        ? isAssigned(role, permission)
+        : true);
   }
 
   return (
@@ -120,15 +153,18 @@ export const PermissionAssignmentModal = ({ role, environment, mutate }: Permiss
                          id={"permission-assignments-hide-unassigned"}
                          onClick={() => setHideUnassigned(current => !current)} />
         </p>
+        <p>
+          <PermissionFilterInput setFilter={setFilter} />
+        </p>
         <p className="ml-auto pt-1">{t("role.label.permission-count", {count: role.permissions.length})}</p>
       </ItemListHeader>
-      {filterPermissions(allPermissions).map(permission => (
+      {filterPermissions(allPermissions, filter).map(permission => (
         <ItemListCard key={`permission-assignment-${permission.id}`}>
           <div className="w-11/12">
             <h5 className="text-lg font-medium leading-tight text-neutral-800 dark:text-neutral-50">
               {permission.name}
             </h5>
-            {permission.description !== null && (
+            {permission.description && (
               <>
                 <Separator thick={false} />
                 <span className="text-xs">

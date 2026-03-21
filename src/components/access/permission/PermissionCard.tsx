@@ -28,7 +28,7 @@ export const PermissionCard = ({ permission }: PermissionCardProps): ReactNode =
             {permission.name}
           </Link>
         </h5>
-        {permission.description !== null && (
+        {permission.description && (
           <>
             <Separator thick={false} />
             <span className="text-xs">
