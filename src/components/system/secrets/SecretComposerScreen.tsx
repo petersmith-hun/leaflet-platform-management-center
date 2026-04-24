@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 const secretKeyPattern = /^[a-zA-Z][a-zA-Z0-9_.:\-]*$/;
-const contextPattern = /^[a-zA-Z0-9]+$/;
+const contextPattern = /^[a-zA-Z][a-zA-Z0-9_.:\-]*$/;
 
 interface SecretComposerScreenProps {
   environment: APIEnvironment;
