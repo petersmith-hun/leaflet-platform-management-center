@@ -153,6 +153,9 @@ jobs:
             domino-cli --cicd import
             echo "Deployment definition successfully imported"
             
+            domino-cli --cicd oauth-import << pipeline.parameters.app_name >>
+            echo "Deployment OAuth descriptor successfully imported"
+            
             domino-cli --cicd deploy << pipeline.parameters.app_name >> ${PROJECT_VERSION}
             echo "Successfully deployed application << pipeline.parameters.app_name >> v${PROJECT_VERSION}"
             

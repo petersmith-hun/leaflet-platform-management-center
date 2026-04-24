@@ -1,0 +1,28 @@
+domino:
+  oauth:
+    lpmc:
+      behavior:
+        target-provider: gateway-psproghu
+        roll-client-secret-on-deploy: true
+        use-secret-manager-for:
+          - client-secret
+          - client-id
+      tenant:
+        environment: prod
+        name: psproghu
+      client:
+        allowed-callbacks:
+          - https://admin.psprog.hu/api/auth/callback/psproghu-lags
+        required-permissions:
+          - read:comments:own
+          - write:documents
+          - write:comments
+          - write:categories
+          - write:entries
+          - write:comments:own
+          - read:categories
+          - write:tags
+          - read:comments
+          - read:entries
+          - read:documents
+          - read:tags

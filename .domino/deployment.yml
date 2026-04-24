@@ -20,6 +20,8 @@ domino:
             HOSTNAME: 0.0.0.0
             NODE_OPTIONS: --max_old_space_size=128
             NODE_ENV: production
+            OAUTH_CLIENT_ID: "[dsm:domino.oauth.psproghu.prod.lpmc.client-id]"
+            OAUTH_CLIENT_SECRET: "[dsm:domino.oauth.psproghu.prod.lpmc.client-secret]"
           volumes:
             "[dsm:volume.config.lpmc]": "/opt/lpmc/.env:ro"
             "/etc/timezone": "/etc/timezone:ro"
