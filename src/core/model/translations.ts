@@ -5,7 +5,7 @@ import { IdentifiedSelfStatusAwareModel } from "@/core/model/common";
  */
 export enum PackLocale {
 
-  HU = "hu_HU",
+  HU = "hu-HU",
   EN = "en"
 }
 
