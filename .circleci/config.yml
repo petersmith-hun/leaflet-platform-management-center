@@ -130,7 +130,7 @@ jobs:
               circleci run release plan << pipeline.parameters.deploy_name >> \
                 --environment-name=production \
                 --component-name=<< pipeline.parameters.app_name >> \
-                --target-version="${PROJECT_VERSION}"
+                --target-version="${VERSION}"
             fi
       - run:
           name: Archive dist code
