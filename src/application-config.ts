@@ -10,7 +10,7 @@ const createClientConfig = (service: ExternalService): ExternalServiceParameters
     clientSecret: process.env[`OAUTH_CLIENT_SECRET`] as string,
     host: process.env[`SERVICE_${servicePrefix}_HOST`] as string,
     audience: process.env[`SERVICE_${servicePrefix}_AUDIENCE`] as string,
-    scope: (process.env[`SERVICE_${servicePrefix}_SCOPE`] as string ?? "").split(","),
+    scope: (process.env[`SERVICE_${servicePrefix}_SCOPE`] as string)?.split(",") ?? [],
     requireUserScope: process.env[`SERVICE_${servicePrefix}_REQUIRED_USER_SCOPE`] as string
   }
 }

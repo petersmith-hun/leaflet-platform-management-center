@@ -142,7 +142,7 @@
     "pack.edit.general-status": "General status",
     "pack.edit.locale": "Pack language",
     "pack.edit.locale.en": "English",
-    "pack.edit.locale.hu_HU": "Hungarian",
+    "pack.edit.locale.hu-HU": "Hungarian",
     "pack.edit.name": "Translation pack name",
 
     "permission.edit.created-at": "Created at",
