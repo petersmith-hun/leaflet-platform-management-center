@@ -77,7 +77,7 @@ export const DeploymentComposerScreen = ({ environment, deployment, mutate }: De
                 t("tab.deployment.create.info")
               ]}>
               <SourceConfigurationTab register={register} errors={errors} setSelectedSourceType={setSelectedSourceType} />
-              <TargetConfigurationTab register={register} errors={errors} />
+              <TargetConfigurationTab register={register} errors={errors} defaultState={deployment?.target?.multiInstance?.enabled ?? false} />
               <ExecutionConfigurationTab register={register} errors={errors} selectedSourceType={selectedSourceType} />
               <HealthcheckConfigurationTab register={register} errors={errors} defaultState={getDefaultState(deployment?.healthcheck.enabled)} />
               <InfoConfigurationTab register={register} errors={errors} defaultState={getDefaultState(deployment?.info.enabled)} />

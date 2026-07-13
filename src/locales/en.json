@@ -92,6 +92,17 @@
     "deployment.edit.source-resource": "Resource",
     "deployment.edit.source-type": "Source type",
     "deployment.edit.target-hosts": "Target hosts",
+    "deployment.edit.multi-instance.enabled": "Multi-instance deployment",
+    "deployment.edit.multi-instance.instance-count": "Instance count",
+    "deployment.edit.multi-instance.spread-mode": "Instance spread mode",
+    "deployment.edit.multi-instance.spread-mode.replicate": "Replicate on all instances",
+    "deployment.edit.multi-instance.spread-mode.one-per-host": "One instance per host",
+    "deployment.edit.multi-instance.naming-strategy": "Instance naming strategy",
+    "deployment.edit.multi-instance.naming-strategy.incremental-suffix": "Use incremental (0-based) suffixing",
+    "deployment.edit.multi-instance.naming-strategy.custom-predefined": "Use custom (predefined) instance names",
+    "deployment.edit.multi-instance.defined-names": "Custom (predefined) instance names",
+    "deployment.edit.multi-instance.port-offset": "Port offset",
+    "deployment.edit.multi-instance.host-network-base-port": "Host network base port",
 
     "directory.edit.name": "Folder name",
 

@@ -1,5 +1,5 @@
 /**
- * Supported filesystem based execution types.
+ * Supported filesystem-based execution types.
  */
 export enum FilesystemExecutionType {
 
@@ -41,11 +41,44 @@ export interface DeploymentSource {
 }
 
 /**
+ * Supported naming strategies.
+ */
+export enum InstanceNamingStrategy {
+
+  INCREMENTAL_SUFFIX = "incremental-suffix",
+  CUSTOM_PREDEFINED = "custom-predefined"
+}
+
+/**
+ * Supported multi-instance spread modes.
+ */
+export enum InstanceSpreadMode {
+
+  ONE_PER_HOST = "one-per-host",
+  REPLICATE = "replicate"
+}
+
+/**
+ * Multi-instance configuration parameters.
+ */
+export interface MultiInstanceDeployment {
+
+  enabled: boolean;
+  instanceCount: number;
+  spreadMode: InstanceSpreadMode;
+  namingStrategy: InstanceNamingStrategy;
+  definedNames?: string[];
+  portOffset: number;
+  hostNetworkBasePort?: number;
+}
+
+/**
  * Deployment target configuration parameters.
  */
 export interface DeploymentTarget {
 
   hosts: string[];
+  multiInstance: OptionalMultiInstanceDeployment;
 }
 
 /**
@@ -89,7 +122,7 @@ export interface DeploymentInfo {
 }
 
 /**
- * Deployment healthcheck configuration parameters.
+ * Deployment health check configuration parameters.
  */
 export interface DeploymentHealthcheck {
 
@@ -120,7 +153,12 @@ export type OptionalDeploymentInfo = (EnabledDeploymentOperation & DeploymentInf
 export type OptionalDeploymentHealthcheck = (EnabledDeploymentOperation & DeploymentHealthcheck) | DisabledDeploymentOperation;
 
 /**
- * Deployment configuration mapping a complete deployment entry..
+ * MultiInstanceDeployment configuration combined with the enabled/disabled flag.
+ */
+export type OptionalMultiInstanceDeployment = (EnabledDeploymentOperation & MultiInstanceDeployment) | DisabledDeploymentOperation;
+
+/**
+ * Deployment configuration, representing a complete deployment entry.
  */
 export interface Deployment {
 
@@ -159,7 +197,7 @@ export interface DeploymentExport {
 }
 
 /**
- * Execution arguments part of the form representation for deployment definition editor.
+ * Execution arguments part of the form representation for the deployment definition editor.
  */
 export interface ExecutionArgumentsForm {
 
@@ -173,7 +211,21 @@ export interface ExecutionArgumentsForm {
 }
 
 /**
- * Form representation for deployment definition editor.
+ * Multi-instance configuration part of the form representation for the deployment definition editor.
+ */
+export interface MultiInstanceDeploymentForm {
+
+  enabled: boolean;
+  instanceCount: string;
+  spreadMode: InstanceSpreadMode;
+  namingStrategy: InstanceNamingStrategy;
+  definedNames?: string;
+  portOffset: string;
+  hostNetworkBasePort?: string;
+}
+
+/**
+ * Form representation for the deployment definition editor.
  */
 export interface DeploymentForm {
 
@@ -181,6 +233,7 @@ export interface DeploymentForm {
   source: DeploymentSource;
   target: {
     hosts: string;
+    multiInstance: MultiInstanceDeploymentForm;
   };
   execution: {
     commandName: string;

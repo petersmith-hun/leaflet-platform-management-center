@@ -5,13 +5,16 @@ import {
   DeploymentInfo,
   DockerArguments,
   ExecutionArgumentsForm,
+  InstanceNamingStrategy,
+  InstanceSpreadMode,
   MapLikeObject,
+  MultiInstanceDeployment,
   SourceType
 } from "@/core/model/domino";
 import ms from "ms";
 
 /**
- * Maps the given Deployment object (retrieved from Domino) to DeploymentForm object (to populate deployment editor form).
+ * Maps the given Deployment object (retrieved from Domino) to DeploymentForm object (to populate the deployment editor form).
  *
  * @param deployment contents of the deployment definition
  */
@@ -24,6 +27,7 @@ export const mapToDeploymentForm = (deployment?: Deployment): DeploymentForm => 
     } as DeploymentForm;
   }
 
+  const multiInstance = deployment.target.multiInstance as MultiInstanceDeployment | undefined;
   const healthcheck = deployment.healthcheck as DeploymentHealthcheck | undefined;
   const info = deployment.info as DeploymentInfo | undefined;
 
@@ -32,6 +36,15 @@ export const mapToDeploymentForm = (deployment?: Deployment): DeploymentForm => 
     source: deployment.source,
     target: {
       hosts: transformListToString(deployment.target.hosts)!,
+      multiInstance: {
+        enabled: deployment.target.multiInstance?.enabled ?? false,
+        instanceCount: String(multiInstance?.instanceCount ?? "0"),
+        spreadMode: multiInstance?.spreadMode ?? InstanceSpreadMode.REPLICATE,
+        namingStrategy: multiInstance?.namingStrategy ?? InstanceNamingStrategy.INCREMENTAL_SUFFIX,
+        definedNames: transformListToString(multiInstance?.definedNames),
+        portOffset: String(multiInstance?.portOffset ?? "0"),
+        hostNetworkBasePort: String(multiInstance?.hostNetworkBasePort ?? "0"),
+      },
     },
     healthcheck: {
       enabled: deployment.healthcheck.enabled,

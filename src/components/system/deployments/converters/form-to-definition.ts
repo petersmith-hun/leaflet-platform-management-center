@@ -21,7 +21,22 @@ export const mapToDeployment = (deploymentForm: DeploymentForm): Deployment => {
     id: deploymentForm.id,
     source: deploymentForm.source,
     target: {
-      hosts: transformStringToList(deploymentForm.target.hosts)!
+      hosts: transformStringToList(deploymentForm.target.hosts)!,
+      multiInstance: deploymentForm.target.multiInstance.enabled
+        ? {
+          enabled: true,
+          instanceCount: parsePortNumber(deploymentForm.target.multiInstance.instanceCount),
+          spreadMode: deploymentForm.target.multiInstance.spreadMode,
+          namingStrategy: deploymentForm.target.multiInstance.namingStrategy,
+          definedNames: deploymentForm.target.multiInstance.definedNames
+            ? transformStringToList(deploymentForm.target.multiInstance.definedNames)
+            : undefined,
+          portOffset: parsePortNumber(deploymentForm.target.multiInstance.portOffset),
+          hostNetworkBasePort: deploymentForm.target.multiInstance.hostNetworkBasePort
+            ? parsePortNumber(deploymentForm.target.multiInstance.hostNetworkBasePort)
+            : undefined
+        }
+        : { enabled: false }
     },
     execution: {
       via: deploymentForm.execution.via,
@@ -39,6 +54,10 @@ export const mapToDeployment = (deploymentForm: DeploymentForm): Deployment => {
       ? transformInfo(deploymentForm)
       : { enabled: false },
   }
+}
+
+const parsePortNumber = (portNumber: string): number => {
+  return parseInt(String(portNumber));
 }
 
 const mapDockerArguments = (deploymentForm: DeploymentForm): DockerArguments => {
