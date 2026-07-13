@@ -1,6 +1,7 @@
 import { APIEnvironment } from "@/api-environment";
 import { CardWithTitle, PageOperationCard, SimpleCard } from "@/components/common/Cards";
 import { DataRow, WideDataCell } from "@/components/common/DataRow";
+import { ItemEnabledStatusFlag } from "@/components/common/ItemEnabledStatusFlag";
 import { ToastType } from "@/components/common/OperationResultToast";
 import { DeleteOperation } from "@/components/common/operations/DeleteOperation";
 import { MultiPaneScreen, NarrowPane, WidePane } from "@/components/common/ScreenLayout";
@@ -106,10 +107,36 @@ export const ViewDeploymentScreen = ({ deployment, environment, mutate }: ViewDe
 
         <CardWithTitle title={t("page.sub-title.system.deployments.target-config")}>
           <DataRow>
-            <WideDataCell title={t("forms:deployment.edit.target-host")}>
+            <WideDataCell title={t("forms:deployment.edit.target-hosts")}>
               <ArrayArgument items={deployment.target.hosts} />
             </WideDataCell>
+            <WideDataCell title={t("forms:deployment.edit.multi-instance.enabled")}>
+              <ItemEnabledStatusFlag item={deployment.target.multiInstance ?? { enabled: false }} />
+            </WideDataCell>
           </DataRow>
+          {deployment.target.multiInstance?.enabled && (
+            <>
+              <DataRow>
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.instance-count")}
+                              children={deployment.target.multiInstance.instanceCount} />
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.spread-mode")}
+                              children={t(`forms:deployment.edit.multi-instance.spread-mode.${deployment.target.multiInstance.spreadMode}`)} />
+              </DataRow>
+              <DataRow>
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.naming-strategy")}
+                              children={t(`forms:deployment.edit.multi-instance.naming-strategy.${deployment.target.multiInstance.namingStrategy}`)} />
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.defined-names")}>
+                  <ArrayArgument items={deployment.target.multiInstance.definedNames ?? []} />
+                </WideDataCell>
+              </DataRow>
+              <DataRow>
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.port-offset")}
+                              children={deployment.target.multiInstance.portOffset ?? notApplicable} />
+                <WideDataCell title={t("forms:deployment.edit.multi-instance.host-network-base-port")}
+                              children={deployment.target.multiInstance.hostNetworkBasePort ?? notApplicable} />
+              </DataRow>
+            </>
+          )}
         </CardWithTitle>
 
         <CardWithTitle title={t("page.sub-title.system.deployments.execution-config")}>

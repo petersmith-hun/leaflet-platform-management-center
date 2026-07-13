@@ -10,6 +10,7 @@ interface InputProps extends ValidatedInput {
   id: string;
   readonly?: boolean;
   password?: boolean;
+  forceNumber?: boolean;
 }
 
 /**
@@ -21,8 +22,9 @@ interface InputProps extends ValidatedInput {
  * @param readonly makes the input read-only
  * @param errorSupplier validation error supplier
  * @param password indicates the input to be rendered as password input (defaults to false)
+ * @param forceNumber force the input to be handled as number
  */
-export const Input = ({ registerReturn, label, id, readonly = false, errorSupplier, password = false }: InputProps): ReactNode => {
+export const Input = ({ registerReturn, label, id, readonly = false, errorSupplier, password = false, forceNumber = false }: InputProps): ReactNode => {
 
   useEffect(() => {
     tailwindElementsLoader()
@@ -32,7 +34,7 @@ export const Input = ({ registerReturn, label, id, readonly = false, errorSuppli
   return (
     <div className="mb-3 max-w-[90%]">
       <div className="relative" data-te-input-wrapper-init="">
-        <input type={password ? "password" : "text"}
+        <input type={password ? "password" : (forceNumber ? "number" : "text")}
                className="read-only:dark:bg-neutral-600 peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                id={id}
                placeholder={label}
